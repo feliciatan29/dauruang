@@ -1,4 +1,4 @@
-@extends('layout.nasabah')
+@extends('nasabah.layout')
 @section('content')
 
     <!-- Carousel Start -->
