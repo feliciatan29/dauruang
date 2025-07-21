@@ -12,7 +12,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('login', ['title' => 'Login']);
+        return view('admin.login', ['title' => 'Login']);
     }
 
     /**
@@ -29,7 +29,7 @@ class UserController extends Controller
         // Proses login
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate(); // Regenerasi sesi untuk keamanan
-            return redirect()->intended('/beranda'); // ✅ arahkan ke halaman beranda
+            return redirect()->intended('/admin.beranda'); // ✅ arahkan ke halaman beranda
         }
 
         // Jika gagal login
