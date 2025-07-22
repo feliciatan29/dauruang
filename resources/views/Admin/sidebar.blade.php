@@ -71,7 +71,7 @@
 
         <!-- LOGO -->
         <li class="nav-item pt-3">
-            <a class="nav-link d-block text-center" href="{{ url('/beranda') }}">
+            <a class="nav-link d-block text-center" href="{{ url('/admin.beranda') }}">
                 <img class="sidebar-brand-logo" src="{{ asset('assets/images/logo1.png') }}" alt="Logo Utama" />
                 <img class="sidebar-brand-logomini" src="{{ asset('assets/images/logo_trash_mini.svg') }}" alt="Logo Mini" />
                 <div class="small font-weight-light pt-1">Responsive Dashboard</div>
@@ -90,14 +90,14 @@
 
         <!-- MENU -->
         <li class="nav-item">
-            <a class="nav-link {{ Request::is('beranda') ? 'active' : '' }}" href="{{ route('beranda') }}">
+            <a class="nav-link {{ Request::is('admin.beranda') ? 'active' : '' }}" href="{{ route('admin.beranda') }}">
                 <i class="mdi mdi-compass-outline menu-icon"></i>
                 <span class="menu-title">Dashboard</span>
             </a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link {{ Request::is('nasabah') ? 'active' : '' }}" href="{{ route('nasabah.index') }}">
+            <a class="nav-link {{ Request::is('admin.nasabah') ? 'active' : '' }}" href="{{ route('nasabah.index') }}">
                 <i class="mdi mdi-account menu-icon"></i>
                 <span class="menu-title">Data Nasabah</span>
             </a>
@@ -117,20 +117,20 @@
             </a>
         </li>
 
-      
+
         <li class="nav-item">
             <a class="nav-link {{ Request::is('pesanan') ? 'active' : '' }}" href="{{ route('pesanan.index') }}">
                 <i class="mdi mdi-package-variant menu-icon"></i>
                 <span class="menu-title">Data Pesanan</span>
             </a>
-        </li> 
+        </li>
 
         <li class="nav-item">
             <a class="nav-link {{ Request::is('riwayat') ? 'active' : '' }}" href="{{ route('riwayat.index') }}">
                 <i class="mdi mdi-history menu-icon"></i>
                 <span class="menu-title">Data Riwayat</span>
             </a>
-        </li> 
+        </li>
 
         <!-- LOGOUT -->
         <li class="nav-item pt-3">

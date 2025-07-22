@@ -26,7 +26,7 @@
                         <th>Nama Nasabah</th>
                         <th>Alamat</th>
                         <th>Jenis Nasabah</th>
-                        <th>No Telephpne</th>
+                        <th>No Telephone</th>
                         <th>Tanggal Daftar</th>
                         <th>Status</th>
                         <th>Aksi</th>

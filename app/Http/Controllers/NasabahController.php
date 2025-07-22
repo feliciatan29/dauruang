@@ -10,7 +10,7 @@ class NasabahController extends Controller
     public function index()
     {
         $nasabahs = Nasabah::paginate(20);
-        return view('nasabah.index', compact('nasabahs'))->with('i', (request()->input('page', 1) - 1) * 20);
+        return view('admin.nasabah.index', compact('nasabahs'))->with('i', (request()->input('page', 1) - 1) * 20);
     }
 
     public function create()
@@ -60,7 +60,7 @@ class NasabahController extends Controller
 
     public function edit(Nasabah $nasabah)
     {
-        return view('nasabah.edit', compact('nasabah'));
+        return view('admin.nasabah.edit', compact('nasabah'));
     }
 
     public function update(Request $request, Nasabah $nasabah)

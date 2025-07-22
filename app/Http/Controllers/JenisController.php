@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Jenis;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage; 
+use Illuminate\Support\Facades\Storage;
 
 class JenisController extends Controller
 {
@@ -16,7 +16,7 @@ class JenisController extends Controller
     public function index()
     {
         $jenish = Jenis::latest()->paginate(20);
-        return view('jenis.index', compact('jenish'))->with('i', (request()->input('page', 1) - 1) * 20);
+        return view('admin.jenis.index', compact('jenish'))->with('i', (request()->input('page', 1) - 1) * 20);
     }
 
     public function cari_jenis(Request $request)
@@ -25,7 +25,7 @@ class JenisController extends Controller
         $jenish = Jenis::where('nm_jenis', 'LIKE', "%$kata%")
                      ->paginate(20);
 
-        return view('jenis.index', compact('jenish'))->with('i', (request()->input('page', 1) - 1) * 20);
+        return view('admin.jenis.index', compact('jenish'))->with('i', (request()->input('page', 1) - 1) * 20);
     }
 
     /**
@@ -35,7 +35,7 @@ class JenisController extends Controller
      */
     public function create()
     {
-        return view('jenis.create');
+        return view('admin.jenis.create');
     }
 
     /**
@@ -64,7 +64,7 @@ class JenisController extends Controller
             'harga_perkilo' => $request->harga_perkilo,
             'harga_satuan' => $request->harga_satuan,
             'gambar' => $nama_file
-    
+
         ]);
 
         return redirect()->route('jenis.index')->with('success', 'Data Jenis Sampah Berhasil Disimpan');
@@ -89,7 +89,7 @@ class JenisController extends Controller
      */
     public function edit(Jenis $jenis)
     {
-        return view('jenis.edit', compact('jenis'));
+        return view('admin.jenis.edit', compact('jenis'));
     }
 
     /**
