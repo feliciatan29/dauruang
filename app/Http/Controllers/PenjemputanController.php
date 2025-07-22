@@ -12,13 +12,13 @@ class PenjemputanController extends Controller
     {
         $penjemputans = DB::table('tbl_penjemputan')->get();
 
-        return view('penjemputan.index', compact('penjemputans'))
+        return view('admin.penjemputan.index', compact('penjemputans'))
             ->with('i', (request()->input('page', 1) - 1) * 10);
     }
 
     public function create()
     {
-        return view('penjemputan.create');
+        return view('admin.penjemputan.create');
     }
 
     public function store(Request $request)
@@ -51,7 +51,7 @@ class PenjemputanController extends Controller
     public function edit($id)
     {
         $penjemputan = Penjemputan::findOrFail($id);
-        return view('penjemputan.edit', compact('penjemputan'));
+        return view('admin.penjemputan.edit', compact('penjemputan'));
     }
 
     public function update(Request $request, $id)

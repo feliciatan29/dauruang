@@ -14,7 +14,7 @@ class RiwayatController extends Controller
     public function index()
     {
         $riwayats = Riwayat::all();
-        return view('riwayat.index', compact('riwayats'));
+        return view('admin.riwayat.index', compact('riwayats'));
     }
 
     /**
