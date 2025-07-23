@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('nasabah.layout')
 @section('content')
 
     <!-- Carousel Start -->
@@ -6,7 +6,7 @@
         <div id="header-carousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img class="w-100" src="img/home-1.jpeg" alt="Image">
+                    <img class="w-100" src="nasabah/img/home-1.jpeg" alt="Image">
                     <div class="carousel-caption">
                         <div class="container">
                             <div class="row justify-content-center">
@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img class="w-100" src="img/home-1.jpeg" alt="Image">
+                    <img class="w-100" src="nasabah/img/home-1.jpeg" alt="Image">
                     <div class="carousel-caption">
                         <div class="container">
                             <div class="row justify-content-center">
@@ -112,7 +112,7 @@
                 <div class="tracking-step">
                     <div class="step active">
                         <div class="icon"><i class="bi bi-arrow-repeat"></i></div>
-                        <a href="{{ route('pesanan.diproses') }}"> Sedang Diproses</a>
+                        <a href="{{ route('nasabah.pesananc.diproses') }}"> Sedang Diproses</a>
                     </div>
                     <div class="step">
                         <div class="icon"><i class="bi bi-box-seam"></i></div>
@@ -135,7 +135,7 @@
         <div class="container">
             <div class="row g-5 align-items-end">
                 <div class="col-lg-3 col-md-5 wow fadeInUp" data-wow-delay="0.1s">
-                    <img class="img-fluid rounded" data-wow-delay="0.1s" src="img/about-1.jpg">
+                    <img class="img-fluid rounded" data-wow-delay="0.1s" src="nasabah/img/about-1.jpg">
                 </div>
                 <div class="col-lg-6 col-md-7 wow fadeInUp" data-wow-delay="0.3s">
                     <h1 class="display-1 text-primary mb-0">#1</h1>
@@ -169,7 +169,7 @@
 
 
     <!-- Facts Start -->
-    <div class="container-fluid facts my-5 py-5" data-parallax="scroll" data-image-src="img/home-1.jpeg">
+    <div class="container-fluid facts my-5 py-5" data-parallax="scroll" data-image-src="nasabah/img/home-1.jpeg">
         <div class="container py-5">
             <div class="row g-5">
                 <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.1s">
@@ -253,11 +253,11 @@
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="service-item rounded d-flex h-100">
                         <div class="service-img rounded">
-                            <img class="img-fluid" src="img/service-1.jpg" alt="">
+                            <img class="img-fluid" src="nasabah/img/service-1.jpg" alt="">
                         </div>
                         <div class="service-text rounded p-5">
                             <div class="btn-square rounded-circle mx-auto mb-3">
-                                <img class="img-fluid" src="img/icon/icon-3.png" alt="Icon">
+                                <img class="img-fluid" src="nasabah/img/icon/icon-3.png" alt="Icon">
                             </div>
                             <h4 class="mb-3">Cara Mengelola Sampah</h4>
                             <p class="mb-4">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
@@ -268,11 +268,11 @@
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
                     <div class="service-item rounded d-flex h-100">
                         <div class="service-img rounded">
-                            <img class="img-fluid" src="img/service-2.jpg" alt="">
+                            <img class="img-fluid" src="nasabah/img/service-2.jpg" alt="">
                         </div>
                         <div class="service-text rounded p-5">
                             <div class="btn-square rounded-circle mx-auto mb-3">
-                                <img class="img-fluid" src="img/icon/icon-6.png" alt="Icon">
+                                <img class="img-fluid" src="nasabah/img/icon/icon-6.png" alt="Icon">
                             </div>
                             <h4 class="mb-3">Panduan Aplikasi DaurUang</h4>
                             <p class="mb-4">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
@@ -283,11 +283,11 @@
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="service-item rounded d-flex h-100">
                         <div class="service-img rounded">
-                            <img class="img-fluid" src="img/service-3.jpg" alt="">
+                            <img class="img-fluid" src="nasabah/img/service-3.jpg" alt="">
                         </div>
                         <div class="service-text rounded p-5">
                             <div class="btn-square rounded-circle mx-auto mb-3">
-                                <img class="img-fluid" src="img/icon/icon-5.png" alt="Icon">
+                                <img class="img-fluid" src="nasabah/img/icon/icon-5.png" alt="Icon">
                             </div>
                             <h4 class="mb-3">Apa Itu DaurUang?</h4>
                             <p class="mb-4">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
@@ -298,11 +298,11 @@
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="service-item rounded d-flex h-100">
                         <div class="service-img rounded">
-                            <img class="img-fluid" src="img/service-4.jpg" alt="">
+                            <img class="img-fluid" src="nasabah/img/service-4.jpg" alt="">
                         </div>
                         <div class="service-text rounded p-5">
                             <div class="btn-square rounded-circle mx-auto mb-3">
-                                <img class="img-fluid" src="img/icon/icon-4.png" alt="Icon">
+                                <img class="img-fluid" src="nasabah/img/icon/icon-4.png" alt="Icon">
                             </div>
                             <h4 class="mb-3">Kategori Daur Ulang </h4>
                             <p class="mb-4">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
@@ -313,11 +313,11 @@
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
                     <div class="service-item rounded d-flex h-100">
                         <div class="service-img rounded">
-                            <img class="img-fluid" src="img/service-5.jpg" alt="">
+                            <img class="img-fluid" src="nasabah/img/service-5.jpg" alt="">
                         </div>
                         <div class="service-text rounded p-5">
                             <div class="btn-square rounded-circle mx-auto mb-3">
-                                <img class="img-fluid" src="img/icon/icon-8.png" alt="Icon">
+                                <img class="img-fluid" src="nasabah/img/icon/icon-8.png" alt="Icon">
                             </div>
                             <h4 class="mb-3">Area Cakupan</h4>
                             <p class="mb-4">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
@@ -328,11 +328,11 @@
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="service-item rounded d-flex h-100">
                         <div class="service-img rounded">
-                            <img class="img-fluid" src="img/service-6.jpg" alt="">
+                            <img class="img-fluid" src="nasabah/img/service-6.jpg" alt="">
                         </div>
                         <div class="service-text rounded p-5">
                             <div class="btn-square rounded-circle mx-auto mb-3">
-                                <img class="img-fluid" src="img/icon/icon-2.png" alt="Icon">
+                                <img class="img-fluid" src="nasabah/img/icon/icon-2.png" alt="Icon">
                             </div>
                             <h4 class="mb-3">Cara Mencairkan Coin</h4>
                             <p class="mb-4">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
@@ -365,7 +365,7 @@
             <div class="post-item position-relative h-100" data-aos="fade-up" data-aos-delay="100">
 
               <div class="post-img position-relative overflow-hidden">
-                <img class="img-fluid" src="img/service-7.jpg" alt="">
+                <img class="img-fluid" src="nasabah/img/service-7.jpg" alt="">
                 <span class="post-date">December 12</span>
               </div>
 
@@ -396,7 +396,7 @@
             <div class="post-item position-relative h-100" data-aos="fade-up" data-aos-delay="200">
 
               <div class="post-img position-relative overflow-hidden">
-                <img class="img-fluid" src="img/service-8.jpg" alt="">
+                <img class="img-fluid" src="nasabah/img/service-8.jpg" alt="">
                 <span class="post-date">July 17</span>
               </div>
 
@@ -427,7 +427,7 @@
             <div class="post-item position-relative h-100">
 
               <div class="post-img position-relative overflow-hidden">
-                <img class="img-fluid" src="img/service-9.jpg" alt="">
+                <img class="img-fluid" src="nasabah/img/service-9.jpg" alt="">
                 <span class="post-date">September 05</span>
               </div>
 

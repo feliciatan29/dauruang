@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('nasabah.layout')
 @section('content')
 
     <!-- Carousel Start -->
@@ -6,7 +6,7 @@
         <div id="header-carousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img class="w-100" src="{{ asset('img/home-1.jpeg') }}" alt="Image">
+                    <img class="w-100" src="{{ asset('nasabah/img/home-1.jpeg') }}" alt="Image">
                     <div class="carousel-caption">
                         <div class="container">
                             <div class="row justify-content-center">
@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img class="w-100" src="{{ asset('img/home-1.jpeg') }}" alt="Image">
+                    <img class="w-100" src="{{ asset('nasabah/img/home-1.jpeg') }}" alt="Image">
                     <div class="carousel-caption">
                         <div class="container">
                             <div class="row justify-content-center">
@@ -57,7 +57,7 @@
     <div class="col-md-4">
         <div class="d-flex p-3 border rounded shadow-sm align-items-center h-100 bg-white"
              data-id="1" data-harga="1000" data-nama="Plastik">
-            <img src="{{ asset('img/icon/plastic (2).png') }}" alt="Plastik" width="80" class="me-3 rounded">
+            <img src="{{ asset('nasabah/img/icon/plastic (2).png') }}" alt="Plastik" width="80" class="me-3 rounded">
             <div class="flex-grow-1">
                 <h5 class="mb-1">Plastik</h5>
                 <p class="text-muted mb-2 small">Rp&nbsp;1.000&nbsp;/&nbsp;kg</p>
@@ -79,7 +79,7 @@
     <div class="col-md-4">
         <div class="d-flex p-3 border rounded shadow-sm align-items-center h-100 bg-white"
              data-id="2" data-harga="700" data-nama="Kertas Campur">
-            <img src="{{ asset('img/icon/paper.png') }}" alt="Kertas" width="80" class="me-3 rounded">
+            <img src="{{ asset('nasabah/img/icon/paper.png') }}" alt="Kertas" width="80" class="me-3 rounded">
             <div class="flex-grow-1">
                 <h5 class="mb-1">Kertas Campur</h5>
                 <p class="text-muted mb-2 small">Rp&nbsp;700&nbsp;/&nbsp;kg</p>
@@ -99,7 +99,7 @@
     <div class="col-md-4">
         <div class="d-flex p-3 border rounded shadow-sm align-items-center h-100 bg-white"
              data-id="3" data-harga="300" data-nama="Kaca">
-            <img src="{{ asset('img/icon/bottle (2).png') }}" alt="Kaca" width="80" class="me-3 rounded">
+            <img src="{{ asset('nasabah/img/icon/bottle (2).png') }}" alt="Kaca" width="80" class="me-3 rounded">
             <div class="flex-grow-1">
                 <h5 class="mb-1">Kaca</h5>
                 <p class="text-muted mb-2 small">Rp&nbsp;300&nbsp;/&nbsp;kg</p>
@@ -119,7 +119,7 @@
     <div class="col-md-4">
         <div class="d-flex p-3 border rounded shadow-sm align-items-center h-100 bg-white"
              data-id="4" data-harga="2500" data-nama="Minyak Jelantah">
-            <img src="{{ asset('img/icon/oil (1).png') }}" alt="Minyak Jelantah" width="80" class="me-3 rounded">
+            <img src="{{ asset('nasabah/img/icon/oil (1).png') }}" alt="Minyak Jelantah" width="80" class="me-3 rounded">
             <div class="flex-grow-1">
                 <h5 class="mb-1">Minyak Jelantah</h5>
                 <p class="text-muted mb-2 small">Rp&nbsp;2.500&nbsp;/&nbsp;kg</p>
@@ -139,7 +139,7 @@
     <div class="col-md-4">
         <div class="d-flex p-3 border rounded shadow-sm align-items-center h-100 bg-white"
              data-id="5" data-harga="3500" data-nama="Kaleng Alumunium">
-            <img src="{{ asset('img/icon/beer-can (1).png') }}" alt="Kaleng Alumunium" width="80" class="me-3 rounded">
+            <img src="{{ asset('nasabah/img/icon/beer-can (1).png') }}" alt="Kaleng Alumunium" width="80" class="me-3 rounded">
             <div class="flex-grow-1">
                 <h5 class="mb-1">Kaleng Alumunium</h5>
                 <p class="text-muted mb-2 small">Rp&nbsp;3.500&nbsp;/&nbsp;kg</p>
@@ -159,7 +159,7 @@
     <div class="col-md-4">
         <div class="d-flex p-3 border rounded shadow-sm align-items-center h-100 bg-white"
              data-id="6" data-harga="800" data-nama="Kaleng">
-            <img src="{{ asset('img/icon/box (3).png') }}" alt="Kaleng" width="80" class="me-3 rounded">
+            <img src="{{ asset('nasabah/img/icon/box (3).png') }}" alt="Kaleng" width="80" class="me-3 rounded">
             <div class="flex-grow-1">
                 <h5 class="mb-1">Kaleng</h5>
                 <p class="text-muted mb-2 small">Rp&nbsp;800&nbsp;/&nbsp;kg</p>
@@ -179,7 +179,7 @@
     <div class="col-md-4">
         <div class="d-flex p-3 border rounded shadow-sm align-items-center h-100 bg-white"
              data-id="7" data-harga="1000" data-nama="Kardus">
-            <img src="{{ asset('img/icon/box (2).png') }}" alt="Kardus" width="80" class="me-3 rounded">
+            <img src="{{ asset('nasabah/img/icon/box (2).png') }}" alt="Kardus" width="80" class="me-3 rounded">
             <div class="flex-grow-1">
                 <h5 class="mb-1">Kardus</h5>
                 <p class="text-muted mb-2 small">Rp&nbsp;1.000&nbsp;/&nbsp;kg</p>
@@ -199,7 +199,7 @@
     <div class="col-md-4">
         <div class="d-flex p-3 border rounded shadow-sm align-items-center h-100 bg-white"
              data-id="8" data-harga="1500" data-nama="Plastik PET">
-            <img src="{{ asset('img/icon/plastic (2).png') }}" alt="Plastik PET" width="80" class="me-3 rounded">
+            <img src="{{ asset('nasabah/img/icon/plastic (2).png') }}" alt="Plastik PET" width="80" class="me-3 rounded">
             <div class="flex-grow-1">
                 <h5 class="mb-1">Plastik PET</h5>
                 <p class="text-muted mb-2 small">Rp&nbsp;1.500&nbsp;/&nbsp;kg</p>
@@ -219,7 +219,7 @@
     <div class="col-md-4">
         <div class="d-flex p-3 border rounded shadow-sm align-items-center h-100 bg-white"
              data-id="9" data-harga="4000" data-nama="Besi">
-            <img src="{{ asset('img/icon/roll (1).png') }}" alt="Besi" width="80" class="me-3 rounded">
+            <img src="{{ asset('nasabah/img/icon/roll (1).png') }}" alt="Besi" width="80" class="me-3 rounded">
             <div class="flex-grow-1">
                 <h5 class="mb-1">Besi</h5>
                 <p class="text-muted mb-2 small">Rp&nbsp;4.000&nbsp;/&nbsp;kg</p>
@@ -358,7 +358,7 @@
     }
 
     function kirimKeFormulir() {
-    fetch("{{ route('pesananc.session') }}", {
+    fetch("{{ route('nasabah.pesananc.session') }}", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -367,7 +367,7 @@
         body: JSON.stringify(keranjang)
     }).then(res => {
         if (res.ok) {
-            window.location.href = "{{ route('pesananc.form') }}";
+            window.location.href = "{{ route('nasabah.pesananc.form') }}";
         }
     });
 }

@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('nasabah.layout')
 @section('content')
 
 @php
@@ -19,7 +19,7 @@
 <div class="container py-5">
     <h2 class="mb-4">Formulir Pengiriman Sampah</h2>
 
-    <form action="{{ route('pesananc.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('nasabah.pesananc.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         {{-- Upload gambar --}}
@@ -87,7 +87,7 @@
         </div>
 
         {{-- Tombol Kirim --}}
-        <button type="submit" class="btn btn-primary">Kirim</button>
+        <button type="submit" onclick="this.disabled=true; this.form.submit();">Kirim</button>
     </form>
 </div>
 

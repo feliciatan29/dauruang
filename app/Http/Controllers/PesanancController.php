@@ -14,11 +14,13 @@ class PesanancController extends Controller
 
     public function create()
     {
-        return view('pesananc.form');
+        return view('nasabah.pesananc.form');
     }
+
 
     public function store(Request $request)
 {
+    \Log::info('Form store() dipanggil');
     $request->validate([
         'telepon' => 'required|string|max:20',
         'alamat' => 'required|string',
@@ -78,8 +80,8 @@ class PesanancController extends Controller
 
     public function diproses()
 {
-    $pesananc = \App\Models\Pesananc::where('status', 'diproses')->get();
-    return view('pesananc.diproses', compact('pesananc'));
+    $pesananc = Pesananc::where('status', 'diproses')->get();
+    return view('nasabah.pesananc.diproses', compact('pesananc'));
 }
 
 
