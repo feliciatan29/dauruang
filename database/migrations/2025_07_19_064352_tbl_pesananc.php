@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('waktu');
             $table->string('gambar')->nullable();
             $table->text('catatan')->nullable();
-            $table->json('jenis_sampah');
+            $table->json('jenis_sampah')->nullable();
             $table->string('status')->default('diproses');
             $table->timestamps();
         });

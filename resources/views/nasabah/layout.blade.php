@@ -22,15 +22,15 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
 <!-- Libraries Stylesheet -->
-<link href="{{ asset('lib/animate/animate.min.css') }}" rel="stylesheet">
-<link href="{{ asset('lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
-<link href="{{ asset('lib/lightbox/css/lightbox.min.css') }}" rel="stylesheet">
+<link href="{{ asset('nasabah/lib/animate/animate.min.css') }}" rel="stylesheet">
+<link href="{{ asset('nasabah/lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
+<link href="{{ asset('nasabah/lib/lightbox/css/lightbox.min.css') }}" rel="stylesheet">
 
 <!-- Customized Bootstrap Stylesheet -->
-<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+<link href="{{ asset('nasabah/css/bootstrap.min.css') }}" rel="stylesheet">
 
 <!-- Template Stylesheet -->
-<link href="{{ asset('css/style.css') }}" rel="stylesheet">
+<link href="{{ asset('nasabah/css/style.css') }}" rel="stylesheet">
 
 <!-- Google Maps API -->
 <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY"></script>
@@ -83,7 +83,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="index.html" class="nav-item nav-link active">Home</a>
+                <a href="{{ url('beranda-nasabah') }}" class="nav-item nav-link active">Home</a>
                 <a href="{{ route('pesananc.pilihjenis') }}" class="nav-item nav-link">Mulai</a>
 
                 <a href="{{ route('order.index') }}" class="nav-item nav-link">Pesanan</a>
@@ -185,17 +185,17 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- Library Javascript (gunakan asset karena ini file lokal di /public/lib/...) -->
-<script src="{{ asset('lib/wow/wow.min.js') }}"></script>
-<script src="{{ asset('lib/easing/easing.min.js') }}"></script>
-<script src="{{ asset('lib/waypoints/waypoints.min.js') }}"></script>
-<script src="{{ asset('lib/owlcarousel/owl.carousel.min.js') }}"></script>
-<script src="{{ asset('lib/counterup/counterup.min.js') }}"></script>
-<script src="{{ asset('lib/parallax/parallax.min.js') }}"></script>
-<script src="{{ asset('lib/isotope/isotope.pkgd.min.js') }}"></script>
-<script src="{{ asset('lib/lightbox/js/lightbox.min.js') }}"></script>
+<script src="{{ asset('nasabah/lib/wow/wow.min.js') }}"></script>
+<script src="{{ asset('nasabah/lib/easing/easing.min.js') }}"></script>
+<script src="{{ asset('nasabah/lib/waypoints/waypoints.min.js') }}"></script>
+<script src="{{ asset('nasabah/lib/owlcarousel/owl.carousel.min.js') }}"></script>
+<script src="{{ asset('nasabah/lib/counterup/counterup.min.js') }}"></script>
+<script src="{{ asset('nasabah/lib/parallax/parallax.min.js') }}"></script>
+<script src="{{ asset('nasabah/lib/isotope/isotope.pkgd.min.js') }}"></script>
+<script src="{{ asset('nasabah/lib/lightbox/js/lightbox.min.js') }}"></script>
 
 <!-- Template Javascript -->
-<script src="{{ asset('js/main.js') }}"></script>
+<script src="{{ asset('nasabah/js/main.js') }}"></script>
 
 
 

@@ -100,38 +100,40 @@ Route::resource('pesanan', PesananController::class)->middleware('auth');
 Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index');
 
 
-Route::get('/', function () {
-    return view('beranda');
+//route nasabah
+
+Route::get('/beranda-nasabah', function () {
+    return view('nasabah.beranda');
 });
 
 Route::get('/pesananc/diproses', function () {
     $pesananc = pesananc::where('status', 'diproses')->get();
-    return view('pesananc.diproses', compact('pesananc')); // ← INI WAJIB ADA
+    return view('nasabah.pesananc.diproses', compact('pesananc')); // ← INI WAJIB ADA
 });
 
 
 // Form pilih jenis
 Route::get('/pesananc/pilihjenis', function () {
-    return view('pesananc.pilihjenis');
+    return view('nasabah.pesananc.pilihjenis');
 })->name('pesananc.pilihjenis');
 
 // Formulir pengiriman
-Route::get('/pesananc/form', [PesanancController::class, 'create'])->name('pesananc.form');
-Route::post('/pesananc/store', [PesanancController::class, 'store'])->name('pesananc.store');
+Route::get('/pesananc/form', [PesanancController::class, 'create'])->name('nasabah.pesananc.form');
+Route::post('/pesananc/store', [PesanancController::class, 'store'])->name('nasabah.pesananc.store');
 
 // Halaman berhasil
 Route::get('/pesananc/berhasil', function () {
-    return view('pesananc.berhasil');
+    return view('nasabah.pesananc.berhasil');
 })->name('pesananc.berhasil');
 
 // Lihat detail pesananc
-Route::get('/pesananc/{id}', [PesanancController::class, 'show'])->name('pesananc.detail');
+Route::get('/pesananc/{id}', [PesanancController::class, 'show'])->name('nasabah.pesananc.detail');
 
 // Batalkan pesananc
-Route::delete('/pesananc/{id}/batal', [PesanancController::class, 'destroy'])->name('pesananc.batal');
+Route::delete('/pesananc/{id}/batal', [PesanancController::class, 'destroy'])->name('nasabah.pesananc.batal');
 
 // Simpan data session keranjang
-Route::post('/pesananc/session', [PesanancController::class, 'simpanSession'])->name('pesananc.session');
+Route::post('/pesananc/session', [PesanancController::class, 'simpanSession'])->name('nasabah.pesananc.session');
 Route::get('/pesananc/diproses', [PesanancController::class, 'diproses'])->name('pesananc.diproses');
 
 

@@ -1,37 +1,89 @@
-@extends('layout')
-@section('content')
+@extends('nasabah.layout')
 
-<div class="container py-4">
-    <h3 class="text-2xl font-semibold mb-6">Pesanan Diproses</h3>
+@section('content')
+<!-- CSS Custom -->
+<style>
+    .order-card {
+        transition: all 0.3s ease;
+        border-radius: 1rem;
+        border: 1px solid #dee2e6;
+        padding: 1.5rem;
+        background-color: #fff;
+    }
+
+    .order-card:hover {
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        transform: translateY(-3px);
+    }
+
+    .badge-status {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        padding: 0.4rem 0.8rem;
+        border-radius: 999px;
+        background-color: #d1e7dd;
+        color: #0f5132;
+    }
+
+    .btn-action {
+        transition: all 0.25s ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .btn-action:hover {
+        box-shadow: 0 4px 12px rgba(255, 115, 0, 0.25);
+    }
+
+    @media (max-width: 576px) {
+        .order-card {
+            padding: 1rem;
+        }
+
+        .btn-action {
+            width: 100%;
+        }
+    }
+</style>
+
+<div class="container py-5">
+    <h2 class="text-center mb-5 fw-bold text-success">Pesanan Sedang Diproses</h2>
 
     @forelse($pesananc as $item)
-    <div class="bg-white shadow-md rounded-xl p-4 mb-6 border border-gray-200">
-        <div class="flex items-center justify-between mb-2">
-            <div class="flex items-center gap-2">
-                <span class="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">Toko</span>
-                <span class="font-medium text-gray-800">Pesanan #{{ $item->id }}</span>
+    <div class="order-card mb-4">
+        {{-- Header --}}
+        <div class="d-flex justify-content-between align-items-start mb-3">
+            <div class="d-flex align-items-center gap-2">
+                <span class="badge bg-danger text-white">Toko</span>
+                <span class="fw-semibold">Pesanan #{{ $item->id }}</span>
             </div>
-            <span class="text-green-600 font-semibold">SEDANG DIPROSES</span>
+            <span class="badge-status">Sedang Diproses</span>
         </div>
 
-        <div class="flex items-start gap-4">
-            <img src="{{ asset('storage/'.$item->gambar) }}" alt="Gambar" class="w-24 h-24 object-cover rounded border">
-            <div class="flex-1">
-                <p class="text-lg font-semibold text-gray-900">{{ $item->catatan ?? 'Tidak ada catatan' }}</p>
-                <p class="text-sm text-gray-500 mt-1">Alamat: {{ $item->alamat }}</p>
-                <p class="text-sm text-gray-500">Telepon: {{ $item->telepon }}</p>
-                <p class="text-sm text-gray-500">Tanggal: {{ $item->tanggal }} | Waktu: {{ $item->waktu }}</p>
+        {{-- Isi Konten --}}
+        <div class="row g-3">
+            {{-- Gambar --}}
+            <div class="col-12 col-md-3">
+                <img src="{{ asset('storage/'.$item->gambar) }}" alt="Gambar Pesanan"
+                    class="img-fluid rounded border">
+            </div>
+
+            {{-- Detail --}}
+            <div class="col-12 col-md-9 text-secondary">
+                <p><strong>Catatan:</strong> {{ $item->catatan ?? 'Tidak ada catatan' }}</p>
+                <p><strong>Alamat:</strong> {{ $item->alamat }}</p>
+                <p><strong>Telepon:</strong> {{ $item->telepon }}</p>
+                <p><strong>Tanggal & Waktu:</strong> {{ $item->tanggal }} • {{ $item->waktu }}</p>
             </div>
         </div>
 
-        <div class="mt-4 flex justify-end gap-3">
-            <button class="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 text-sm">Hubungi Penjual</button>
-            <button class="bg-white text-orange-500 border border-orange-500 px-4 py-2 rounded hover:bg-orange-100 text-sm">Beli Lagi</button>
+        {{-- Tombol --}}
+        <div class="d-flex flex-column flex-sm-row gap-2 justify-content-end mt-4">
+            <button class="btn btn-warning btn-action text-white px-4">Hubungi Penjemput</button>
         </div>
     </div>
     @empty
-    <p class="text-center text-gray-500">Belum ada pesanan yang sedang diproses.</p>
+    <p class="text-center text-muted fs-5">Belum ada pesanan yang sedang diproses.</p>
     @endforelse
 </div>
-
 @endsection
