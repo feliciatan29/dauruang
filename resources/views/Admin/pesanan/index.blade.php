@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('admin.layout')
 @section('content')
 
 <div class="container mt-4">
@@ -36,9 +36,9 @@
                             <td>{{ $item->jenis_sampah }}</td>
                             <td>{{ $item->berat }}</td>
                             <td>
-                                <span class="badge badge-{{ 
-                                    $item->status === 'done' ? 'success' : 
-                                    ($item->status === 'process' ? 'info' : 'warning') 
+                                <span class="badge badge-{{
+                                    $item->status === 'done' ? 'success' :
+                                    ($item->status === 'process' ? 'info' : 'warning')
                                 }}">
                                     {{ ucfirst($item->status) }}
                                 </span>

@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('admin.layout')
 
 @section('content')
 <div class="container mt-4">
@@ -33,9 +33,9 @@
                             <td>{{ $riwayat->jenis_sampah }}</td>
                             <td>{{ $riwayat->berat }}</td>
                             <td>
-                                <span class="badge badge-{{ 
-                                    $riwayat->status === 'done' ? 'success' : 
-                                    ($riwayat->status === 'process' ? 'info' : 'warning') 
+                                <span class="badge badge-{{
+                                    $riwayat->status === 'done' ? 'success' :
+                                    ($riwayat->status === 'process' ? 'info' : 'warning')
                                 }}">
                                     {{ ucfirst($riwayat->status) }}
                                 </span>

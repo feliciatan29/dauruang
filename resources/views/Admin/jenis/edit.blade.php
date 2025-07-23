@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('admin.layout')
 @section('content')
 
 <div class="col-lg-8 mb-4">
@@ -12,7 +12,7 @@
                 <form class="user" method="POST" action="{{route('jenis.update', $jenis->id) }}" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
-          
+
                     <div class="form-group">
                           <Label>Kode Jenis Sampah :</Label>
                           <input type="text" class="form-control" name="kd_jenis" value="{{ $jenis->kd_jenis }}">
@@ -39,12 +39,12 @@
                           <input type="file" class="form-control" name="gambar" value="{{ $jenis->gambar }}">
                     </div>
 
-          
+
           <center><input type="submit" class="btn btn-primary" value="Update Data" /></center>
-                    
-                    
+
+
                   </form>
-                  
+
                 </div>
               </div>
             </div>

@@ -13,14 +13,14 @@ class PesananController extends Controller
     {
         $pesanans = DB::table('tbl_pesanan')->get();
 
-        return view('pesanan.index', compact('pesanans'))
+        return view('admin.pesanan.index', compact('pesanans'))
             ->with('i', (request()->input('page', 1) - 1) * 10);
     }
 
     // Menampilkan form tambah pesanan
     public function create()
     {
-        return view('pesanan.create');
+        return view('admin.pesanan.create');
     }
 
     // Menyimpan data pesanan baru ke tbl_pesanan
@@ -44,7 +44,7 @@ class PesananController extends Controller
     public function edit($id)
     {
         $pesanan = Pesanan::findOrFail($id);
-        return view('pesanan.edit', compact('pesanan'));
+        return view('admin.pesanan.edit', compact('pesanan'));
     }
 
     // Menyimpan perubahan data pesanan

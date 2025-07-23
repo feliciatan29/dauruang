@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('admin.layout')
 @section('content')
 
 <div class="col-lg-8 mb-4">
@@ -14,8 +14,8 @@
 
                 <div class="form-group">
                     <Label>Kode nasabah :</Label>
-                    <input type="text" class="form-control" name="no_nasabah" value="{{ $nasabah->no_nasabah }}">
-                    @error('no_nasabah')
+                    <input type="text" class="form-control" name="kd_nasabah" value="{{ $nasabah->kd_nasabah }}">
+                    @error('kd_nasabah')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
@@ -47,8 +47,8 @@
 
                 <div class="form-group">
                     <Label>No Telephone :</Label>
-                    <input type="text" class="form-control" name="no_telephone" value="{{ $nasabah->no_telepon }}">
-                    @error('no_telphone')
+                    <input type="text" class="form-control" name="no_telephone" value="{{ $nasabah->no_telephone }}">
+                    @error('no_telephone')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
