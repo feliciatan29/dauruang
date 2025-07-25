@@ -106,13 +106,13 @@
             <div class="tracking-box text-center rounded py-5 px-4">
                 <div class="tracking-header d-flex justify-content-between align-items-center">
                     <h4 class="mb-0"></h4>
-                    <a href="{{ route('order.index') }}">Lihat Riwayat Pesanan &rarr;</a>
+                    <a href="#">Lihat Riwayat Pesanan &rarr;</a>
                 </div>
 
                 <div class="tracking-step">
                     <div class="step active">
                         <div class="icon"><i class="bi bi-arrow-repeat"></i></div>
-                        <a href="{{ route('nasabah.pesananc.diproses') }}"> Sedang Diproses</a>
+                        <a href="{{ route('pesananc.diproses') }}"> Sedang Diproses</a>
                     </div>
                     <div class="step">
                         <div class="icon"><i class="bi bi-box-seam"></i></div>

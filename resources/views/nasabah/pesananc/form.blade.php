@@ -87,8 +87,13 @@
         </div>
 
         {{-- Tombol Kirim --}}
-        <button type="submit" onclick="this.disabled=true; this.form.submit();">Kirim</button>
+        <button id="simpanKeKeranjang" class="btn btn-secondary">Simpan ke Keranjang</button>
+
     </form>
 </div>
+
+
+
+
 
 @endsection

@@ -83,24 +83,25 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="{{ url('beranda-nasabah') }}" class="nav-item nav-link active">Home</a>
-                <a href="{{ route('pesananc.pilihjenis') }}" class="nav-item nav-link">Mulai</a>
-
-                <a href="{{ route('order.index') }}" class="nav-item nav-link">Pesanan</a>
-                <a href="project.html" class="nav-item nav-link">Keranjang</a>
+                <a href="{{ url('beranda-nasabah') }}" class="nav-item nav-link active">Beranda</a>
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Profil</a>
+                    <a href="{{ route('pesananc.pilihjenis') }}" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Layanan</a>
                     <div class="dropdown-menu bg-light m-0">
-                        <a href="feature.html" class="dropdown-item">Features</a>
-                        <a href="quote.html" class="dropdown-item">Free Quote</a>
-                        <a href="team.html" class="dropdown-item">Our Team</a>
-                        <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                        <a href="404.html" class="dropdown-item">404 Page</a>
+                        <a href="{{ route('pesananc.pilihjenis') }}" class="dropdown-item">Drop Off</a>
+                        <a href="{{ route('pesananc.pilihjenis') }}" class="dropdown-item">Company</a>
                     </div>
                 </div>
-                <a href="contact.html" class="nav-item nav-link">Contact</a>
+                <a href="#" class="nav-item nav-link">Keranjang</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Profil Saya</a>
+                    <div class="dropdown-menu bg-light m-0">
+                        <a href="feature.html" class="dropdown-item">Profil</a>
+                        <a href="quote.html" class="dropdown-item">Logout</a>
+                    </div>
+                </div>
+
             </div>
-            <a href="" class="btn btn-primary py-4 px-lg-4 rounded-0 d-none d-lg-block">Get A Quote<i class="fa fa-arrow-right ms-3"></i></a>
+            <a href="" class="btn btn-primary py-4 px-lg-4 rounded-0 d-none d-lg-block">Mulai Sekarang<i class="fa fa-arrow-right ms-3"></i></a>
         </div>
     </nav>
     <!-- Navbar End -->
