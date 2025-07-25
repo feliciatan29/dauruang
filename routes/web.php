@@ -69,7 +69,8 @@ Route::resource('transaksi', TransaksiController::class)->middleware('auth');
 Route::get('/cari', [JadwalController::class, 'cari'])->middleware('auth');
 
 // Pesanan
-Route::resource('pesanan', PesananController::class)->middleware('auth');
+Route::resource('pesanan', PesananController::class);
+Route::post('/pesanan/{id}/status', [PesananController::class, 'updateStatus'])->name('pesanan.updateStatus');
 
 
 Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index');

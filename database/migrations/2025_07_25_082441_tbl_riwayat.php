@@ -14,12 +14,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create('tbl_riwayat', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
+            $table->string('telepon', 20);
+            $table->text('alamat');
             $table->date('tanggal');
-            $table->string('nama');
-            $table->string('jenis_sampah');
-            $table->integer('berat');
-            $table->string('status'); // selalu 'done'
+            $table->string('waktu');
+            $table->string('gambar')->nullable();
+            $table->text('catatan')->nullable();
+            $table->string('status')->default('transaksi berhasil'); // status tetap
             $table->timestamps();
         });
     }

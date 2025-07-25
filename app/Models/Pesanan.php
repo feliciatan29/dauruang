@@ -9,13 +9,15 @@ class Pesanan extends Model
 {
     use HasFactory;
 
-    protected $table = 'tbl_pesanan';
+    protected $table = 'tbl_pesananc'; // Ubah ke tabel tbl_pesananc
 
     protected $fillable = [
+        'telepon',
+        'alamat',
         'tanggal',
-        'nama',
-        'jenis_sampah',
-        'berat',
+        'waktu',
+        'gambar',
+        'catatan',
         'status',
     ];
 }
