@@ -14,7 +14,6 @@ use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\PesananController;
 use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\PesanancController;
-use App\Http\Controllers\OrderController;
 use App\Models\Pesananc;
 
 /*
@@ -74,39 +73,41 @@ Route::resource('pesanan', PesananController::class)->middleware('auth');
 
 
 Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index');
-
+Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index')->middleware('auth');
 
 //route nasabah
 
-// Riwayat
-Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index')->middleware('auth');
-
-// Beranda nasabah
 Route::get('/beranda-nasabah', function () {
     return view('nasabah.beranda');
-})->middleware('auth');
+});
 
-// Pesananc
+Route::get('/pesananc/diproses', function () {
+    $pesananc = pesananc::where('status', 'diproses')->get();
+    return view('nasabah.pesananc.diproses', compact('pesananc')); // ← INI WAJIB ADA
+});
+
+
+// Form pilih jenis
 Route::get('/pesananc/pilihjenis', function () {
     return view('nasabah.pesananc.pilihjenis');
-})->name('pesananc.pilihjenis')->middleware('auth');
+})->name('pesananc.pilihjenis');
 
-Route::get('/pesananc/form', [PesanancController::class, 'create'])->name('nasabah.pesananc.form')->middleware('auth');
-Route::post('/pesananc/store', [PesanancController::class, 'store'])->name('nasabah.pesananc.store')->middleware('auth');
+// Formulir pengiriman
+Route::get('/pesananc/form', [PesanancController::class, 'create'])->name('nasabah.pesananc.form');
+Route::post('/pesananc/store', [PesanancController::class, 'store'])->name('nasabah.pesananc.store');
 
+// Halaman berhasil
 Route::get('/pesananc/berhasil', function () {
     return view('nasabah.pesananc.berhasil');
-})->name('pesananc.berhasil')->middleware('auth');
+})->name('pesananc.berhasil');
 
-Route::get('/pesananc/{id}', [PesanancController::class, 'show'])->name('nasabah.pesananc.detail')->middleware('auth');
+// Lihat detail pesananc
+Route::get('/pesananc/{id}', [PesanancController::class, 'show'])->name('nasabah.pesananc.detail');
 
-Route::delete('/pesananc/{id}/batal', [PesanancController::class, 'destroy'])->name('nasabah.pesananc.batal')->middleware('auth');
+// Batalkan pesananc
+Route::delete('/pesananc/{id}/batal', [PesanancController::class, 'destroy'])->name('nasabah.pesananc.batal');
 
-Route::post('/pesananc/session', [PesanancController::class, 'simpanSession'])->name('nasabah.pesananc.session')->middleware('auth');
-
-Route::get('/pesananc/diproses', [PesanancController::class, 'diproses'])->name('pesananc.diproses')->middleware('auth');
-
-// Order
-Route::get('/order', [OrderController::class, 'index'])->name('order.index')->middleware('auth');
-Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.show')->middleware('auth');
+// Simpan data session keranjang
+Route::post('/pesananc/session', [PesanancController::class, 'simpanSession'])->name('nasabah.pesananc.session');
+Route::get('/pesananc/diproses', [PesanancController::class, 'diproses'])->name('pesananc.diproses');
 

@@ -245,7 +245,7 @@
                     <small><span id="totalJenis">0</span> jenis | <span id="totalBerat">0</span> kg</small>
                     <div class="fw-bold text-success">Est. Rp <span id="totalHarga">0</span></div>
                 </div>
-                <button onclick="kirimKeFormulir()" class="btn btn-primary px-4">Lanjut</button>
+                <button id="btnLanjut" onclick="kirimKeFormulir()" class="btn btn-lanjut px-4" disabled>Lanjut</button>
             </div>
         </div>
     </div>
@@ -276,6 +276,24 @@
         background-color: #198754 !important;
         color: white;
     }
+
+    .btn-lanjut {
+    background-color: #198754;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 20px;
+    transition: all 0.3s ease;
+    }
+
+    .btn-lanjut:disabled {
+        background-color: #c3e6cb !important;
+        color: #6c757d !important;
+        cursor: not-allowed;
+        box-shadow: none;
+        opacity: 0.7;
+    }
+
 
     .btn-outline-danger:hover,
     .btn-outline-primary:hover {
@@ -337,40 +355,65 @@
     }
 
     function updateRingkasan() {
-        const totalJenis = Object.keys(keranjang).length;
-        let totalKg = 0;
-        let totalHarga = 0;
+    const totalJenis = Object.keys(keranjang).length;
+    let totalKg = 0;
+    let totalHarga = 0;
 
-        Object.values(keranjang).forEach(item => {
-            totalKg += item.jumlah;
-            totalHarga += item.jumlah * item.harga;
-        });
-
-        const summaryBox = document.getElementById('summaryBox');
-        if (totalJenis > 0) {
-            summaryBox.classList.remove('d-none');
-            document.getElementById('totalJenis').innerText = totalJenis;
-            document.getElementById('totalBerat').innerText = totalKg;
-            document.getElementById('totalHarga').innerText = totalHarga.toLocaleString();
-        } else {
-            summaryBox.classList.add('d-none');
-        }
-    }
-
-    function kirimKeFormulir() {
-    fetch("{{ route('nasabah.pesananc.session') }}", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "X-CSRF-TOKEN": "{{ csrf_token() }}"
-        },
-        body: JSON.stringify(keranjang)
-    }).then(res => {
-        if (res.ok) {
-            window.location.href = "{{ route('nasabah.pesananc.form') }}";
-        }
+    Object.values(keranjang).forEach(item => {
+        totalKg += item.jumlah;
+        totalHarga += item.jumlah * item.harga;
     });
+
+    const summaryBox = document.getElementById('summaryBox');
+    const btnLanjut = document.getElementById('btnLanjut');
+
+    if (totalJenis > 0) {
+        summaryBox.classList.remove('d-none');
+        document.getElementById('totalJenis').innerText = totalJenis;
+        document.getElementById('totalBerat').innerText = totalKg;
+        document.getElementById('totalHarga').innerText = totalHarga.toLocaleString();
+
+        // Periksa apakah total sudah memenuhi minimum 3 kg
+        if (totalKg >= 3) {
+            btnLanjut.disabled = false;
+            btnLanjut.classList.remove('btn-disabled');
+        } else {
+            btnLanjut.disabled = true;
+            btnLanjut.classList.add('btn-disabled');
+        }
+
+    } else {
+        summaryBox.classList.add('d-none');
+        btnLanjut.disabled = true;
+        btnLanjut.classList.add('btn-disabled');
+    }
 }
 
+
+    function kirimKeFormulir() {
+        let totalKg = 0;
+        Object.values(keranjang).forEach(item => {
+            totalKg += item.jumlah;
+        });
+
+        if (totalKg < 3) {
+            alert("Minimal total sampah yang dipilih adalah 3 kg.");
+            return;
+        }
+
+        fetch("{{ route('nasabah.pesananc.session') }}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
+            body: JSON.stringify(keranjang)
+        }).then(res => {
+            if (res.ok) {
+                window.location.href = "{{ route('nasabah.pesananc.form') }}";
+            }
+        });
+    }
 </script>
+
 @endsection
