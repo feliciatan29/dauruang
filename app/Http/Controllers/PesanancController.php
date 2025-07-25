@@ -35,7 +35,7 @@ class PesanancController extends Controller
         $gambarPath = $request->file('gambar')->store('uploads/gambar', 'public');
     }
 
-    // Simpan ke database
+    // Simpan ke tbl_pesananc
     $pesananc = Pesananc::create([
         'gambar' => $gambarPath,
         'telepon' => $request->telepon,
@@ -43,17 +43,17 @@ class PesanancController extends Controller
         'tanggal' => $request->tanggal,
         'waktu' => $request->waktu,
         'catatan' => $request->catatan,
-        'status' => 'diproses', // ini penting!
+        'status' => 'diproses',
     ]);
 
-    // Redirect ke halaman detail
-    return redirect()->route('pesananc.berhasil');
 
+
+    return redirect()->route('pesananc.berhasil');
 }
 
     public function show($id)
 {
-    
+
 }
 
 
@@ -84,7 +84,7 @@ class PesanancController extends Controller
     return view('nasabah.pesananc.diproses', compact('pesananc'));
 }
 
-    
+
 
 
 

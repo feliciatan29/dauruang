@@ -87,7 +87,7 @@
         </div>
 
         {{-- Tombol Kirim --}}
-        <button id="simpanKeKeranjang" class="btn btn-secondary">Simpan ke Keranjang</button>
+        <button type="submit" class="btn btn-primary">Kirim</button>
 
     </form>
 </div>

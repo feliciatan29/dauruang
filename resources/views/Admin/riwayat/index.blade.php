@@ -18,32 +18,39 @@
                     <tr>
                         <th>No</th>
                         <th>Tanggal</th>
-                        <th>Nama</th>
-                        <th>Jenis Sampah</th>
-                        <th>Berat (kg)</th>
+                        <th>Waktu</th>
+                        <th>Telepon</th>
+                        <th>Alamat</th>
+                        <th>Catatan</th>
+                        <th>Bukti Gambar</th>
                         <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($riwayats as $key => $riwayat)
+                    @forelse($riwayats as $key => $item)
                         <tr>
                             <td>{{ $key + 1 }}</td>
-                            <td>{{ $riwayat->tanggal }}</td>
-                            <td>{{ $riwayat->nama }}</td>
-                            <td>{{ $riwayat->jenis_sampah }}</td>
-                            <td>{{ $riwayat->berat }}</td>
+                            <td>{{ $item->tanggal }}</td>
+                            <td>{{ $item->waktu }}</td>
+                            <td>{{ $item->telepon }}</td>
+                            <td>{{ $item->alamat }}</td>
+                            <td>{{ $item->catatan ?? '-' }}</td>
                             <td>
-                                <span class="badge badge-{{
-                                    $riwayat->status === 'done' ? 'success' :
-                                    ($riwayat->status === 'process' ? 'info' : 'warning')
-                                }}">
-                                    {{ ucfirst($riwayat->status) }}
-                                </span>
+                                @if($item->gambar)
+                                    <a href="{{ asset('storage/' . $item->gambar) }}" target="_blank">
+                                        <img src="{{ asset('storage/' . $item->gambar) }}" width="60" height="60" style="object-fit:cover" alt="Bukti">
+                                    </a>
+                                @else
+                                    <span class="text-muted">-</span>
+                                @endif
+                            </td>
+                            <td>
+                                <span class="badge badge-success">{{ ucfirst($item->status) }}</span>
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6">Data riwayat belum tersedia.</td>
+                            <td colspan="8">Data riwayat belum tersedia.</td>
                         </tr>
                     @endforelse
                 </tbody>

@@ -4,7 +4,7 @@
 <div class="container mt-4">
     <div class="col-lg-12">
 
-        <h2 class="mb-3">Data Pesanan</h2>
+        <h2 class="mb-3">Data Pesanan Nasabah</h2>
 
         @if($message = Session::get('success'))
             <div class="alert alert-success">
@@ -12,7 +12,7 @@
             </div>
         @endif
 
-        <a href="{{ route('pesanan.create') }}" class="btn btn-primary mb-3">Tambah Pesanan</a>
+
 
         <div class="table-responsive">
             <table class="table table-bordered table-striped table-hover text-center">
@@ -20,10 +20,12 @@
                     <tr>
                         <th>No</th>
                         <th>Tanggal</th>
-                        <th>Nama</th>
-                        <th>Jenis Sampah</th>
-                        <th>Berat (kg)</th>
+                        <th>Waktu</th>
+                        <th>Telepon</th>
+                        <th>Alamat</th>
+                        <th>Catatan</th>
                         <th>Status</th>
+                        <th>Bukti Gambar</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -32,29 +34,39 @@
                         <tr>
                             <td>{{ $i + $key + 1 }}</td>
                             <td>{{ $item->tanggal }}</td>
-                            <td>{{ $item->nama }}</td>
-                            <td>{{ $item->jenis_sampah }}</td>
-                            <td>{{ $item->berat }}</td>
+                            <td>{{ $item->waktu }}</td>
+                            <td>{{ $item->telepon }}</td>
+                            <td>{{ $item->alamat }}</td>
+                            <td>{{ $item->catatan ?? '-' }}</td>
                             <td>
                                 <span class="badge badge-{{
-                                    $item->status === 'done' ? 'success' :
-                                    ($item->status === 'process' ? 'info' : 'warning')
-                                }}">
+                                    $item->status === 'transaksi berhasil' ? 'success' :
+                                    ($item->status === 'telah diterima' ? 'info' : 'warning')
+                                    }}">
                                     {{ ucfirst($item->status) }}
                                 </span>
+                            </td>
+                            <td>
+                                @if($item->gambar)
+                                    <a href="{{ asset('storage/' . $item->gambar) }}" target="_blank">
+                                        <img src="{{ asset('storage/' . $item->gambar) }}" width="60" height="60" style="object-fit:cover" alt="Bukti">
+                                    </a>
+                                @else
+                                    <span class="text-muted">-</span>
+                                @endif
                             </td>
                             <td>
                                 <form action="{{ route('pesanan.destroy', $item->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <a href="{{ route('pesanan.edit', $item->id) }}" class="btn btn-sm btn-warning mb-1">Edit</a>
-                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Apakah Anda Ingin Menghapus Data Ini?')">Hapus</button>
+                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus pesanan ini?')">Hapus</button>
                                 </form>
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="7">Data pesanan belum tersedia.</td>
+                            <td colspan="9">Data pesanan belum tersedia.</td>
                         </tr>
                     @endforelse
                 </tbody>
