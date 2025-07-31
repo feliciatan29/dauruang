@@ -14,7 +14,7 @@
     <!-- Google Web Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">  
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">
 
 <!-- Icon Font Stylesheet -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -35,7 +35,7 @@
 <!-- Google Maps API -->
 <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY"></script>
 
-    
+
 </head>
 
 <body>
@@ -91,12 +91,12 @@
                         <a href="{{ route('pesananc.pilihjenis') }}" class="dropdown-item">Company</a>
                     </div>
                 </div>
-                <a href="#" class="nav-item nav-link">Keranjang</a>
+                <a href="{{ route('pesananc.keranjang') }}" class="nav-item nav-link">Keranjang</a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Profil Saya</a>
                     <div class="dropdown-menu bg-light m-0">
-                        <a href="feature.html" class="dropdown-item">Profil</a>
-                        <a href="quote.html" class="dropdown-item">Logout</a>
+                        <a href="#" class="dropdown-item">Profil</a>
+                        <a href="#" class="dropdown-item">Logout</a>
                     </div>
                 </div>
 

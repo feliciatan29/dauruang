@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Artikel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage; 
+use Illuminate\Support\Facades\Storage;
 
 class ArtikelController extends Controller
 {
@@ -16,7 +16,7 @@ class ArtikelController extends Controller
     public function index()
     {
         $artikels = Artikel::latest()->paginate(20);
-        return view('artikel.index', compact('artikels'))->with('i', (request()->input('page', 1) - 1) * 20);
+        return view('admin.artikel.index', compact('artikels'))->with('i', (request()->input('page', 1) - 1) * 20);
     }
 
      public function cari_artikel(Request $request)
@@ -25,7 +25,7 @@ class ArtikelController extends Controller
         $artikels = Artikel::where('judul_artikel', 'LIKE', "%$kata%")
                      ->paginate(20);
 
-        return view('artikel.index', compact('artikels'))->with('i', (request()->input('page', 1) - 1) * 20);
+        return view('admin.artikel.index', compact('artikels'))->with('i', (request()->input('page', 1) - 1) * 20);
     }
 
     /**
@@ -35,7 +35,7 @@ class ArtikelController extends Controller
      */
     public function create()
     {
-         return view('artikel.create');
+         return view('admin.artikel.create');
     }
 
     /**
@@ -66,7 +66,7 @@ class ArtikelController extends Controller
             'tgl_terbit' => $request->tgl_terbit,
             'isi_artikel' => $request->isi_artikel,
             'gambar' => $nama_file
-    
+
         ]);
 
         return redirect()->route('artikel.index')->with('success', 'Data Artikel Berhasil Disimpan');
@@ -92,7 +92,7 @@ class ArtikelController extends Controller
     public function edit(Artikel $artikel)
     {
          // Kirim data ke view
-        return view('artikel.edit', compact('artikel'));
+        return view('admin.artikel.edit', compact('artikel'));
     }
 
     /**

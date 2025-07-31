@@ -10,12 +10,13 @@ class NasabahController extends Controller
     public function index()
     {
         $nasabahs = Nasabah::paginate(20);
-        return view('admin.nasabah.index', compact('nasabahs'))->with('i', (request()->input('page', 1) - 1) * 20);
+        return view('admin.nasabah.index', compact('nasabahs'))
+            ->with('i', (request()->input('page', 1) - 1) * 20);
     }
 
     public function create()
     {
-        return view('nasabah.create');
+        return view('admin.nasabah.create');
     }
 
     public function store(Request $request)
@@ -40,22 +41,18 @@ class NasabahController extends Controller
         $nama_file = time() . "_" . $file->getClientOriginalName();
         $file->move($tujuan_upload, $nama_file);
 
-        try {
-            Nasabah::create([
-                'kd_nasabah' => $request->kd_nasabah,
-                'nm_nasabah' => $request->nm_nasabah,
-                'alamat' => $request->alamat,
-                'jenis_nasabah' => $request->jenis_nasabah,
-                'no_telephone' => $request->no_telephone,
-                'tgl_daftar' => $request->tgl_daftar,
-                'status' => $request->status,
-                'gambar' => $nama_file,
-            ]);
+        Nasabah::create([
+            'kd_nasabah' => $request->kd_nasabah,
+            'nm_nasabah' => $request->nm_nasabah,
+            'alamat' => $request->alamat,
+            'jenis_nasabah' => $request->jenis_nasabah,
+            'no_telephone' => $request->no_telephone,
+            'tgl_daftar' => $request->tgl_daftar,
+            'status' => $request->status,
+            'gambar' => $nama_file,
+        ]);
 
-            return redirect()->route('nasabah.index')->with('success', 'Data Nasabah Berhasil Disimpan');
-        } catch (\Exception $e) {
-            return redirect()->back()->withErrors(['msg' => 'Data gagal disimpan: ' . $e->getMessage()]);
-        }
+        return redirect()->route('admin.nasabah.index')->with('success', 'Data Nasabah Berhasil Disimpan');
     }
 
     public function edit(Nasabah $nasabah)
@@ -81,7 +78,6 @@ class NasabahController extends Controller
         if ($request->hasFile('gambar')) {
             $tujuan_upload = public_path('Foto_Nasabah');
 
-            // Hapus gambar lama
             if ($nasabah->gambar && file_exists($tujuan_upload . '/' . $nasabah->gambar)) {
                 unlink($tujuan_upload . '/' . $nasabah->gambar);
             }
@@ -93,12 +89,8 @@ class NasabahController extends Controller
             $data['gambar'] = $nama_file;
         }
 
-        try {
-            $nasabah->update($data);
-            return redirect()->route('nasabah.index')->with('success', 'Data Nasabah Berhasil Diperbarui');
-        } catch (\Exception $e) {
-            return redirect()->back()->withErrors(['msg' => 'Data gagal diperbarui: ' . $e->getMessage()]);
-        }
+        $nasabah->update($data);
+        return redirect()->route('admin.nasabah.index')->with('success', 'Data Nasabah Berhasil Diperbarui');
     }
 
     public function destroy($id)
@@ -111,6 +103,6 @@ class NasabahController extends Controller
         }
 
         $nasabah->delete();
-        return redirect()->route('nasabah.index')->with('success', 'Data Nasabah Berhasil Dihapus');
+        return redirect()->route('admin.nasabah.index')->with('success', 'Data Nasabah Berhasil Dihapus');
     }
 }

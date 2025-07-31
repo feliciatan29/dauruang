@@ -33,10 +33,6 @@
             font-size: 0.8rem;
         }
 
-        #profileDropdown {
-            font-size: 0.9rem;
-        }
-
         #profileDropdown p {
             margin-bottom: 0.3rem;
         }
@@ -60,7 +56,6 @@
                 </div>
                 <i class="mdi mdi-chevron-down mt-1"></i>
             </a>
-
             <div class="collapse mt-2 px-3" id="profileDropdown">
                 <div class="text-left">
                     <p class="mb-1"><strong>Nama:</strong> Intan Widara</p>
@@ -76,8 +71,7 @@
                 <img class="sidebar-brand-logomini" src="{{ asset('assets/images/logo_trash_mini.svg') }}" alt="Logo Mini" />
                 <div class="small font-weight-light pt-1">Responsive Dashboard</div>
             </a>
-
-            <!-- Search (Opsional) -->
+            <!-- Optional Search -->
             <form class="d-flex align-items-center" action="#">
                 <div class="input-group mt-2">
                     <div class="input-group-prepend">
@@ -96,41 +90,42 @@
             </a>
         </li>
 
+        @auth
         <li class="nav-item">
-            <a class="nav-link {{ Request::is('admin.nasabah') ? 'active' : '' }}" href="{{ route('nasabah.index') }}">
+            <a class="nav-link {{ Request::is('nasabah*') ? 'active' : '' }}" href="{{ route('admin.nasabah.index') }}">
                 <i class="mdi mdi-account menu-icon"></i>
                 <span class="menu-title">Data Nasabah</span>
             </a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link {{ Request::is('jenis') ? 'active' : '' }}" href="{{ route('jenis.index') }}">
+            <a class="nav-link {{ Request::is('jenis*') ? 'active' : '' }}" href="{{ route('jenis.index') }}">
                 <i class="mdi mdi-recycle menu-icon"></i>
                 <span class="menu-title">Data Jenis Sampah</span>
             </a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link {{ Request::is('penjemputan') ? 'active' : '' }}" href="{{ route('penjemputan.index') }}">
+            <a class="nav-link {{ Request::is('penjemputan*') ? 'active' : '' }}" href="{{ route('penjemputan.index') }}">
                 <i class="mdi mdi-truck menu-icon"></i>
                 <span class="menu-title">Data Jadwal Jemput</span>
             </a>
         </li>
 
-
         <li class="nav-item">
-            <a class="nav-link {{ Request::is('pesanan') ? 'active' : '' }}" href="{{ route('pesanan.index') }}">
+            <a class="nav-link {{ Request::is('pesanan*') ? 'active' : '' }}" href="{{ route('pesanan.index') }}">
                 <i class="mdi mdi-package-variant menu-icon"></i>
                 <span class="menu-title">Data Pesanan</span>
             </a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link {{ Request::is('riwayat') ? 'active' : '' }}" href="{{ route('riwayat.index') }}">
+            <a class="nav-link {{ Request::is('riwayat*') ? 'active' : '' }}" href="{{ route('riwayat.index') }}">
                 <i class="mdi mdi-history menu-icon"></i>
                 <span class="menu-title">Data Riwayat</span>
             </a>
         </li>
+        @endauth
 
         <!-- LOGOUT -->
         <li class="nav-item pt-3">

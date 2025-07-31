@@ -13,8 +13,8 @@
             </div>
         @endif
 
-        <div class="mb-3">
-            <a href="{{ route('nasabah.create') }}" class="btn btn-primary">Tambah Nasabah</a>
+    <div class="mb-3">
+            <a href="{{ route('admin.nasabah.create') }}" class="btn btn-primary">Tambah Nasabah</a>
         </div>
         <div class="table-responsive">
             <table class="table table-bordered table-striped table-hover text-center">
@@ -53,10 +53,10 @@
                                 </span>
                             </td>
                             <td>
-                                <form action="{{ route('nasabah.destroy', $nasabah->id) }}" method="POST">
+                                <form action="{{ route('admin.nasabah.destroy', $nasabah->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <a href="{{ route('nasabah.edit', $nasabah->id) }}"
+                                    <a href="{{ route('admin.nasabah.edit', $nasabah->id) }}"
                                        class="btn btn-sm btn-warning mb-1">Edit</a>
                                     <button type="submit" class="btn btn-sm btn-danger"
                                             onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
