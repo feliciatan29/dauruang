@@ -8,7 +8,7 @@
         </div>
         <div class="card-body">
 
-            <form class="user" method="POST" action="{{ route('nasabah.update', $nasabah->id) }}" enctype="multipart/form-data">
+            <form class="user" method="POST" action="{{ route('admin.nasabah.update', $nasabah->id) }}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 

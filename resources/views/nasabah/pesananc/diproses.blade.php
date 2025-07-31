@@ -9,6 +9,7 @@
         border: 1px solid #dee2e6;
         padding: 1.5rem;
         background-color: #fff;
+        position: relative;
     }
 
     .order-card:hover {
@@ -26,6 +27,23 @@
         color: #0f5132;
     }
 
+    .sampah-title {
+        font-weight: bold;
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .icon-small {
+        width: 18px;
+        height: 18px;
+        vertical-align: middle;
+        margin-right: 6px;
+    }
+
+    .note-text::before {
+        content: '📝 ';
+    }
+
     .btn-action {
         transition: all 0.25s ease;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
@@ -33,6 +51,11 @@
 
     .btn-action:hover {
         box-shadow: 0 4px 12px rgba(255, 115, 0, 0.25);
+    }
+
+    .action-footer {
+        margin-top: 1.5rem;
+        text-align: right;
     }
 
     @media (max-width: 576px) {
@@ -43,11 +66,19 @@
         .btn-action {
             width: 100%;
         }
+
+        .action-footer {
+            text-align: center;
+        }
     }
 </style>
 
 <div class="container py-5">
     <h2 class="text-center mb-5 fw-bold text-success">Pesanan Sedang Diproses</h2>
+
+    @if(session('success'))
+        <div class="alert alert-success text-center">{{ session('success') }}</div>
+    @endif
 
     @forelse($pesananc as $item)
     <div class="order-card mb-4">
@@ -55,7 +86,7 @@
         <div class="d-flex justify-content-between align-items-start mb-3">
             <div class="d-flex align-items-center gap-2">
                 <span class="badge bg-danger text-white">Toko</span>
-                <span class="fw-semibold">Pesanan #{{ $item->id }}</span>
+                <span class="fw-semibold">Pesanan #{{ $item['id'] ?? 'N/A' }}</span>
             </div>
             <span class="badge-status">Sedang Diproses</span>
         </div>
@@ -63,27 +94,36 @@
         {{-- Isi Konten --}}
         <div class="row g-3">
             {{-- Gambar --}}
-            <div class="col-12 col-md-3">
-                <img src="{{ asset('storage/'.$item->gambar) }}" alt="Gambar Pesanan"
-                    class="img-fluid rounded border">
+            <div class="col-12 col-md-3 text-center">
+                @if(!empty($item['gambar']))
+                    <img src="{{ asset($item['gambar']) }}" alt="Gambar Pesanan" class="img-fluid rounded border">
+                @else
+                    <div class="bg-light text-center p-4 border rounded">Tidak ada gambar</div>
+                @endif
             </div>
 
-            {{-- Detail --}}
+            <!-- Informasi -->
             <div class="col-12 col-md-9 text-secondary">
-                <p><strong>Catatan:</strong> {{ $item->catatan ?? 'Tidak ada catatan' }}</p>
-                <p><strong>Alamat:</strong> {{ $item->alamat }}</p>
-                <p><strong>Telepon:</strong> {{ $item->telepon }}</p>
-                <p><strong>Tanggal & Waktu:</strong> {{ $item->tanggal }} • {{ $item->waktu }}</p>
+                <p class="sampah-title">SAMPAH {{ $item['jenis'] ?? '' }}</p>
+                <p class="mb-2">
+                    <i class="bi bi-scale"></i> {{ $item['berat'] ?? '-' }} kg
+                </p>
+                <p>
+                    <i class="bi bi-sticky"></i> {{ $item['catatan'] ?? '' }}
+                </p>
             </div>
         </div>
 
-        {{-- Tombol --}}
-        <div class="d-flex flex-column flex-sm-row gap-2 justify-content-end mt-4">
-            <button class="btn btn-warning btn-action text-white px-4">Hubungi Penjemput</button>
+        <!-- Total & Tombol -->
+        <div class="action-footer mt-4">
+            <p class="fw-semibold mb-2">Total: Rp {{ number_format($item['total'] ?? 0, 0, ',', '.') }}</p>
+            <a href="tel:{{ $item['telepon'] ?? '' }}" class="btn btn-warning btn-action text-white px-4">
+                Hubungi Penjemput
+            </a>
         </div>
     </div>
     @empty
-    <p class="text-center text-muted fs-5">Belum ada pesanan yang sedang diproses.</p>
+        <p class="text-center text-muted fs-5">Belum ada pesanan yang sedang diproses.</p>
     @endforelse
 </div>
 @endsection

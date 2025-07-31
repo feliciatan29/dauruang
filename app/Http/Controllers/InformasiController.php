@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Informasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage; 
+use Illuminate\Support\Facades\Storage;
 
 class InformasiController extends Controller
 {
@@ -16,9 +16,9 @@ class InformasiController extends Controller
     public function index()
     {
         $informasis = Informasi::latest()->paginate(20);
-        return view('informasi.index', compact('informasis'))->with('i', (request()->input('page', 1) - 1) * 20);
+        return view('admin.informasi.index', compact('informasis'))->with('i', (request()->input('page', 1) - 1) * 20);
     }
-    
+
     public function cari_informasi(Request $request)
     {
         $kata = $request->input('kata');
@@ -35,7 +35,7 @@ class InformasiController extends Controller
      */
     public function create()
     {
-        return view('informasi.create');
+        return view('admin.informasi.create');
     }
 
     /**
@@ -64,7 +64,7 @@ class InformasiController extends Controller
             'tgl_informasi' => $request->tgl_informasi,
             'isi_informasi' => $request->isi_informasi,
             'gambar' => $nama_file
-    
+
         ]);
 
         return redirect()->route('informasi.index')->with('success', 'Data Informasi Berhasil Disimpan');
@@ -90,7 +90,7 @@ class InformasiController extends Controller
     public function edit(Informasi $informasi)
     {
         // Kirim data ke view
-        return view('informasi.edit', compact('informasi'));
+        return view('admin.informasi.edit', compact('informasi'));
     }
 
     /**
