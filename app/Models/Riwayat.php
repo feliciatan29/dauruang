@@ -10,10 +10,16 @@ class Riwayat extends Model
     use HasFactory;
     protected $table = 'tbl_riwayat';
     protected $fillable = [
-        'tanggal',
-        'nama',
-        'jenis_sampah',
-        'berat',
-        'status',
+    'gambar',
+    'nama',
+    'telepon',
+    'alamat',
+    'tanggal',
+    'waktu',
+    'catatan',
+    'jenis_sampah',
+    'berat',
+    'total_pesanan',
+    'status',
     ];
 }
