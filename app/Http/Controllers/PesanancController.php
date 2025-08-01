@@ -22,12 +22,16 @@ class PesanancController extends Controller
 {
     \Log::info('Form store() dipanggil');
     $request->validate([
+        'nama' => 'required|string|max:255',
         'telepon' => 'required|string|max:20',
         'alamat' => 'required|string',
         'tanggal' => 'required|date',
         'waktu' => 'required|string',
         'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         'catatan' => 'nullable|string',
+        'jenis_sampah' => 'required|json',
+        'berat' => 'required|numeric',
+        'total_pesanan' => 'required|numeric',
     ]);
 
     $gambarPath = null;
@@ -35,9 +39,8 @@ class PesanancController extends Controller
     if ($request->hasFile('gambar')) {
         $file = $request->file('gambar');
         $nama_file = time() . "_" . $file->getClientOriginalName();
-
-        // Cek folder Foto_Sampah
         $tujuan_upload = public_path('Foto_Sampah');
+
         if (!file_exists($tujuan_upload)) {
             mkdir($tujuan_upload, 0777, true);
         }
@@ -46,19 +49,23 @@ class PesanancController extends Controller
         $gambarPath = 'Foto_Sampah/' . $nama_file;
     }
 
-    // Simpan ke tbl_pesananc
-    $pesananc = Pesananc::create([
-        'gambar' => $gambarPath,
+    Pesananc::create([
+        'nama' => $request->nama,
         'telepon' => $request->telepon,
         'alamat' => $request->alamat,
         'tanggal' => $request->tanggal,
         'waktu' => $request->waktu,
+        'gambar' => $gambarPath,
         'catatan' => $request->catatan,
+        'jenis_sampah' => $request->jenis_sampah,
+        'berat' => $request->berat,
+        'total_pesanan' => $request->total_pesanan,
         'status' => 'diproses',
     ]);
 
     return redirect()->route('pesananc.berhasil');
 }
+
 
     public function show($id)
 {
@@ -178,14 +185,18 @@ public function submit(Request $request)
         return redirect()->route('pesananc.keranjang')->with('success', 'Form disimpan ke keranjang.');
     }
 
-    if ($action === 'kirim') {
+   if ($action === 'kirim') {
     $request->validate([
+        'nama' => 'required|string|max:255',
         'telepon' => 'required|string|max:20',
         'alamat' => 'required|string',
         'tanggal' => 'required|date',
         'waktu' => 'required|string',
         'catatan' => 'nullable|string',
         'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        'jenis_sampah' => 'required|json',
+        'berat' => 'required|numeric',
+        'total_pesanan' => 'required|numeric',
     ]);
 
     $gambarPath = null;
@@ -193,25 +204,27 @@ public function submit(Request $request)
     if ($request->hasFile('gambar')) {
         $file = $request->file('gambar');
         $nama_file = time() . "_" . $file->getClientOriginalName();
-
         $tujuan_upload = public_path('Foto_Sampah');
         if (!file_exists($tujuan_upload)) {
             mkdir($tujuan_upload, 0777, true);
         }
-
         $file->move($tujuan_upload, $nama_file);
         $gambarPath = 'Foto_Sampah/' . $nama_file;
-    } else if (session()->has('form_sementara.gambar')) {
+    } elseif (session()->has('form_sementara.gambar')) {
         $gambarPath = session('form_sementara.gambar');
     }
 
     Pesananc::create([
+        'nama' => $request->nama,
         'telepon' => $request->telepon,
         'alamat' => $request->alamat,
         'tanggal' => $request->tanggal,
         'waktu' => $request->waktu,
         'catatan' => $request->catatan,
         'gambar' => $gambarPath,
+        'jenis_sampah' => $request->jenis_sampah,
+        'berat' => $request->berat,
+        'total_pesanan' => $request->total_pesanan,
         'status' => 'diproses',
     ]);
 

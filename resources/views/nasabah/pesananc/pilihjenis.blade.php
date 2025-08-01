@@ -309,8 +309,9 @@
         const card = button.closest('[data-id]');
         const id = card.dataset.id;
         const harga = parseInt(card.dataset.harga);
+        const nama = card.dataset.nama;
 
-        keranjang[id] = { jumlah: 1, harga: harga };
+        keranjang[id] = { jumlah: 1, harga: harga, nama: nama };
 
         button.classList.add('d-none');
         card.querySelector('.counter-wrapper').classList.remove('d-none');

@@ -35,6 +35,13 @@
 
         {{-- Informasi tempat tinggal --}}
         <h5 class="mt-4">Informasi Tempat Tinggal</h5>
+        <!-- Nama -->
+        <div class="mb-3">
+            <label class="form-label">Nama</label>
+            <input type="text" name="nama" class="form-control wajib"
+                placeholder="Nama Lengkap" value="{{ old('nama', $form['nama'] ?? '') }}">
+        </div>
+
         <div class="mb-3">
             <label class="form-label">No Telepon</label>
             <input type="text" name="telepon" class="form-control wajib"
@@ -68,6 +75,12 @@
             <p class="mb-1"><strong>Total Jenis</strong> | {{ count($keranjang) }} Item</p>
             <p class="mb-2">Total Berat: <strong>{{ $berat }} kg</strong></p>
 
+            <ul class="mb-3">
+                @foreach($keranjang as $item)
+                    <li>{{ $item['nama'] ?? '-' }} - {{ $item['jumlah'] }} kg</li>
+                @endforeach
+            </ul>
+
             <div class="alert alert-primary text-center fw-medium mb-3" role="alert">
                 Setiap penjualan akan dikenakan biaya layanan sebesar <strong>0%</strong> kepada Pengguna
             </div>
@@ -85,6 +98,12 @@
                 <span class="fw-semibold">Rp {{ number_format($total, 0, ',', '.') }}</span>
             </div>
         </div>
+
+
+        {{-- Hidden input untuk database --}}
+        <input type="hidden" name="jenis_sampah" value="{{ json_encode($keranjang) }}">
+        <input type="hidden" name="berat" value="{{ $berat }}">
+        <input type="hidden" name="total_pesanan" value="{{ $total }}">
 
         {{-- Informasi tambahan --}}
         <h5 class="mt-4">Informasi Tambahan</h5>
