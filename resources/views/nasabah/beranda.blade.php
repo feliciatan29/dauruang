@@ -243,224 +243,85 @@
 
 
     <!-- Service Start -->
-    <div class="container-xxl py-5">
-        <div class="container">
-            <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                <p class="fs-5 fw-bold text-primary">Kenali DaurUang</p>
-                <h1 class="display-5 mb-5">Panduan Penggunaan dan Informasi Penting</h1>
-            </div>
-            <div class="row g-4">
+ <div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+            <p class="fs-5 fw-bold text-primary">Informasi Terbaru</p>
+            <h1 class="display-5 mb-5">Kabar dan Pengumuman dari DaurUang</h1>
+        </div>
+        <div class="row g-4">
+            @forelse ($informasis as $info)
+                @php
+                    $gambarPath = public_path('Foto_Informasi/' . $info->gambar);
+                    $gambarAda = $info->gambar && file_exists($gambarPath);
+                    $gambarUrl = $gambarAda ? asset('Foto_Informasi/' . $info->gambar) : asset('img/default.jpg');
+                @endphp
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="service-item rounded d-flex h-100">
                         <div class="service-img rounded">
-                            <img class="img-fluid" src="nasabah/img/service-1.jpg" alt="">
+                            <img class="img-fluid" src="{{ $gambarUrl }}" alt="{{ $info->judul_informasi }}">
                         </div>
-                        <div class="service-text rounded p-5">
+                        <div class="service-text rounded p-4">
                             <div class="btn-square rounded-circle mx-auto mb-3">
-                                <img class="img-fluid" src="nasabah/img/icon/icon-3.png" alt="Icon">
+                                <img class="img-fluid" src="{{ asset('nasabah/img/icon/icon-3.png') }}" alt="Icon">
                             </div>
-                            <h4 class="mb-3">Cara Mengelola Sampah</h4>
-                            <p class="mb-4">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
-                            <a class="btn btn-sm" href=""><i class="fa fa-plus text-primary me-2"></i>Read More</a>
+                            <h5 class="mb-2">{{ $info->judul_informasi }}</h5>
+                            <p class="text-muted small mb-2">
+                                {{ \Carbon\Carbon::parse($info->tgl_informasi)->format('d M Y') }} | {{ $info->kategori }}
+                            </p>
+                            <p class="mb-3 artikel-content">{{ Str::limit(strip_tags($info->isi_informasi), 100) }}</p>
+                            <a class="btn btn-sm" href="#"><i class="fa fa-plus text-primary me-2"></i>Read More</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="service-item rounded d-flex h-100">
-                        <div class="service-img rounded">
-                            <img class="img-fluid" src="nasabah/img/service-2.jpg" alt="">
-                        </div>
-                        <div class="service-text rounded p-5">
-                            <div class="btn-square rounded-circle mx-auto mb-3">
-                                <img class="img-fluid" src="nasabah/img/icon/icon-6.png" alt="Icon">
-                            </div>
-                            <h4 class="mb-3">Panduan Aplikasi DaurUang</h4>
-                            <p class="mb-4">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
-                            <a class="btn btn-sm" href=""><i class="fa fa-plus text-primary me-2"></i>Read More</a>
-                        </div>
-                    </div>
+            @empty
+                <div class="col-12">
+                    <p class="text-center">Belum ada informasi yang tersedia.</p>
                 </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="service-item rounded d-flex h-100">
-                        <div class="service-img rounded">
-                            <img class="img-fluid" src="nasabah/img/service-3.jpg" alt="">
-                        </div>
-                        <div class="service-text rounded p-5">
-                            <div class="btn-square rounded-circle mx-auto mb-3">
-                                <img class="img-fluid" src="nasabah/img/icon/icon-5.png" alt="Icon">
-                            </div>
-                            <h4 class="mb-3">Apa Itu DaurUang?</h4>
-                            <p class="mb-4">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
-                            <a class="btn btn-sm" href=""><i class="fa fa-plus text-primary me-2"></i>Read More</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="service-item rounded d-flex h-100">
-                        <div class="service-img rounded">
-                            <img class="img-fluid" src="nasabah/img/service-4.jpg" alt="">
-                        </div>
-                        <div class="service-text rounded p-5">
-                            <div class="btn-square rounded-circle mx-auto mb-3">
-                                <img class="img-fluid" src="nasabah/img/icon/icon-4.png" alt="Icon">
-                            </div>
-                            <h4 class="mb-3">Kategori Daur Ulang </h4>
-                            <p class="mb-4">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
-                            <a class="btn btn-sm" href=""><i class="fa fa-plus text-primary me-2"></i>Read More</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="service-item rounded d-flex h-100">
-                        <div class="service-img rounded">
-                            <img class="img-fluid" src="nasabah/img/service-5.jpg" alt="">
-                        </div>
-                        <div class="service-text rounded p-5">
-                            <div class="btn-square rounded-circle mx-auto mb-3">
-                                <img class="img-fluid" src="nasabah/img/icon/icon-8.png" alt="Icon">
-                            </div>
-                            <h4 class="mb-3">Area Cakupan</h4>
-                            <p class="mb-4">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
-                            <a class="btn btn-sm" href=""><i class="fa fa-plus text-primary me-2"></i>Read More</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="service-item rounded d-flex h-100">
-                        <div class="service-img rounded">
-                            <img class="img-fluid" src="nasabah/img/service-6.jpg" alt="">
-                        </div>
-                        <div class="service-text rounded p-5">
-                            <div class="btn-square rounded-circle mx-auto mb-3">
-                                <img class="img-fluid" src="nasabah/img/icon/icon-2.png" alt="Icon">
-                            </div>
-                            <h4 class="mb-3">Cara Mencairkan Coin</h4>
-                            <p class="mb-4">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
-                            <a class="btn btn-sm" href=""><i class="fa fa-plus text-primary me-2"></i>Read More</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @endforelse
         </div>
     </div>
+</div>
     <!-- Service End -->
 
 
  <!-- Recent Posts Section -->
-    <section id="recent-posts" class="recent-posts section">
+<section class="container my-5">
+    <div class="container mt-5">
+        <h2 class="mb-4 text-center">Artikel Terbaru</h2>
+        <div class="row">
+            @forelse ($artikels as $artikel)
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        @php
+                            $gambarPath = public_path('Foto_Artikel/' . $artikel->gambar);
+                            $gambarAda = $artikel->gambar && file_exists($gambarPath);
+                        @endphp
 
-      <!-- Section Title -->
-      <div class="container-xxl py-5">
-        <div class="container">
-            <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                <p class="fs-5 fw-bold text-primary">Artikel</p>
-                <h1 class="display-5 mb-5">Kegiatan</h1>
-            </div>
+                        <div class="ratio ratio-4x3">
+                            <img src="{{ $gambarAda ? asset('Foto_Artikel/' . $artikel->gambar) : asset('img/default.jpg') }}"
+                                class="card-img-top object-fit-cover"
+                                alt="{{ $artikel->judul_artikel }}">
+                        </div>
 
-      <div class="container">
-
-        <div class="row gy-5">
-
-          <div class="col-xl-4 col-md-6">
-            <div class="post-item position-relative h-100" data-aos="fade-up" data-aos-delay="100">
-
-              <div class="post-img position-relative overflow-hidden">
-                <img class="img-fluid" src="nasabah/img/service-7.jpg" alt="">
-                <span class="post-date">December 12</span>
-              </div>
-
-              <div class="post-content d-flex flex-column">
-
-                <h3 class="post-title">Edukasi Pengelolaan Sampah bagi Warga Kelurahan Kesambi</h3>
-
-                <div class="meta d-flex align-items-center">
-                  <div class="d-flex align-items-center">
-                    <i class="bi bi-person"></i> <span class="ps-2">Julia Parker</span>
-                  </div>
-                  <span class="px-3 text-black-50">/</span>
-                  <div class="d-flex align-items-center">
-                    <i class="bi bi-folder2"></i> <span class="ps-2">Edukasi</span>
-                  </div>
+                        <div class="card-body">
+                            <h5 class="card-title judul-artikel">{{ $artikel->judul_artikel }}</h5>
+                            <p class="text-muted small mb-2">
+                                Oleh {{ $artikel->nm_penulis }} | {{ \Carbon\Carbon::parse($artikel->tgl_terbit)->format('d M Y') }}
+                            </p>
+                            <p class="card-text artikel-content">{{ $artikel->isi_artikel }}</p>
+                        </div>
+                    </div>
                 </div>
-
-                <hr>
-
-                <a href="blog-details.html" class="readmore stretched-link"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
-
-              </div>
-
-            </div>
-          </div><!-- End post item -->
-
-          <div class="col-xl-4 col-md-6">
-            <div class="post-item position-relative h-100" data-aos="fade-up" data-aos-delay="200">
-
-              <div class="post-img position-relative overflow-hidden">
-                <img class="img-fluid" src="nasabah/img/service-8.jpg" alt="">
-                <span class="post-date">July 17</span>
-              </div>
-
-              <div class="post-content d-flex flex-column">
-
-                <h3 class="post-title">Kegiatan Pembersihan Sampah Rutin Bulanan</h3>
-
-                <div class="meta d-flex align-items-center">
-                  <div class="d-flex align-items-center">
-                    <i class="bi bi-person"></i> <span class="ps-2">Mario Douglas</span>
-                  </div>
-                  <span class="px-3 text-black-50">/</span>
-                  <div class="d-flex align-items-center">
-                    <i class="bi bi-folder2"></i> <span class="ps-2">Kegiatan</span>
-                  </div>
+            @empty
+                <div class="col-12">
+                    <p class="text-center">Belum ada artikel yang tersedia.</p>
                 </div>
-
-                <hr>
-
-                <a href="blog-details.html" class="readmore stretched-link"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
-
-              </div>
-
-            </div>
-          </div><!-- End post item -->
-
-          <div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-            <div class="post-item position-relative h-100">
-
-              <div class="post-img position-relative overflow-hidden">
-                <img class="img-fluid" src="nasabah/img/service-9.jpg" alt="">
-                <span class="post-date">September 05</span>
-              </div>
-
-              <div class="post-content d-flex flex-column">
-
-                <h3 class="post-title">Gerakan Sadar Sampah di Hari Lingkungan Hidup</h3>
-
-                <div class="meta d-flex align-items-center">
-                  <div class="d-flex align-items-center">
-                    <i class="bi bi-person"></i> <span class="ps-2">Lisa Hunter</span>
-                  </div>
-                  <span class="px-3 text-black-50">/</span>
-                  <div class="d-flex align-items-center">
-                    <i class="bi bi-folder2"></i> <span class="ps-2">Kegiatan</span>
-                  </div>
-                </div>
-
-                <hr>
-
-                <a href="blog-details.html" class="readmore stretched-link"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
-
-                
-              </div>
-            </div>
-          </div>
+            @endforelse
         </div>
-
-        <!-- Controls -->
-        
-      </div>
     </div>
-  </div>
-</section><!-- /Recent Posts Section -->
+</section>
+<!-- /Recent Posts Section -->
 
 <!-- Google Maps Location Start -->
 <div class="container my-5">
@@ -550,6 +411,28 @@
     margin: 0;
     color: #444;
 }
+
+.artikel-content,
+.judul-artikel {
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    word-wrap: break-word;
+    max-width: 100%; /* biar full width di dalam card */
+}
+
+.card-img-top {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* agar gambar terisi penuh tanpa distorsi */
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+}
+
+
 </style>
 
 
