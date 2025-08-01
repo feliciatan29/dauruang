@@ -15,11 +15,12 @@ return new class extends Migration
     {
         Schema::create('tbl_penjemputan', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nm_nasabah');
-            $table->date('tgl_penjemputan');
-            $table->time('waktu_penjemputan');
+            $table->string('nama');
+            $table->date('tanggal');
+            $table->string('waktu');
             $table->string('alamat');
             $table->string('berat');
+            $table->json('jenis_sampah');
             $table->string('status');
             $table->timestamps();
         });

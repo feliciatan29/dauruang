@@ -85,6 +85,8 @@ Route::get('/pesananc/berhasil', function () {
     return view('nasabah.pesananc.berhasil');
 })->name('pesananc.berhasil')->middleware('auth');
 
+
+
 // Lihat detail pesananc
 Route::get('/pesananc/{id}', [PesanancController::class, 'show'])->name('nasabah.pesananc.detail')->middleware('auth');
 
