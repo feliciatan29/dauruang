@@ -95,7 +95,7 @@
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Profil Saya</a>
                     <div class="dropdown-menu bg-light m-0">
-                        <a href="#" class="dropdown-item">Profil</a>
+                        <a href="{{ route('profil') }}" class="dropdown-item">Profil</a>
                         <a href="#" class="dropdown-item">Logout</a>
                     </div>
                 </div>
