@@ -11,6 +11,7 @@ use App\Http\Controllers\JenisController;
 use App\Http\Controllers\PesananController;
 use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\PesanancController;
+use App\Http\Controllers\BerandaNasabahController;
 use App\Models\Pesananc;
 
 /*
@@ -28,15 +29,15 @@ Route::post('/login', [UserController::class, 'authenticate']);
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
 // Dashboard (Beranda)
-Route::get('/admin.beranda', [BerandaController::class, 'index'])->name('admin.beranda')->middleware('auth');
+Route::get('/admin.beranda', [BerandaController::class, 'index'])->name('admin.beranda');
 
 // Artikel
-Route::resource('artikel', ArtikelController::class)->middleware('auth');
-Route::get('/cari_artikel', [ArtikelController::class, 'cari_artikel'])->middleware('auth');
+Route::resource('artikel', ArtikelController::class);
+Route::get('/cari_artikel', [ArtikelController::class, 'cari_artikel']);
 
 // Informasi
-Route::resource('informasi', InformasiController::class)->middleware('auth');
-Route::get('/cari_informasi', [InformasiController::class, 'cari_informasi'])->middleware('auth');
+Route::resource('informasi', InformasiController::class);
+Route::get('/cari_informasi', [InformasiController::class, 'cari_informasi']);
 
 
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -46,22 +47,24 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 
 // Penjemputan
-Route::resource('penjemputan', PenjemputanController::class)->middleware('auth');
+Route::resource('penjemputan', PenjemputanController::class);
 Route::patch('penjemputan/{id}/status', [PenjemputanController::class, 'updateStatus'])->name('penjemputan.updateStatus');
 
 // Jenis Sampah
-Route::resource('jenis', JenisController::class)->middleware('auth');
-Route::get('/cari_jenis', [JenisController::class, 'cari_jenis'])->middleware('auth');
+Route::resource('jenis', JenisController::class);
+Route::get('/cari_jenis', [JenisController::class, 'cari_jenis']);
 
 // Pesanan
-Route::resource('pesanan', PesananController::class)->middleware('auth');
+Route::resource('pesanan', PesananController::class);
 Route::post('/pesanan/{id}/status', [PesananController::class, 'updateStatus'])->name('pesanan.updateStatus');
 
 // Riwayat
-Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index')->middleware('auth'); // Remove duplicate
+Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index'); // Remove duplicate
 
 // Route for nasabah
-Route::get('/beranda-nasabah', fn() => view('nasabah.beranda'))->middleware('auth');
+Route::get('/beranda-nasabah', [BerandaNasabahController::class, 'index'])->name('beranda.nasabah');
+
+
 
 Route::get('/pesananc/diproses', function () {
     $pesananc = Pesananc::where('status', 'diproses')->get();
