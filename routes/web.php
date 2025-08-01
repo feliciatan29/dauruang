@@ -12,6 +12,7 @@ use App\Http\Controllers\PesananController;
 use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\PesanancController;
 use App\Http\Controllers\BerandaNasabahController;
+use App\Http\Controllers\ProfilesController;
 use App\Models\Pesananc;
 
 /*
@@ -61,10 +62,10 @@ Route::post('/pesanan/{id}/status', [PesananController::class, 'updateStatus'])-
 // Riwayat
 Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index'); // Remove duplicate
 
+
+
 // Route for nasabah
 Route::get('/beranda-nasabah', [BerandaNasabahController::class, 'index'])->name('beranda.nasabah');
-
-
 
 Route::get('/pesananc/diproses', function () {
     $pesananc = Pesananc::where('status', 'diproses')->get();
@@ -110,3 +111,15 @@ Route::get('/keranjang', [PesanancController::class, 'keranjang'])->name('pesana
 Route::get('/formulir', [PesanancController::class, 'formulir'])->name('nasabah.pesananc.formulir');
 Route::post('/pesananc/submit', [PesanancController::class, 'submit'])->name('nasabah.pesananc.submit');
 
+Route::get('/profil-saya', function () {
+    return view('nasabah.pesananc.profil');
+})->name('profil');
+
+Route::middleware(['auth'])->group(function () {
+    Route::post('/profile', [ProfilesController::class, 'update'])->name('profile.update');
+});
+
+Route::put('/profile', [ProfilesController::class, 'update'])->name('profile.update');
+Route::get('/profil/edit', [App\Http\Controllers\ProfilesController::class, 'edit'])->name('profiles.edit');
+Route::put('/profil/update/{id}', [App\Http\Controllers\ProfilesController::class, 'update'])->name('profiles.update');
+Route::get('/profile', [ProfilesController::class, 'show'])->name('profiles.show');
