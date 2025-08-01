@@ -12,12 +12,16 @@ class Pesanan extends Model
     protected $table = 'tbl_pesananc'; // Ubah ke tabel tbl_pesananc
 
     protected $fillable = [
-        'telepon',
-        'alamat',
-        'tanggal',
-        'waktu',
-        'gambar',
-        'catatan',
-        'status',
+    'gambar',
+    'nama',
+    'telepon',
+    'alamat',
+    'tanggal',
+    'waktu',
+    'catatan',
+    'jenis_sampah',
+    'berat',
+    'total_pesanan',
+    'status',
     ];
 }

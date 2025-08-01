@@ -20,12 +20,12 @@ return new class extends Migration
             $table->text('alamat');
             $table->date('tanggal');
             $table->string('waktu');
-            $table->string('gambar')->nullable();
             $table->text('catatan')->nullable();
             $table->json('jenis_sampah');
             $table->enum('status', ['diproses', 'selesai', 'dibatalkan'])->default('diproses');
             $table->double('berat')->default(0);
             $table->bigInteger('total_pesanan')->default(0);
+
             $table->timestamps();
         });
     }

@@ -14,6 +14,7 @@ class Pesananc extends Model
 
     // Kolom yang boleh diisi (mass assignment)
     protected $fillable = [
+    'gambar',
     'nama',
     'telepon',
     'alamat',

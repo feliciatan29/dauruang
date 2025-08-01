@@ -15,12 +15,15 @@ return new class extends Migration
     {
         Schema::create('tbl_riwayat', function (Blueprint $table) {
             $table->id();
+            $table->string('nama');
             $table->string('telepon', 20);
             $table->text('alamat');
             $table->date('tanggal');
             $table->string('waktu');
-            $table->string('gambar')->nullable();
             $table->text('catatan')->nullable();
+            $table->json('jenis_sampah');
+            $table->double('berat')->default(0);
+            $table->bigInteger('total_pesanan')->default(0);
             $table->string('status')->default('transaksi berhasil'); // status tetap
             $table->timestamps();
         });

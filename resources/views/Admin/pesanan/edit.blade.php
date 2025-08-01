@@ -22,13 +22,8 @@
             @method('PUT')
 
             <div class="form-group">
-                <label for="telepon">Nomor Telepon</label>
-                <input type="text" name="telepon" value="{{ old('telepon', $pesanan->telepon) }}" class="form-control" required>
-            </div>
-
-            <div class="form-group">
-                <label for="alamat">Alamat</label>
-                <textarea name="alamat" class="form-control" rows="2" required>{{ old('alamat', $pesanan->alamat) }}</textarea>
+                <label for="nama">Nama</label>
+                <input type="text" name="nama" value="{{ old('nama', $pesanan->nama) }}" class="form-control" required>
             </div>
 
             <div class="form-group">
@@ -39,6 +34,32 @@
             <div class="form-group">
                 <label for="waktu">Waktu Penjemputan</label>
                 <input type="text" name="waktu" value="{{ old('waktu', $pesanan->waktu) }}" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="telepon">Nomor Telepon</label>
+                <input type="text" name="telepon" value="{{ old('telepon', $pesanan->telepon) }}" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="alamat">Alamat</label>
+                <textarea name="alamat" class="form-control" rows="2" required>{{ old('alamat', $pesanan->alamat) }}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="jenis_sampah">Jenis Sampah</label>
+                @php $jenisSampah = json_decode($pesanan->jenis_sampah, true); @endphp
+                <input type="text" readonly class="form-control" value="{{ is_array($jenisSampah) ? implode(', ', array_column($jenisSampah, 'nama')) : '-' }}">
+            </div>
+
+            <div class="form-group">
+                <label for="berat">Berat Sampah (kg)</label>
+                <input type="number" step="0.01" name="berat" value="{{ old('berat', $pesanan->berat) }}" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="total_pesanan">Total Pesanan (Rp)</label>
+                <input type="number" name="total_pesanan" value="{{ old('total_pesanan', $pesanan->total_pesanan) }}" class="form-control" required>
             </div>
 
             <div class="form-group">
