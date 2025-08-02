@@ -17,6 +17,18 @@
     @endforeach
 @endif
 
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <strong>Terjadi kesalahan:</strong>
+        <ul class="mb-0">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+
 <div class="container py-5">
     <h2 class="mb-4">Formulir Pengiriman Sampah</h2>
 
@@ -123,24 +135,32 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const form = document.querySelector('form');
-        const btnKirim = document.querySelector('button[name="action"][value="kirim"]');
         const wajibFields = document.querySelectorAll('.wajib');
 
-        // Saat klik Kirim, tambahkan atribut required ke semua field wajib
-        btnKirim.addEventListener('click', function () {
-            wajibFields.forEach(field => {
-                field.setAttribute('required', 'required');
-            });
+        document.querySelector('button[name="action"][value="keranjang"]').addEventListener('click', function (e) {
+            e.preventDefault();
+            // Hapus required dari field wajib agar tidak dicegat browser
+            wajibFields.forEach(field => field.removeAttribute('required'));
+
+            // Tambah input hidden action=keranjang jika belum ada
+            let input = form.querySelector('input[name="action"]');
+            if (!input) {
+                input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'action';
+                form.appendChild(input);
+            }
+            input.value = 'keranjang';
+
+            form.submit();
         });
 
-        // Saat klik Simpan Keranjang, hapus required agar tidak dicegat browser
-        const btnKeranjang = document.querySelector('button[name="action"][value="keranjang"]');
-        btnKeranjang.addEventListener('click', function () {
-            wajibFields.forEach(field => {
-                field.removeAttribute('required');
-            });
+        document.querySelector('button[name="action"][value="kirim"]').addEventListener('click', function (e) {
+            // Pastikan semua wajib punya required
+            wajibFields.forEach(field => field.setAttribute('required', 'required'));
         });
     });
 </script>
+
 
 @endsection
