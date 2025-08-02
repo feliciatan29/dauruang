@@ -105,6 +105,10 @@ Route::get('/reset-form', function () {
     session()->forget('form_sementara');
     return redirect()->route('nasabah.pesananc.form');
 });
+Route::get('/nasabah/pesananc/diproses', [PesanancController::class, 'diproses'])->name('pesananc.diproses');
+
+Route::post('/nasabah/pesananc/submit', [PesanancController::class, 'submit'])->name('nasabah.pesananc.submit');
+
 
 // Tampilkan halaman keranjang
 Route::get('/keranjang', [PesanancController::class, 'keranjang'])->name('pesananc.keranjang');
@@ -125,3 +129,7 @@ Route::put('/profile', [ProfilesController::class, 'update'])->name('profile.upd
 Route::get('/profil/edit', [App\Http\Controllers\ProfilesController::class, 'edit'])->name('profiles.edit');
 Route::put('/profil/update/{id}', [App\Http\Controllers\ProfilesController::class, 'update'])->name('profiles.update');
 Route::get('/profile', [ProfilesController::class, 'show'])->name('profiles.show');
+
+Route::prefix('nasabah')->name('nasabah.')->group(function () {
+    Route::get('/pesananc/formulir', [PesanancController::class, 'formulir'])->name('pesananc.formulir');
+});

@@ -17,7 +17,8 @@
             <p><strong>Catatan:</strong> {{ $form['catatan'] ?? '-' }}</p>
         </div>
 
-        <a href="{{ route('pesananc.formulir') }}" class="btn btn-primary">Lanjutkan Isi Formulir</a>
+        <a href="{{ route('nasabah.pesananc.formulir') }}" class="btn btn-primary">Lanjutkan Isi Formulir</a>
+
     @else
         <p class="text-muted">Belum ada data formulir yang disimpan sementara.</p>
     @endif
