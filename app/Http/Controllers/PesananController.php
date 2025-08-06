@@ -2,87 +2,118 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pesananc;
 use Illuminate\Http\Request;
+use App\Models\Pesananc;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
 
 class PesananController extends Controller
 {
-    // Menampilkan semua pesanan
+    // Menampilkan daftar pesanan
     public function index()
     {
-        $pesanans = Pesananc::all();
-        return view('admin.pesanan.index', compact('pesanans'))
-            ->with('i', (request()->input('page', 1) - 1) * 10);
+        $pesanans = Pesananc::orderByDesc('created_at')->paginate(10);
+        return view('admin.pesanan.index', compact('pesanans'));
     }
 
     // Menampilkan form edit
     public function edit($id)
     {
         $pesanan = Pesananc::findOrFail($id);
-        return view('admin.pesanan.edit', compact('pesanan'));
+        $jenisSampah = json_decode($pesanan->jenis_sampah, true) ?? [];
+
+        return view('admin.pesanan.edit', compact('pesanan', 'jenisSampah'));
     }
 
-    // Proses update pesanan (hanya berat & status)
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'berat' => 'required|numeric|min:0',
-            'status' => 'required|in:sedang diproses,telah diterima,transaksi berhasil',
-        ]);
+    // Update pesanan & pindahkan ke riwayat jika status = transaksi berhasil
+   public function update(Request $request, $id)
+{
+    $request->validate([
+        'status' => 'required|in:sedang diproses,telah diterima,transaksi berhasil',
+        'jenis_sampah' => 'required|array',
+    ]);
 
-        $pesanan = Pesananc::findOrFail($id);
+    // Filter hanya yang memiliki 'nama'
+    $inputJenis = collect($request->jenis_sampah)
+        ->filter(function ($item) {
+            return !empty($item['nama']);
+        })->values();
 
-        // Jika status menjadi "transaksi berhasil", pindahkan ke tabel riwayat
-        if ($request->status === 'transaksi berhasil') {
-            $gambarName = $pesanan->gambar ? basename($pesanan->gambar) : null;
-
-            DB::table('tbl_riwayat')->insert([
-                'nama' => $pesanan->nama,
-                'telepon' => $pesanan->telepon,
-                'alamat' => $pesanan->alamat,
-                'tanggal' => $pesanan->tanggal,
-                'waktu' => $pesanan->waktu,
-                'gambar' => $gambarName, // hanya nama file
-                'catatan' => $pesanan->catatan,
-                'status' => 'transaksi berhasil',
-                'jenis_sampah' => $pesanan->jenis_sampah,
-                'berat' => $request->berat,
-                'total_pesanan' => $pesanan->total_pesanan,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-
-            // Hapus pesanan dari tabel utama
-            $pesanan->delete();
-
-            return redirect()->route('pesanan.index')->with('success', 'Pesanan berhasil dipindahkan ke Riwayat');
+    // Validasi manual berat (jumlah) dan harga
+    foreach ($inputJenis as $index => $item) {
+        if (!isset($item['jumlah']) || !is_numeric($item['jumlah']) || $item['jumlah'] < 0) {
+            return back()->withErrors([
+                "jenis_sampah.{$index}.jumlah" => 'Field berat wajib diisi dan harus berupa angka minimal 0.'
+            ])->withInput();
         }
 
-        // Jika belum "transaksi berhasil", cukup update berat dan status
-        $pesanan->update([
-            'berat' => $request->berat,
-            'status' => $request->status,
-        ]);
-
-        return redirect()->route('pesanan.index')->with('success', 'Status dan berat berhasil diperbarui');
+        if (!isset($item['harga']) || !is_numeric($item['harga']) || $item['harga'] < 0) {
+            return back()->withErrors([
+                "jenis_sampah.{$index}.harga" => 'Field harga wajib diisi dan harus berupa angka minimal 0.'
+            ])->withInput();
+        }
     }
 
-    // Hapus pesanan + gambar (jika ada)
-    public function destroy($id)
-    {
-        $pesanan = Pesananc::findOrFail($id);
+    $pesanan = Pesananc::findOrFail($id);
+    $finalJenis = [];
+    $totalBerat = 0;
+    $totalHarga = 0;
 
-        if ($pesanan->gambar) {
-            $gambarPath = public_path('Foto_Sampah/' . basename($pesanan->gambar));
-            if (File::exists($gambarPath)) {
-                File::delete($gambarPath);
-            }
-        }
+    foreach ($inputJenis as $item) {
+        $nama = $item['nama'];
+        $berat = floatval($item['jumlah']); // ← sesuai field 'jumlah' di form
+        $harga = floatval($item['harga']);
+        $subtotal = $berat * $harga;
+
+        $finalJenis[] = [
+            'nama' => $nama,
+            'jumlah' => $berat, // simpan sebagai 'jumlah' agar cocok dengan data sebelumnya
+            'harga' => $harga,
+        ];
+
+        $totalBerat += $berat;
+        $totalHarga += $subtotal;
+    }
+
+    if ($request->status === 'transaksi berhasil') {
+        // Pindah ke riwayat
+        DB::table('tbl_riwayat')->insert([
+            'nama' => $pesanan->nama,
+            'telepon' => $pesanan->telepon,
+            'alamat' => $pesanan->alamat,
+            'tanggal' => $pesanan->tanggal,
+            'waktu' => $pesanan->waktu,
+            'gambar' => $pesanan->gambar ? basename($pesanan->gambar) : null,
+            'catatan' => $pesanan->catatan,
+            'status' => 'transaksi berhasil',
+            'jenis_sampah' => json_encode($finalJenis),
+            'berat' => $totalBerat,
+            'total_pesanan' => $totalHarga,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
 
         $pesanan->delete();
 
-        return redirect()->route('pesanan.index')->with('success', 'Pesanan berhasil dihapus');
+        return redirect()->route('pesanan.index')->with('success', 'Pesanan berhasil dipindahkan ke Riwayat.');
+    }
+
+    // Update data jika belum transaksi berhasil
+    $pesanan->update([
+        'status' => $request->status,
+        'jenis_sampah' => json_encode($finalJenis),
+        'berat' => $totalBerat,
+        'total_pesanan' => $totalHarga,
+    ]);
+
+    return redirect()->route('pesanan.index')->with('success', 'Data pesanan berhasil diperbarui.');
+}
+
+    // Hapus pesanan
+    public function destroy($id)
+    {
+        $pesanan = Pesananc::findOrFail($id);
+        $pesanan->delete();
+
+        return redirect()->route('pesanan.index')->with('success', 'Pesanan berhasil dihapus.');
     }
 }

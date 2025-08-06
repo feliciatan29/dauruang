@@ -1,118 +1,168 @@
 @extends('admin.layout')
+
 @section('content')
+<div class="container mt-4">
+    <div class="col-lg-10 offset-lg-1">
+        <h2 class="mb-4">Edit Data Pesanan</h2>
 
-    <div class="container mt-4">
-        <div class="col-lg-8 offset-lg-2">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <strong>Terjadi kesalahan!</strong>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
-            <h2 class="mb-4">Edit Data Pesanan</h2>
+        <form action="{{ route('pesanan.update', $pesanan->id) }}" method="POST">
+            @csrf
+            @method('PUT')
 
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <strong>Terjadi kesalahan!</strong>
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
+            {{-- DATA UTAMA --}}
+            <div class="form-group">
+                <label>Nama</label>
+                <input type="text" value="{{ $pesanan->nama }}" class="form-control" readonly>
+            </div>
+
+            <div class="form-group">
+                <label>Tanggal</label>
+                <input type="date" value="{{ $pesanan->tanggal }}" class="form-control" readonly>
+            </div>
+
+            <div class="form-group">
+                <label>Waktu</label>
+                <input type="text" value="{{ $pesanan->waktu }}" class="form-control" readonly>
+            </div>
+
+            <div class="form-group">
+                <label>Telepon</label>
+                <input type="text" value="{{ $pesanan->telepon }}" class="form-control" readonly>
+            </div>
+
+            <div class="form-group">
+                <label>Alamat</label>
+                <textarea class="form-control" rows="2" readonly>{{ $pesanan->alamat }}</textarea>
+            </div>
+
+            {{-- JENIS SAMPAH --}}
+            <div class="form-group">
+                <label>Jenis Sampah, Berat & Harga</label>
+                @php
+                    $jenisSampah = json_decode($pesanan->jenis_sampah, true);
+                @endphp
+
+                @if (is_array($jenisSampah))
+                    <div id="jenisSampahContainer">
+                        @foreach ($jenisSampah as $index => $js)
+                            <div class="row mb-2">
+                                <div class="col-md-4">
+                                    <input type="text" name="jenis_sampah[{{ $index }}][nama]"
+                                        value="{{ $js['nama'] ?? '' }}" class="form-control" required
+                                        placeholder="Jenis Sampah">
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="number" step="0.01" min="0"
+                                        name="jenis_sampah[{{ $index }}][jumlah]"
+                                        value="{{ floatval($js['jumlah'] ?? 0) }}"
+                                        class="form-control berat-input" required placeholder="Berat (kg)">
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="number" step="100" min="0"
+                                        name="jenis_sampah[{{ $index }}][harga]"
+                                        value="{{ intval($js['harga'] ?? 0) }}"
+                                        class="form-control harga-input" required placeholder="Harga/kg">
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control total-item bg-light" readonly
+                                        placeholder="Subtotal">
+                                </div>
+                            </div>
                         @endforeach
-                    </ul>
+                    </div>
+                @else
+                    <p class="text-muted">Data jenis sampah tidak tersedia.</p>
+                @endif
+            </div>
+
+            {{-- TOTAL BERAT DAN HARGA --}}
+            <div class="row mt-3 mb-3">
+                <div class="col-md-6">
+                    <label>Total Berat (kg)</label>
+                    <input type="text" id="totalBeratFormatted" class="form-control" readonly>
+                    <input type="hidden" id="totalBerat" name="berat">
                 </div>
-            @endif
-
-            <form action="{{ route('pesanan.update', $pesanan->id) }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                @method('PUT')
-
-                {{-- NAMA --}}
-                <div class="form-group">
-                    <label for="nama">Nama</label>
-                    <input type="text" name="nama" value="{{ old('nama', $pesanan->nama) }}" class="form-control"
-                        readonly>
+                <div class="col-md-6">
+                    <label>Total Harga (Rp)</label>
+                    <input type="text" id="totalHargaFormatted" class="form-control" readonly>
+                    <input type="hidden" id="totalHarga" name="total_pesanan">
                 </div>
+            </div>
 
-                {{-- TANGGAL --}}
-                <div class="form-group">
-                    <label for="tanggal">Tanggal Penjemputan</label>
-                    <input type="date" name="tanggal" value="{{ old('tanggal', $pesanan->tanggal) }}"
-                        class="form-control" readonly>
-                </div>
+            {{-- CATATAN --}}
+            <div class="form-group">
+                <label>Catatan</label>
+                <textarea class="form-control" rows="2" readonly>{{ $pesanan->catatan }}</textarea>
+            </div>
 
-                {{-- WAKTU --}}
-                <div class="form-group">
-                    <label for="waktu">Waktu Penjemputan</label>
-                    <input type="text" name="waktu" value="{{ old('waktu', $pesanan->waktu) }}" class="form-control"
-                        readonly>
-                </div>
+            {{-- STATUS --}}
+            <div class="form-group">
+                <label>Status Pesanan</label>
+                <select name="status" class="form-control" required>
+                    <option value="sedang diproses" {{ $pesanan->status == 'sedang diproses' ? 'selected' : '' }}>
+                        Diproses</option>
+                    <option value="telah diterima" {{ $pesanan->status == 'telah diterima' ? 'selected' : '' }}>
+                        Telah Diterima</option>
+                    <option value="transaksi berhasil" {{ $pesanan->status == 'transaksi berhasil' ? 'selected' : '' }}>
+                        Transaksi Berhasil</option>
+                </select>
+            </div>
 
-                {{-- TELEPON --}}
-                <div class="form-group">
-                    <label for="telepon">Nomor Telepon</label>
-                    <input type="text" name="telepon" value="{{ old('telepon', $pesanan->telepon) }}"
-                        class="form-control" readonly>
-                </div>
-
-                {{-- ALAMAT --}}
-                <div class="form-group">
-                    <label for="alamat">Alamat</label>
-                    <textarea name="alamat" class="form-control" rows="2" readonly>{{ old('alamat', $pesanan->alamat) }}</textarea>
-                </div>
-
-                {{-- JENIS SAMPAH --}}
-                <div class="form-group">
-                    <label for="jenis_sampah">Jenis Sampah</label>
-                    @php $jenisSampah = json_decode($pesanan->jenis_sampah, true); @endphp
-                    <input type="text" readonly class="form-control"
-                        value="{{ is_array($jenisSampah) ? implode(', ', array_column($jenisSampah, 'nama')) : '-' }}">
-                </div>
-
-                {{-- BERAT (BOLEH UBAH) --}}
-                <div class="form-group">
-                    <label for="berat">Berat Sampah (kg)</label>
-                    <input type="number" step="0.01" name="berat" value="{{ old('berat', $pesanan->berat) }}"
-                        class="form-control" required>
-                </div>
-
-                {{-- TOTAL PESANAN --}}
-                <div class="form-group">
-                    <label for="total_pesanan">Total Pesanan (Rp)</label>
-                    <input type="number" name="total_pesanan" value="{{ old('total_pesanan', $pesanan->total_pesanan) }}"
-                        class="form-control" readonly>
-                </div>
-
-                {{-- CATATAN --}}
-                <div class="form-group">
-                    <label for="catatan">Catatan (Opsional)</label>
-                    <textarea name="catatan" class="form-control" rows="2" readonly>{{ old('catatan', $pesanan->catatan) }}</textarea>
-                </div>
-
-                {{-- STATUS (BOLEH UBAH) --}}
-                <div class="form-group">
-                    <label for="status">Status Pesanan</label>
-                    <select name="status" class="form-control" required>
-                        <option value="sedang diproses" {{ $pesanan->status == 'sedang diproses' ? 'selected' : '' }}>
-                            Sedang Diproses</option>
-                        <option value="telah diterima" {{ $pesanan->status == 'telah diterima' ? 'selected' : '' }}>Telah
-                            Diterima</option>
-                        <option value="transaksi berhasil"
-                            {{ $pesanan->status == 'transaksi berhasil' ? 'selected' : '' }}>Transaksi Berhasil</option>
-                    </select>
-                </div>
-
-                {{-- GAMBAR --}}
-                <div class="form-group">
-                    <label for="gambar">Bukti Gambar</label><br>
-                    @if ($pesanan->gambar)
-                        <img src="{{ asset('storage/' . $pesanan->gambar) }}" width="120" class="mb-2 rounded">
-                    @endif
-                    <input type="file" name="gambar" class="form-control-file" disabled>
-                    <small class="form-text text-muted">Format gambar: JPG, JPEG, PNG. Maks. 2MB.</small>
-                </div>
-
-                <div class="text-right">
-                    <a href="{{ route('pesanan.index') }}" class="btn btn-secondary">Kembali</a>
-                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                </div>
-            </form>
-
-        </div>
+            {{-- TOMBOL --}}
+            <div class="text-right mt-4">
+                <a href="{{ route('pesanan.index') }}" class="btn btn-secondary">Kembali</a>
+                <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+            </div>
+        </form>
     </div>
+</div>
 
+{{-- JAVASCRIPT UNTUK HITUNG TOTAL --}}
+<script>
+    function hitungTotal() {
+        let totalBerat = 0;
+        let totalHarga = 0;
+
+        document.querySelectorAll('#jenisSampahContainer .row').forEach(function(row) {
+            const beratInput = row.querySelector('.berat-input');
+            const hargaInput = row.querySelector('.harga-input');
+            const totalItem = row.querySelector('.total-item');
+
+            if (!beratInput || !hargaInput || !totalItem) return;
+
+            const berat = parseFloat(beratInput.value) || 0;
+            const harga = parseFloat(hargaInput.value) || 0;
+            const subtotal = berat * harga;
+
+            totalItem.value = 'Rp ' + subtotal.toLocaleString('id-ID');
+            totalBerat += berat;
+            totalHarga += subtotal;
+        });
+
+        // Set hasil akhir ke input
+        document.getElementById('totalBeratFormatted').value = totalBerat.toFixed(2);
+        document.getElementById('totalBerat').value = totalBerat.toFixed(2);
+
+        document.getElementById('totalHargaFormatted').value = 'Rp ' + totalHarga.toLocaleString('id-ID');
+        document.getElementById('totalHarga').value = totalHarga.toFixed(0);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.berat-input, .harga-input').forEach(function(input) {
+            input.addEventListener('input', hitungTotal);
+        });
+        hitungTotal(); // hitung awal
+    });
+</script>
 @endsection
