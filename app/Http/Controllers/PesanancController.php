@@ -217,7 +217,7 @@ class PesanancController extends Controller
             ],
         ];
 
-        return view('pesananc.diterima', compact('pesananc'));
+        return view('nasabah.pesananc.diterima', compact('pesananc'));
     }
 
     public function transaksi_berhasil()
