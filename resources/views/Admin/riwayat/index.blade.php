@@ -45,7 +45,16 @@
                                     @php
                                         $jenisSampah = json_decode($item->jenis_sampah, true);
                                     @endphp
-                                    {{ is_array($jenisSampah) ? implode(', ', array_column($jenisSampah, 'nama')) : '-' }}
+                                    @if (is_array($jenisSampah) && count($jenisSampah))
+                                        <ul class="list-unstyled mb-0 text-left">
+                                            @foreach ($jenisSampah as $sampah)
+                                                <li>{{ $sampah['nama'] ?? '-' }}
+                                                    ({{ number_format($sampah['jumlah'] ?? 0, 2) }} kg)</li>
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        <span class="text-muted">-</span>
+                                    @endif
                                 </td>
 
                                 <td>{{ $item->berat ?? '-' }} kg</td>

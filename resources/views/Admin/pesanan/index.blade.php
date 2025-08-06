@@ -1,4 +1,5 @@
 @extends('admin.layout')
+
 @section('content')
     <div class="container mt-4">
         <div class="col-lg-12">
@@ -31,50 +32,63 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($pesanans as $key => $item)
+                        @forelse($pesanans as $item)
                             <tr>
-                                <td>{{ $i + $key + 1 }}</td>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->nama }}</td>
                                 <td>{{ $item->tanggal }}</td>
                                 <td>{{ $item->waktu }}</td>
                                 <td>{{ $item->telepon }}</td>
                                 <td>{{ $item->alamat }}</td>
 
-                                {{-- JENIS SAMPAH (tampilkan hanya nama) --}}
+                                {{-- Jenis Sampah --}}
                                 <td>
                                     @php
                                         $jenisSampah = json_decode($item->jenis_sampah, true);
                                     @endphp
-                                    {{ is_array($jenisSampah) ? implode(', ', array_column($jenisSampah, 'nama')) : '-' }}
+                                    @if (is_array($jenisSampah) && count($jenisSampah))
+                                        <ul class="list-unstyled mb-0 text-left">
+                                            @foreach ($jenisSampah as $sampah)
+                                                <li>{{ $sampah['nama'] ?? '-' }}
+                                                    ({{ number_format($sampah['jumlah'] ?? 0, 2) }} kg)</li>
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        <span class="text-muted">-</span>
+                                    @endif
                                 </td>
 
-                                <td>{{ $item->berat }} kg</td>
+                                <td>{{ number_format($item->berat, 2) }} kg</td>
                                 <td>Rp {{ number_format($item->total_pesanan, 0, ',', '.') }}</td>
                                 <td>{{ $item->catatan ?? '-' }}</td>
 
+                                {{-- Status --}}
                                 <td>
-                                    <span
-                                        class="badge badge-{{ $item->status === 'transaksi berhasil'
-                                            ? 'success'
-                                            : ($item->status === 'telah diterima'
-                                                ? 'info'
-                                                : 'warning') }}">
+                                    @php
+                                        $badgeClass = match ($item->status) {
+                                            'transaksi berhasil' => 'success',
+                                            'telah diterima' => 'info',
+                                            default => 'warning',
+                                        };
+                                    @endphp
+                                    <span class="badge badge-{{ $badgeClass }}">
                                         {{ ucfirst($item->status) }}
                                     </span>
                                 </td>
 
-                                {{-- ✅ BUKTI GAMBAR --}}
+                                {{-- Gambar --}}
                                 <td>
-                                    @if ($item->gambar)
+                                    @if ($item->gambar && file_exists(public_path($item->gambar)))
                                         <a href="{{ asset($item->gambar) }}" target="_blank">
                                             <img src="{{ asset($item->gambar) }}" width="60" height="60"
-                                                style="object-fit:cover" alt="Bukti Gambar">
+                                                style="object-fit:cover;" alt="Bukti Gambar">
                                         </a>
                                     @else
                                         <span class="text-muted">-</span>
                                     @endif
                                 </td>
 
+                                {{-- Aksi --}}
                                 <td>
                                     <form action="{{ route('pesanan.destroy', $item->id) }}" method="POST">
                                         @csrf
@@ -88,7 +102,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="13">Data pesanan belum tersedia.</td>
+                                <td colspan="13" class="text-center">Data pesanan belum tersedia.</td>
                             </tr>
                         @endforelse
                     </tbody>
