@@ -50,7 +50,6 @@ class JenisController extends Controller
             'kd_jenis' => 'required',
             'nm_jenis' => 'required',
             'harga_perkilo' => 'required',
-            'harga_satuan' => 'required',
             'gambar' => 'required',
         ]);
         $file = $request->file('gambar');
@@ -62,7 +61,6 @@ class JenisController extends Controller
             'kd_jenis' => $request->kd_jenis,
             'nm_jenis' => $request->nm_jenis,
             'harga_perkilo' => $request->harga_perkilo,
-            'harga_satuan' => $request->harga_satuan,
             'gambar' => $nama_file
 
         ]);
@@ -105,7 +103,6 @@ class JenisController extends Controller
         'kd_jenis' => 'required',
         'nm_jenis' => 'required',
         'harga_perkilo' => 'required',
-        'harga_satuan' => 'required',
         'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi gambar
     ]);
 
@@ -113,7 +110,6 @@ class JenisController extends Controller
     $jenis->kd_jenis = $request->kd_jenis;
     $jenis->nm_jenis = $request->nm_jenis;
     $jenis->harga_perkilo = $request->harga_perkilo;
-    $jenis->harga_satuan = $request->harga_satuan;
 
     // Cek apakah ada file gambar yang di-upload
     if ($request->hasFile('gambar')) {

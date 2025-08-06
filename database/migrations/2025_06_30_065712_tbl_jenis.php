@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('kd_jenis');
             $table->string('nm_jenis');
             $table->double('harga_perkilo');
-            $table->double('harga_satuan');
             $table->timestamps();
         });
     }
