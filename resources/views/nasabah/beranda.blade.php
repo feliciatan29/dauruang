@@ -1,3 +1,4 @@
+
 @extends('nasabah.layout')
 @section('content')
 
@@ -114,13 +115,13 @@
                         <div class="icon"><i class="bi bi-arrow-repeat"></i></div>
                         <a href="{{ route('pesananc.diproses') }}"> Sedang Diproses</a>
                     </div>
-                    <div class="step">
+                    <div class="step active">
                         <div class="icon"><i class="bi bi-box-seam"></i></div>
-                        <p>Telah Diterima</p>
+                        <a href="{{ route('pesananc.diterima') }}"> Telah Diterima</a>
                     </div>
-                    <div class="step">
+                    <div class="step active">
                         <div class="icon"><i class="bi bi-check-circle"></i></div>
-                        <p>Transaksi Berhasil</p>
+                        <a href="{{ route('pesananc.transaksi_berhasil') }}">Transaksi Berhasil</a>
                     </div>
                 </div>
             </div>
