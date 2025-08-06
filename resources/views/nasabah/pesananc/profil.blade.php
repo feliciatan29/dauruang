@@ -167,38 +167,36 @@
         <!-- Biodata dan Kontak -->
 <div class="col-lg-8 col-md-7 col-12">
     <a href="{{ route('profiles.edit') }}" class="section-title d-inline-block text-decoration-none" style="color: #00b14f;">
-    <i class="bi bi-pencil-square me-2"></i> Ubah Biodata Diri
+    <i class="bi bi-pencil-square me-2"></i> 
 </a>
 
 
 
             <div class="info-line">
-    <strong>Nama</strong> {{ $user->name ?? '-' }} <span>Ubah</span>
+    <strong>Nama</strong> {{ $user->name ?? '-' }} <span></span>
 </div>
 
 <div class="info-line">
-    <strong>Tanggal Lahir</strong> {{ $profile->tanggal_lahir ?? 'Tambah Tanggal Lahir' }} <span>Ubah</span>
+    <strong>Tanggal Lahir</strong> {{ $profile->tanggal_lahir ?? 'Tambah Tanggal Lahir' }} <span></span>
 </div>
 
 <div class="info-line">
-    <strong>Jenis Kelamin</strong> {{ $profile->jenis_kelamin ?? 'Tambah Jenis Kelamin' }} <span>Ubah</span>
+    <strong>Jenis Kelamin</strong> {{ $profile->jenis_kelamin ?? 'Tambah Jenis Kelamin' }} <span></span>
 </div>
 
 <div class="info-line">
     <strong>Email</strong> {{ $user->email ?? '-' }}
     <span class="badge-verif">Terverifikasi</span>
-    <span>Ubah</span>
+    <span></span>
 </div>
 
 <div class="info-line">
-    <strong>Nomor HP</strong> {{ $profile->nomor_hp ?? 'Tambah Nomor HP' }} <span>Ubah</span>
+    <strong>Nomor HP</strong> {{ $profile->nomor_hp ?? 'Tambah Nomor HP' }} <span></span>
 </div>
 
 
             <div class="button-group">
                 <button class="btn btn-outline-secondary">Buat Kata Sandi</button>
-                <button class="btn btn-outline-secondary">PIN Tokopedia</button>
-                <button class="btn btn-outline-secondary">Verifikasi Instan</button>
             </div>
         </div>
     </div>
