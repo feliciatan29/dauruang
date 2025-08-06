@@ -134,3 +134,15 @@ Route::get('/profile', [ProfilesController::class, 'show'])->name('profiles.show
 Route::prefix('nasabah')->name('nasabah.')->group(function () {
     Route::get('/pesananc/formulir', [PesanancController::class, 'formulir'])->name('pesananc.formulir');
 });
+
+
+Route::prefix('nasabah')->name('nasabah.')->group(function () {
+    Route::get('/pesananc/formulir', [PesanancController::class, 'formulir'])->name('pesananc.formulir');
+});
+//baru ni 
+//status telah diterima
+Route::get('/nasabah/pesananc/diterima', [PesanancController::class, 'diterima'])->name('pesananc.diterima');
+//status transaksi berhasil 
+Route::get('/nasabah/pesananc/transaksi_berhasil', [PesanancController::class, 'transaksi_berhasil'])->name('pesananc.transaksi_berhasil');
+
+Route::post('/pesananc/pilihjenis', [PesanancController::class, 'pilihjenis'])->name('nasabah.pesananc.pilihjenis');

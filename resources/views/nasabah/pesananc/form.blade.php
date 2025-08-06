@@ -1,3 +1,4 @@
+
 @extends('nasabah.layout')
 @section('content')
 
@@ -28,11 +29,11 @@
     </div>
 @endif
 
-
 <div class="container py-5">
     <h2 class="mb-4">Formulir Pengiriman Sampah</h2>
 
-    <form action="{{ route('nasabah.pesananc.submit') }}" method="POST" enctype="multipart/form-data">
+    {{-- ✅ FORM UTAMA --}}
+    <form id="form-pesanan" action="{{ route('nasabah.pesananc.submit') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         {{-- Upload gambar --}}
@@ -47,7 +48,6 @@
 
         {{-- Informasi tempat tinggal --}}
         <h5 class="mt-4">Informasi Tempat Tinggal</h5>
-        <!-- Nama -->
         <div class="mb-3">
             <label class="form-label">Nama</label>
             <input type="text" name="nama" class="form-control wajib"
@@ -61,7 +61,7 @@
         </div>
         <div class="mb-3">
             <label class="form-label">Alamat Lengkap</label>
-            <textarea name="alamat" class="form-control" rows="3" required></textarea>
+            <textarea name="alamat" class="form-control" rows="3" required>{{ old('alamat', $form['alamat'] ?? '') }}</textarea>
         </div>
 
         {{-- Informasi pengantaran --}}
@@ -109,8 +109,12 @@
                 <span>Estimasi Pendapatan</span>
                 <span class="fw-semibold">Rp {{ number_format($total, 0, ',', '.') }}</span>
             </div>
-        </div>
 
+            {{-- ✅ TOMBOL PENGALIHAN KE PILIH JENIS --}}
+            <button type="submit" form="form-edit-jenis" class="btn btn-outline-primary mt-3">
+                <i class="bi bi-plus-circle"></i> Tambah / Edit Jenis Sampah
+            </button>
+        </div>
 
         {{-- Hidden input untuk database --}}
         <input type="hidden" name="jenis_sampah" value="{{ json_encode($keranjang) }}">
@@ -129,20 +133,24 @@
             <button type="submit" name="action" value="kirim" class="btn btn-success">Kirim Pesanan</button>
         </div>
     </form>
+
+    {{-- ✅ FORM TAMBAH JENIS SAMPAH (DILUAR FORM UTAMA) --}}
+    <form id="form-edit-jenis" action="{{ route('pesananc.pilihjenis') }}" method="POST" style="display: none;">
+        @csrf
+        <input type="hidden" name="form_sementara" value="{{ base64_encode(serialize($form)) }}">
+    </form>
 </div>
 
 {{-- Script Validasi Dinamis --}}
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const form = document.querySelector('form');
-        const wajibFields = document.querySelectorAll('.wajib');
+        const form = document.querySelector('#form-pesanan');
+        const wajibFields = form.querySelectorAll('.wajib');
 
         document.querySelector('button[name="action"][value="keranjang"]').addEventListener('click', function (e) {
             e.preventDefault();
-            // Hapus required dari field wajib agar tidak dicegat browser
             wajibFields.forEach(field => field.removeAttribute('required'));
 
-            // Tambah input hidden action=keranjang jika belum ada
             let input = form.querySelector('input[name="action"]');
             if (!input) {
                 input = document.createElement('input');
@@ -155,12 +163,10 @@
             form.submit();
         });
 
-        document.querySelector('button[name="action"][value="kirim"]').addEventListener('click', function (e) {
-            // Pastikan semua wajib punya required
+        document.querySelector('button[name="action"][value="kirim"]').addEventListener('click', function () {
             wajibFields.forEach(field => field.setAttribute('required', 'required'));
         });
     });
 </script>
-
 
 @endsection
