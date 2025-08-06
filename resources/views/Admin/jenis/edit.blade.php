@@ -30,11 +30,6 @@
                     </div>
 
                     <div class="form-group">
-                          <Label>Harga Satuan :</Label>
-                          <input type="number" class="form-control" name="harga_satuan" value="{{ $jenis->harga_satuan }}">
-                    </div>
-
-                    <div class="form-group">
                           <Label>Upload Foto :</Label>
                           <input type="file" class="form-control" name="gambar" value="{{ $jenis->gambar }}">
                     </div>

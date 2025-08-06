@@ -30,11 +30,6 @@
                 </div>
 
                 <div class="form-group">
-                    <Label>Harga Satuan :</Label>
-                    <input type="number" class="form-control" name="harga_satuan">
-                </div>
-
-                <div class="form-group">
                     <Label>Foto Jenis Sampah :</Label>
                     <input type="file" class="form-control" name="gambar">
                 </div>

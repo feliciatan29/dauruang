@@ -42,7 +42,6 @@
                         <th>Kode Jenis</th>
                         <th>Nama Jenis</th>
                         <th>Harga per kg (Rp)</th>
-                        <th>Harga Satuan (Rp)</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -58,7 +57,6 @@
                             <td>{{ $jenis->kd_jenis }}</td>
                             <td>{{ $jenis->nm_jenis }}</td>
                             <td>{{ number_format($jenis->harga_perkilo, 0, ',', '.') }}</td>
-                            <td>{{ number_format($jenis->harga_satuan, 0, ',', '.') }}</td>
                             <td>
                                 <form action="{{ route('jenis.destroy', $jenis->id) }}" method="POST">
                                     @csrf

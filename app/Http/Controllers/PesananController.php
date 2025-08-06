@@ -21,6 +21,7 @@ class PesananController extends Controller
         $pesanan = Pesananc::findOrFail($id);
         $jenisSampah = json_decode($pesanan->jenis_sampah, true) ?? [];
 
+
         return view('admin.pesanan.edit', compact('pesanan', 'jenisSampah'));
     }
 
@@ -32,23 +33,22 @@ class PesananController extends Controller
         'jenis_sampah' => 'required|array',
     ]);
 
-    // Filter hanya yang memiliki 'nama'
     $inputJenis = collect($request->jenis_sampah)
         ->filter(function ($item) {
-            return !empty($item['nama']);
+            return isset($item['checked']) && $item['checked'] == 1 && !empty($item['nama']);
         })->values();
 
-    // Validasi manual berat (jumlah) dan harga
+    // Validasi berat dan harga untuk item yang dicentang saja
     foreach ($inputJenis as $index => $item) {
         if (!isset($item['jumlah']) || !is_numeric($item['jumlah']) || $item['jumlah'] < 0) {
             return back()->withErrors([
-                "jenis_sampah.{$index}.jumlah" => 'Field berat wajib diisi dan harus berupa angka minimal 0.'
+                "jenis_sampah.{$index}.jumlah" => 'Berat harus diisi dan minimal 0.'
             ])->withInput();
         }
 
         if (!isset($item['harga']) || !is_numeric($item['harga']) || $item['harga'] < 0) {
             return back()->withErrors([
-                "jenis_sampah.{$index}.harga" => 'Field harga wajib diisi dan harus berupa angka minimal 0.'
+                "jenis_sampah.{$index}.harga" => 'Harga harus diisi dan minimal 0.'
             ])->withInput();
         }
     }
@@ -60,13 +60,13 @@ class PesananController extends Controller
 
     foreach ($inputJenis as $item) {
         $nama = $item['nama'];
-        $berat = floatval($item['jumlah']); // ← sesuai field 'jumlah' di form
+        $berat = floatval($item['jumlah']);
         $harga = floatval($item['harga']);
         $subtotal = $berat * $harga;
 
         $finalJenis[] = [
             'nama' => $nama,
-            'jumlah' => $berat, // simpan sebagai 'jumlah' agar cocok dengan data sebelumnya
+            'jumlah' => $berat,
             'harga' => $harga,
         ];
 
@@ -75,7 +75,6 @@ class PesananController extends Controller
     }
 
     if ($request->status === 'transaksi berhasil') {
-        // Pindah ke riwayat
         DB::table('tbl_riwayat')->insert([
             'nama' => $pesanan->nama,
             'telepon' => $pesanan->telepon,
@@ -97,7 +96,6 @@ class PesananController extends Controller
         return redirect()->route('pesanan.index')->with('success', 'Pesanan berhasil dipindahkan ke Riwayat.');
     }
 
-    // Update data jika belum transaksi berhasil
     $pesanan->update([
         'status' => $request->status,
         'jenis_sampah' => json_encode($finalJenis),

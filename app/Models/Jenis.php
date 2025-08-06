@@ -10,6 +10,6 @@ class Jenis extends Model
     use HasFactory;
     public $table = "tbl_jenis";
     protected $fillable = [
-    'kd_jenis','nm_jenis','harga_perkilo','harga_satuan','gambar'
+    'kd_jenis','nm_jenis','harga_perkilo','gambar'
     ];
 }
