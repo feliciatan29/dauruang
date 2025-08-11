@@ -300,31 +300,29 @@
 
         <!-- Recent Posts Section -->
         <section class="container my-5">
-            <div class="container mt-5">
-                <h2 class="mb-4 text-center">Artikel Terbaru</h2>
-                <div class="row">
-                    @foreach ($artikels as $artikel)
-                        <div class="col-md-3 mb-4">
-                            <a href="{{ route('artikel.index', $artikel->id) }}" class="text-decoration-none text-dark">
-                                <div class="card h-100 shadow-sm border-0">
-                                    <img src="{{ asset('Foto_Artikel/' . $artikel->gambar) }}" class="card-img-top"
-                                        alt="{{ $artikel->judul_artikel }}" style="height: 200px; object-fit: cover;">
-
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{ $artikel->judul_artikel }}</h5>
-                                        <p class="card-text text-muted mb-1">
-                                            {{ Str::limit(strip_tags($artikel->isi_artikel), 80) }}
-                                        </p>
-                                        <small class="text-secondary">
-                                            {{ \Carbon\Carbon::parse($artikel->tgl_terbit)->format('d M Y') }}
-                                        </small>
-                                    </div>
+            <h2 class="mb-4 text-center fw-bold">Artikel Terbaru</h2>
+            <div class="row g-4">
+                @foreach ($artikels as $artikel)
+                    <div class="col-md-4">
+                        <a href="{{ route('artikel.detail', $artikel->id) }}" class="text-decoration-none text-dark">
+                            <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
+                                <img src="{{ asset('Foto_Artikel/' . $artikel->gambar) }}" class="card-img-top"
+                                    alt="{{ $artikel->judul_artikel }}" style="height: 200px; object-fit: cover;">
+                                <div class="card-body">
+                                    <h5 class="card-title fw-semibold">{{ Str::limit($artikel->judul_artikel, 50) }}</h5>
+                                    <p class="card-text text-muted small mb-2">
+                                        {{ Str::limit(strip_tags($artikel->isi_artikel), 80) }}
+                                    </p>
+                                    <small class="text-secondary d-block">
+                                        {{ \Carbon\Carbon::parse($artikel->tgl_terbit)->format('d M Y') }}
+                                    </small>
                                 </div>
-                            </a>
-                        </div>
-                    @endforeach
-                </div>
+                            </div>
+                        </a>
+                    </div>
+                @endforeach
             </div>
+
         </section>
         <!-- /Recent Posts Section -->
 

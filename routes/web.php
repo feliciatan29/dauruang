@@ -56,7 +56,6 @@ Route::patch('penjemputan/{id}/status', [PenjemputanController::class, 'updateSt
 // Jenis Sampah
 Route::resource('jenis', JenisController::class);
 Route::get('/cari_jenis', [JenisController::class, 'cari_jenis']);
-
 // Pesanan
 Route::resource('pesanan', PesananController::class);
 Route::post('/pesanan/{id}/status', [PesananController::class, 'updateStatus'])->name('pesanan.updateStatus');
@@ -161,5 +160,6 @@ Route::get('/pesananc/{id}/batalkan', [PesanancController::class, 'batalkanTrans
 // Bagian untuk nasabah (beranda)
 Route::get('/artikel', [ArtikelController::class, 'index'])->name('artikel.index');
 Route::get('/artikel/{id}', [ArtikelController::class, 'show'])->name('artikel.detail');
-Route::get('/informasi/{id}', [InformasiNasabahController::class, 'show'])->name('informasi.show');
+Route::get('/informasi', [InformasiController::class, 'index'])->name('informasi.index');
+Route::get('/informasi/{id}', [InformasiController::class, 'show'])->name('informasi.detail');
 
