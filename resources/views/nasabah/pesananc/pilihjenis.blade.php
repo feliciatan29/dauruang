@@ -6,10 +6,11 @@
 <!-- Pesanan Section Start -->
 <div class="container py-5">
     <div class="text-center mx-auto wow fadeInUp mb-4" data-wow-delay="0.1s" style="max-width: 500px;">
+
         <h1 class="display-6 fw-semibold">Pilih Jenis Sampah</h1>
     </div>
 
-    <div class="row g-4">
+   <div class="row g-4">
     {{-- 1. Plastik --}}
     <div class="col-md-4">
         <div class="d-flex p-3 border rounded shadow-sm align-items-center h-100 bg-white"
