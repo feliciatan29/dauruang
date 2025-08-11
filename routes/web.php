@@ -159,3 +159,5 @@ Route::get('/pesananc/{id}/batalkan', [PesanancController::class, 'batalkanTrans
 
 Route::get('/artikel/{id}', [ArtikelNasabahController::class, 'show'])->name('artikel.show');
 Route::get('/informasi/{id}', [InformasiNasabahController::class, 'show'])->name('informasi.show');
+
+

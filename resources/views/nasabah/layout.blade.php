@@ -84,19 +84,13 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
                 <a href="{{ url('beranda-nasabah') }}" class="nav-item nav-link active">Beranda</a>
-                <div class="nav-item dropdown">
-                    <a href="{{ route('pesananc.pilihjenis') }}" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Layanan</a>
-                    <div class="dropdown-menu bg-light m-0">
-                        <a href="{{ route('pesananc.pilihjenis') }}" class="dropdown-item">Drop Off</a>
-                        <a href="{{ route('pesananc.pilihjenis') }}" class="dropdown-item">Company</a>
-                    </div>
-                </div>
+                <a href="{{ route('pesananc.pilihjenis') }}" class="nav-item nav-link active">Mulai Pesanan</a>
                 <a href="{{ route('pesananc.status') }}" class="nav-item nav-link">Pesanan Saya</a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Profil Saya</a>
                     <div class="dropdown-menu bg-light m-0">
                         <a href="{{ route('profil') }}" class="dropdown-item">Profil</a>
-                        <a href="#" class="dropdown-item">Logout</a>
+                        <a href="{{ route('logout') }}" class="dropdown-item">Logout</a>
                     </div>
                 </div>
 
