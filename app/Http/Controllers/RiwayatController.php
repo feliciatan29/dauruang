@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Riwayat;
+use App\Models\Pesananc;
 use Illuminate\Http\Request;
 
 class RiwayatController extends Controller
@@ -16,6 +17,12 @@ class RiwayatController extends Controller
         $riwayats = Riwayat::all();
         return view('admin.riwayat.index', compact('riwayats'));
     }
+
+    public function pesananc()
+{
+    return $this->belongsTo(Pesananc::class, 'pesananc_id');
+}
+
 
     /**
      * Show the form for creating a new resource.
