@@ -91,7 +91,7 @@
                         <a href="{{ route('pesananc.pilihjenis') }}" class="dropdown-item">Company</a>
                     </div>
                 </div>
-                <a href="{{ route('pesananc.keranjang') }}" class="nav-item nav-link">Keranjang</a>
+                <a href="{{ route('pesananc.status') }}" class="nav-item nav-link">Pesanan Saya</a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Profil Saya</a>
                     <div class="dropdown-menu bg-light m-0">

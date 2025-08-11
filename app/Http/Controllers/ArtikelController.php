@@ -78,10 +78,18 @@ class ArtikelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+   public function show($id)
     {
-        //
+        // Ambil artikel berdasarkan id
+        $artikel = DB::table('tbl_artikel')->where('id', $id)->first();
+
+        if (!$artikel) {
+            abort(404, 'Artikel tidak ditemukan');
+        }
+
+        return view('nasabah.pesananc.detail_artikel', compact('artikel'));
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -159,4 +167,6 @@ class ArtikelController extends Controller
 
     return redirect()->route('artikel.index')->with('success', 'Data Artikel Berhasil Dihapus');
     }
+
+
 }

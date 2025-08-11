@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Pesananc;
+use App\Models\Riwayat;
+
 
 class PesanancController extends Controller
 {
@@ -202,38 +204,40 @@ class PesanancController extends Controller
         \Log::warning("Action tidak valid atau kosong di submit()");
         return redirect()->back()->with('error', 'Aksi tidak valid.');
     }
-
+//yang diedit ini baru 22:32
     public function diterima()
-    {
-        $pesananc = [
-            (object)[
-                'id' => 99,
-                'gambar' => 'images/sampah_dummy.jpg',
-                'berat' => 4,
-                'catatan' => 'Sampah sudah diverifikasi',
-                'total_pesanan' => 7000,
-                'telepon' => '08123456789',
-                'jenis_sampah' => (object)['jenis_sampah' => 'Plastik Campuran'],
-            ],
-        ];
+{
+    $pesananc = Pesananc::where('status', 'telah diterima')->get();
+    return view('nasabah.pesananc.diterima', compact('pesananc'));
+}
 
-        return view('nasabah.pesananc.diterima', compact('pesananc'));
-    }
+
 
     public function transaksi_berhasil()
-    {
-        $pesananc = [
-            (object)[
-                'id' => 1,
-                'gambar' => 'uploads/sampah1.jpg',
-                'berat' => 4,
-                'catatan' => 'Sampah sudah diterima & ditimbang ulang',
-                'total_pesanan' => 4600,
-                'telepon' => '081234567890',
-                'jenis_sampah' => (object)['jenis_sampah' => 'Plastik'],
-            ],
-        ];
+{
+    $riwayat = \App\Models\Riwayat::where('status', 'transaksi berhasil')->get();
+    return view('nasabah.pesananc.transaksi_berhasil', compact('riwayat'));
+}
 
-        return view('nasabah.pesananc.transaksi_berhasil', compact('pesananc'));
-    }
+public function statusPesanan()
+{
+    return view('nasabah.pesananc.status_pesanan');
+}
+
+public function batalkanTransaksi($id)
+{
+    $pesanan = Pesananc::findOrFail($id);
+    $pesanan->status = 'dibatalkan';
+    $pesanan->save();
+
+    return redirect()->route('pesananc.diproses')
+        ->with('success', 'Pesanan berhasil dibatalkan.');
+}
+
+
+
+
+
+
+
 }
