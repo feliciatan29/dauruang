@@ -100,7 +100,7 @@
         <div class="container">
             <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
                 <p class="fs-5 fw-bold text-primary">Pesanan Saya</p>
-                <h1 class="display-5 mb-5">Panduan Penggunaan dan Informasi Penting</h1>
+                <h1 class="display-5 mb-5">Yuk, Lihat Status Pesananmu!</h1>
             </div>
         <div class="container py-5">
         <div class="col-12 wow fadeIn" data-wow-delay="0.3s">
@@ -271,7 +271,9 @@
                                 {{ \Carbon\Carbon::parse($info->tgl_informasi)->format('d M Y') }} | {{ $info->kategori }}
                             </p>
                             <p class="mb-3 artikel-content">{{ Str::limit(strip_tags($info->isi_informasi), 100) }}</p>
-                            <a class="btn btn-sm" href="#"><i class="fa fa-plus text-primary me-2"></i>Read More</a>
+                            <a class="btn btn-sm" href="{{ route('informasi.show', $info->id) }}">
+                                <i class="fa fa-plus text-primary me-2"></i>Read More
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -311,6 +313,9 @@
                                 Oleh {{ $artikel->nm_penulis }} | {{ \Carbon\Carbon::parse($artikel->tgl_terbit)->format('d M Y') }}
                             </p>
                             <p class="card-text artikel-content">{{ $artikel->isi_artikel }}</p>
+
+                             {{-- link tersembunyi yang membuat seluruh card bisa diklik --}}
+                             <a href="{{ route('artikel.show', $artikel->id) }}" class="stretched-link"></a>
                         </div>
                     </div>
                 </div>

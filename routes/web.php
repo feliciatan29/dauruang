@@ -5,6 +5,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\InformasiController;
+use App\Http\Controllers\ArtikelNasabahController;
+use App\Http\Controllers\InformasiNasabahController;
 use App\Http\Controllers\NasabahController;
 use App\Http\Controllers\PenjemputanController;
 use App\Http\Controllers\JenisController;
@@ -139,6 +141,7 @@ Route::prefix('nasabah')->name('nasabah.')->group(function () {
 Route::prefix('nasabah')->name('nasabah.')->group(function () {
     Route::get('/pesananc/formulir', [PesanancController::class, 'formulir'])->name('pesananc.formulir');
 });
+
 //baru ni 
 //status telah diterima
 Route::get('/nasabah/pesananc/diterima', [PesanancController::class, 'diterima'])->name('pesananc.diterima');
@@ -146,3 +149,13 @@ Route::get('/nasabah/pesananc/diterima', [PesanancController::class, 'diterima']
 Route::get('/nasabah/pesananc/transaksi_berhasil', [PesanancController::class, 'transaksi_berhasil'])->name('pesananc.transaksi_berhasil');
 
 Route::post('/pesananc/pilihjenis', [PesanancController::class, 'pilihjenis'])->name('nasabah.pesananc.pilihjenis');
+
+Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index');
+
+Route::get('/status-pesanan', [PesanancController::class, 'statusPesanan'])->name('pesananc.status');
+
+Route::get('/pesananc/{id}/batalkan', [PesanancController::class, 'batalkanTransaksi'])
+    ->name('pesananc.batalkan');
+
+Route::get('/artikel/{id}', [ArtikelNasabahController::class, 'show'])->name('artikel.show');
+Route::get('/informasi/{id}', [InformasiNasabahController::class, 'show'])->name('informasi.show');
