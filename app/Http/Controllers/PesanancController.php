@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Pesananc;
 use App\Models\Riwayat;
+use App\Models\Pesanan;
 
 
 class PesanancController extends Controller
@@ -230,9 +231,46 @@ public function batalkanTransaksi($id)
     $pesanan->status = 'dibatalkan';
     $pesanan->save();
 
-    return redirect()->route('pesananc.diproses')
-        ->with('success', 'Pesanan berhasil dibatalkan.');
+    return redirect()->route('pesananc.status')
+    ->with('success', 'Transaksi berhasil dibatalkan.');
+
 }
+
+public function editPilihJenis()
+{
+    // Ambil data sebelumnya dari session
+    $form = session('form_sementara', []); // data form utama
+    $keranjang = session('keranjang', []); // daftar jenis sampah yang dipilih
+
+    return view('nasabah.pesananc.edit_pilihjenis', compact('form', 'keranjang'));
+}
+
+public function updatePilihJenis(Request $request)
+{
+    // Simpan daftar jenis sampah yang baru dipilih
+    $keranjang = $request->input('keranjang', []);
+
+    session(['keranjang' => $keranjang]);
+
+    return redirect()->route('pesananc.formulir')
+        ->with('success', 'Jenis sampah berhasil diperbarui.');
+}
+
+public function destroy($id)
+{
+    // Hapus pesanan di tabel pesanan
+    Pesanan::where('id', $id)->delete();
+
+    // Kalau ada tabel detail pesanan / tabel lain yang nyimpen data terkait
+    // tambahkan penghapusan juga
+    Pesananc::where('pesanan_id', $id)->delete();
+    // contoh: Riwayat::where('pesanan_id', $id)->delete();
+
+    return redirect()->route('pesanan.index')
+                     ->with('success', 'Pesanan berhasil dihapus.');
+}
+
+
 
 
 

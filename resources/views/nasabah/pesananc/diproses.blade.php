@@ -151,9 +151,12 @@
                 <!-- Total & Tombol -->
                 <div class="action-footer mt-4">
                     <p class="fw-semibold mb-2">Total: Rp {{ number_format($item['total_pesanan'] ?? 0, 0, ',', '.') }}</p>
-                    <a href="tel:{{ $item['telepon'] ?? '' }}" class="btn btn-warning btn-action text-white px-4">
-                        Hubungi Penjemput
-                    </a>
+                    <a href="{{ route('pesananc.batalkan', $item->id) }}"
+   class="btn btn-danger btn-action text-white px-4"
+   onclick="return confirm('Yakin ingin membatalkan transaksi ini?')">
+   Batalkan Transaksi
+</a>
+
                 </div>
             </div>
         @empty

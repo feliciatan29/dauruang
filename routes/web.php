@@ -157,7 +157,9 @@ Route::get('/status-pesanan', [PesanancController::class, 'statusPesanan'])->nam
 Route::get('/pesananc/{id}/batalkan', [PesanancController::class, 'batalkanTransaksi'])
     ->name('pesananc.batalkan');
 
+
 // Bagian untuk nasabah (beranda)
 Route::get('/artikel', [ArtikelController::class, 'index'])->name('artikel.index');
 Route::get('/artikel/{id}', [ArtikelController::class, 'show'])->name('artikel.detail');
 Route::get('/informasi/{id}', [InformasiNasabahController::class, 'show'])->name('informasi.show');
+

@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('waktu');
             $table->text('catatan')->nullable();
             $table->json('jenis_sampah');
-            $table->enum('status', ['diproses', 'telah diterima', 'transaksi berhasil'])->default('diproses');
+            $table->enum('status', ['diproses', 'telah diterima', 'transaksi berhasil', 'dibatalkan'])->default('diproses');
             $table->double('berat')->default(0);
             $table->bigInteger('total_pesanan')->default(0);
 
