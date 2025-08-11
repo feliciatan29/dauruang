@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Nasabah;
+use App\Models\Profiles;
 use Illuminate\Http\Request;
 
 class NasabahController extends Controller
 {
     public function index()
     {
-        $nasabahs = Nasabah::paginate(20);
-        return view('admin.nasabah.index', compact('nasabahs'))
+        // Ambil data profile beserta relasi user
+        $profiles = Profiles::with('user')->paginate(20);
+
+        return view('admin.nasabah.index', compact('profiles'))
             ->with('i', (request()->input('page', 1) - 1) * 20);
     }
 
@@ -22,87 +24,78 @@ class NasabahController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'kd_nasabah' => 'required',
-            'nm_nasabah' => 'required',
-            'alamat' => 'required',
-            'jenis_nasabah' => 'required',
-            'no_telephone' => 'required',
-            'tgl_daftar' => 'required',
-            'status' => 'required',
-            'gambar' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'user_id'       => 'required|exists:users,id',
+            'nama_lengkap'  => 'required|string|max:255',
+            'tanggal_lahir' => 'nullable|date',
+            'jenis_kelamin' => 'nullable|string|max:10',
+            'nomor_hp'      => 'nullable|string|max:20',
+            'foto'          => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        $tujuan_upload = public_path('Foto_Nasabah');
-        if (!file_exists($tujuan_upload)) {
-            mkdir($tujuan_upload, 0777, true);
-        }
+        $data = $request->except('foto');
 
-        $file = $request->file('gambar');
-        $nama_file = time() . "_" . $file->getClientOriginalName();
-        $file->move($tujuan_upload, $nama_file);
-
-        Nasabah::create([
-            'kd_nasabah' => $request->kd_nasabah,
-            'nm_nasabah' => $request->nm_nasabah,
-            'alamat' => $request->alamat,
-            'jenis_nasabah' => $request->jenis_nasabah,
-            'no_telephone' => $request->no_telephone,
-            'tgl_daftar' => $request->tgl_daftar,
-            'status' => $request->status,
-            'gambar' => $nama_file,
-        ]);
-
-        return redirect()->route('admin.nasabah.index')->with('success', 'Data Nasabah Berhasil Disimpan');
-    }
-
-    public function edit(Nasabah $nasabah)
-    {
-        return view('admin.nasabah.edit', compact('nasabah'));
-    }
-
-    public function update(Request $request, Nasabah $nasabah)
-    {
-        $request->validate([
-            'kd_nasabah' => 'required',
-            'nm_nasabah' => 'required',
-            'alamat' => 'required',
-            'jenis_nasabah' => 'required',
-            'no_telephone' => 'required',
-            'tgl_daftar' => 'required',
-            'status' => 'required',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        ]);
-
-        $data = $request->except('gambar');
-
-        if ($request->hasFile('gambar')) {
+        if ($request->hasFile('foto')) {
             $tujuan_upload = public_path('Foto_Nasabah');
-
-            if ($nasabah->gambar && file_exists($tujuan_upload . '/' . $nasabah->gambar)) {
-                unlink($tujuan_upload . '/' . $nasabah->gambar);
+            if (!file_exists($tujuan_upload)) {
+                mkdir($tujuan_upload, 0777, true);
             }
-
-            $file = $request->file('gambar');
+            $file = $request->file('foto');
             $nama_file = time() . "_" . $file->getClientOriginalName();
             $file->move($tujuan_upload, $nama_file);
-
-            $data['gambar'] = $nama_file;
+            $data['foto'] = $nama_file;
         }
 
-        $nasabah->update($data);
-        return redirect()->route('admin.nasabah.index')->with('success', 'Data Nasabah Berhasil Diperbarui');
+        Profiles::create($data);
+
+        return redirect()->route('admin.nasabah.index')->with('success', 'Data nasabah berhasil disimpan.');
     }
 
-    public function destroy($id)
+    public function edit(Profiles $profile)
     {
-        $nasabah = Nasabah::findOrFail($id);
-        $tujuan_upload = public_path('Foto_Nasabah');
+        return view('admin.nasabah.edit', compact('profile'));
+    }
 
-        if ($nasabah->gambar && file_exists($tujuan_upload . '/' . $nasabah->gambar)) {
-            unlink($tujuan_upload . '/' . $nasabah->gambar);
+    public function update(Request $request, Profiles $profile)
+    {
+        $request->validate([
+            'user_id'       => 'required|exists:users,id',
+            'nama_lengkap'  => 'required|string|max:255',
+            'tanggal_lahir' => 'nullable|date',
+            'jenis_kelamin' => 'nullable|string|max:10',
+            'nomor_hp'      => 'nullable|string|max:20',
+            'foto'          => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        $data = $request->except('foto');
+
+        if ($request->hasFile('foto')) {
+            $tujuan_upload = public_path('Foto_Nasabah');
+
+            if ($profile->foto && file_exists($tujuan_upload . '/' . $profile->foto)) {
+                unlink($tujuan_upload . '/' . $profile->foto);
+            }
+
+            $file = $request->file('foto');
+            $nama_file = time() . "_" . $file->getClientOriginalName();
+            $file->move($tujuan_upload, $nama_file);
+            $data['foto'] = $nama_file;
         }
 
-        $nasabah->delete();
-        return redirect()->route('admin.nasabah.index')->with('success', 'Data Nasabah Berhasil Dihapus');
+        $profile->update($data);
+
+        return redirect()->route('admin.nasabah.index')->with('success', 'Data nasabah berhasil diperbarui.');
+    }
+
+    public function destroy(Profiles $profile)
+    {
+        $tujuan_upload = public_path('Foto_Nasabah');
+
+        if ($profile->foto && file_exists($tujuan_upload . '/' . $profile->foto)) {
+            unlink($tujuan_upload . '/' . $profile->foto);
+        }
+
+        $profile->delete();
+
+        return redirect()->route('admin.nasabah.index')->with('success', 'Data nasabah berhasil dihapus.');
     }
 }

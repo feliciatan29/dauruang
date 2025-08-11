@@ -142,10 +142,10 @@ Route::prefix('nasabah')->name('nasabah.')->group(function () {
     Route::get('/pesananc/formulir', [PesanancController::class, 'formulir'])->name('pesananc.formulir');
 });
 
-//baru ni 
+//baru ni
 //status telah diterima
 Route::get('/nasabah/pesananc/diterima', [PesanancController::class, 'diterima'])->name('pesananc.diterima');
-//status transaksi berhasil 
+//status transaksi berhasil
 Route::get('/nasabah/pesananc/transaksi_berhasil', [PesanancController::class, 'transaksi_berhasil'])->name('pesananc.transaksi_berhasil');
 
 Route::post('/pesananc/pilihjenis', [PesanancController::class, 'pilihjenis'])->name('nasabah.pesananc.pilihjenis');
@@ -157,7 +157,9 @@ Route::get('/status-pesanan', [PesanancController::class, 'statusPesanan'])->nam
 Route::get('/pesananc/{id}/batalkan', [PesanancController::class, 'batalkanTransaksi'])
     ->name('pesananc.batalkan');
 
-Route::get('/artikel/{id}', [ArtikelNasabahController::class, 'show'])->name('artikel.show');
-Route::get('/informasi/{id}', [InformasiNasabahController::class, 'show'])->name('informasi.show');
 
+// Bagian untuk nasabah (beranda)
+Route::get('/artikel', [ArtikelController::class, 'index'])->name('artikel.index');
+Route::get('/artikel/{id}', [ArtikelController::class, 'show'])->name('artikel.detail');
+Route::get('/informasi/{id}', [InformasiNasabahController::class, 'show'])->name('informasi.show');
 

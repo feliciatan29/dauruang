@@ -2,20 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Artikel;
 
 class ArtikelNasabahController extends Controller
 {
-    public function show($id)
+    /**
+     * Menampilkan detail artikel.
+     * Laravel otomatis mencari berdasarkan id_artikel
+     */
+    public function index(Artikel $artikel)
     {
-        $artikel = Artikel::findOrFail($id);
+        $artikel = Artikel::findOrFail($artikel);
         return view('nasabah.pesananc.detail_artikel', compact('artikel'));
     }
-
-    // Jika pakai route model binding (opsional)
-    // public function show(Artikel $artikel)
-    // {
-    //     return view('nasabah.detail_artikel', compact('artikel'));
-    // }
 }
