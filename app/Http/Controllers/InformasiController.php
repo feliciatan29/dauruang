@@ -78,7 +78,14 @@ class InformasiController extends Controller
      */
     public function show($id)
     {
-        //
+         // Ambil informasi berdasarkan id
+        $informasi = DB::table('tbl_informasi')->where('id', $id)->first();
+
+        if (!$informasi) {
+            abort(404, 'Informasi tidak ditemukan');
+        }
+
+        return view('nasabah.pesananc.detail_informasi', compact('informasi'));
     }
 
     /**

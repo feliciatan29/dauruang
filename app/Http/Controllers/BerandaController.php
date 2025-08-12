@@ -23,6 +23,8 @@ public function index()
     ->orderByDesc('total')
     ->first();
 
+
+
     // Proses agar hanya menampilkan nama jenis sampah (tanpa JSON/array)
     $jenisSampahTerbanyak = null;
 
@@ -51,6 +53,34 @@ public function index()
         'jenisSampahTerbanyak',
         'totalSampahKg'
     ));
+    // Ambil total uang masuk per bulan
+    $uangMasuk = DB::table('riwayat')
+        ->select(
+            DB::raw('MONTH(created_at) as bulan'),
+            DB::raw('SUM(uang_masuk) as total')
+        )
+        ->groupBy(DB::raw('MONTH(created_at)'))
+        ->orderBy(DB::raw('bulan'))
+        ->get();
+
+    // Format data untuk Chart.js
+    $labels = [];
+    $data = [];
+    foreach ($uangMasuk as $row) {
+        $labels[] = date('F', mktime(0, 0, 0, $row->bulan, 1)); // Nama bulan
+        $data[] = $row->total;
+    }
+
+    // Rasio pengembalian sampah
+    $totalSampah = DB::table('riwayat')->sum('volume_sampah');
+    $sampahTerolah = DB::table('riwayat')->sum('volume_terolah');
+    $rasioPengembalian = $totalSampah > 0 ? round(($sampahTerolah / $totalSampah) * 100, 1) : 0;
+
+    return view('dashboard', [
+        'labels' => $labels,
+        'dataUangMasuk' => $data,
+        'rasioPengembalian' => $rasioPengembalian
+    ]);
 }
 
     // Fungsi lainnya tetap default (tidak digunakan di beranda)

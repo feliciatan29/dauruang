@@ -7,9 +7,9 @@ use App\Models\Informasi;
 
 class InformasiNasabahController extends Controller
 {
-    public function show($id)
+    public function index(Informasi $informasi)
     {
-        $informasi = Informasi::findOrFail($id);
+        $informasi = Informasi::findOrFail($infromasi);
         return view('nasabah.pesananc.detail_informasi', compact('informasi'));
     }
 

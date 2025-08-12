@@ -51,49 +51,64 @@
                     <label class="form-label">Pilih Jenis Sampah:</label>
 
                     <div class="row font-weight-bold mb-2 px-2">
-                        <div class="col-md-1 text-center">✔</div>
+                        <div class="col-md-1">Pilih</div>
                         <div class="col-md-3">Jenis Sampah</div>
                         <div class="col-md-2">Harga (Rp/kg)</div>
-                        <div class="col-md-3">Berat (kg)</div>
-                        <div class="col-md-3">Subtotal</div>
+                        <div class="col-md-2">Berat (kg)</div>
+                        <div class="col-md-2">Subtotal</div>
                     </div>
 
                     @php
-                        $dataSampah = json_decode($pesanan->jenis_sampah, true);
+                        $jenisSampah = $jenisSampah ?? (json_decode($pesanan->jenis_sampah, true) ?? []);
                     @endphp
 
-                    @foreach ($dataSampah as $index => $item)
-                        <div class="border rounded p-3 mb-2 bg-light detail-row">
-                            <div class="row align-items-center">
-                                <div class="col-md-1 text-center">
-                                    <input type="checkbox" name="jenis_sampah[{{ $index }}][checked]"
-                                        class="form-check-input sampah-checkbox" value="1"
-                                        {{ isset($item['nama']) ? 'checked' : '' }}>
-                                </div>
+                    @foreach ($jenisSampah as $index => $item)
+                        @php
+                            $namaVal = $item['nama'] ?? '';
+                            $hargaVal = isset($item['harga']) ? $item['harga'] : 0;
+                            $jumlahVal = isset($item['jumlah']) ? $item['jumlah'] : 0;
+                            $totalVal = isset($item['total']) ? $item['total'] : $hargaVal * $jumlahVal;
+                            $checked = !isset($item['checked']) || $item['checked'] ? 'checked' : '';
+                        @endphp
 
-                                <div class="col-md-3">
-                                    <input type="text" name="jenis_sampah[{{ $index }}][nama]"
-                                        class="form-control" value="{{ $item['nama'] }}" readonly>
-                                </div>
+                        <div class="row mb-2 detail-row align-items-center">
+                            <!-- Checkbox -->
+                            <div class="col-md-1 text-center">
+                                <input type="checkbox" class="check-input"
+                                    name="jenis_sampah[{{ $index }}][checked]" value="1" {{ $checked }}>
+                            </div>
 
-                                <div class="col-md-2">
-                                    <input type="number" class="form-control harga-input"
-                                        name="jenis_sampah[{{ $index }}][harga]" value="{{ $item['harga'] }}"
-                                        min="0" step="100" readonly
-                                        {{ isset($item['nama']) ? '' : 'disabled' }}>
-                                </div>
+                            <!-- Jenis Sampah -->
+                            <div class="col-md-3">
+                                <select name="jenis_sampah[{{ $index }}][nama]" class="form-control jenis-select" data-index="{{ $index }}">
+                                    <option value="">-- Pilih Jenis --</option>
+                                    @foreach ($allJenis as $jenis)
+                                        <option value="{{ $jenis->nm_jenis }}" data-harga="{{ $jenis->harga_perkilo }}"
+                                            {{ $namaVal == $jenis->nm_jenis ? 'selected' : '' }}>
+                                            {{ $jenis->nm_jenis }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
 
-                                <div class="col-md-3">
-                                    <input type="number" class="form-control jumlah-input"
-                                        name="jenis_sampah[{{ $index }}][jumlah]" value="{{ $item['jumlah'] }}"
-                                        min="0" step="0.01" {{ isset($item['nama']) ? '' : 'disabled' }}>
-                                </div>
+                            <!-- Harga -->
+                            <div class="col-md-2">
+                                <input type="number" class="form-control harga-input"
+                                    name="jenis_sampah[{{ $index }}][harga]" value="{{ $hargaVal }}"
+                                    min="0" step="100">
+                            </div>
 
-                                <div class="col-md-3">
-                                    <input type="text" class="form-control total-display bg-white" readonly>
-                                    <input type="hidden" class="total-hidden"
-                                        name="jenis_sampah[{{ $index }}][total]">
-                                </div>
+                            <!-- Berat -->
+                            <div class="col-md-2">
+                                <input type="number" class="form-control jumlah-input"
+                                    name="jenis_sampah[{{ $index }}][jumlah]" value="{{ $jumlahVal }}"
+                                    min="0" step="0.1">
+                            </div>
+
+                            <!-- Subtotal -->
+                            <div class="col-md-2">
+                                <input type="number" class="form-control total-input"
+                                    name="jenis_sampah[{{ $index }}][total]" value="{{ $totalVal }}" readonly>
                             </div>
                         </div>
                     @endforeach
@@ -123,13 +138,9 @@
                 <div class="form-group">
                     <label>Status Pesanan</label>
                     <select name="status" class="form-control" required>
-                        <option value="sedang diproses" {{ $pesanan->status == 'diproses' ? 'selected' : '' }}>
-                            Diproses</option>
-                        <option value="telah diterima" {{ $pesanan->status == 'telah diterima' ? 'selected' : '' }}>
-                            Telah Diterima</option>
-                        <option value="transaksi berhasil"
-                            {{ $pesanan->status == 'transaksi berhasil' ? 'selected' : '' }}>
-                            Transaksi Berhasil</option>
+                        <option value="sedang diproses" {{ $pesanan->status == 'sedang diproses' ? 'selected' : '' }}>Diproses</option>
+                        <option value="telah diterima" {{ $pesanan->status == 'telah diterima' ? 'selected' : '' }}>Telah Diterima</option>
+                        <option value="transaksi berhasil" {{ $pesanan->status == 'transaksi berhasil' ? 'selected' : '' }}>Transaksi Berhasil</option>
                     </select>
                 </div>
 
@@ -142,10 +153,26 @@
         </div>
     </div>
 
-    {{-- SCRIPT UNTUK PERHITUNGAN DAN FILTER --}}
+    {{-- SCRIPT --}}
     <script>
         function formatRupiah(angka) {
             return new Intl.NumberFormat('id-ID').format(angka);
+        }
+
+        function updateTotal(row) {
+            const checkbox = row.querySelector('.check-input');
+            const hargaInput = row.querySelector('.harga-input');
+            const jumlahInput = row.querySelector('.jumlah-input');
+            const totalInput = row.querySelector('.total-input');
+
+            if (checkbox.checked) {
+                const harga = parseFloat(hargaInput.value) || 0;
+                const jumlah = parseFloat(jumlahInput.value) || 0;
+                totalInput.value = harga * jumlah;
+            } else {
+                totalInput.value = 0;
+            }
+            updateTotalSemua();
         }
 
         function updateTotalSemua() {
@@ -153,81 +180,50 @@
             let totalHarga = 0;
 
             document.querySelectorAll('.detail-row').forEach(row => {
-                const checkbox = row.querySelector('.sampah-checkbox');
-                const harga = row.querySelector('.harga-input');
-                const jumlah = row.querySelector('.jumlah-input');
-                const totalDisplay = row.querySelector('.total-display');
-                const totalHidden = row.querySelector('.total-hidden');
+                const checkbox = row.querySelector('.check-input');
+                const jumlah = parseFloat(row.querySelector('.jumlah-input').value) || 0;
+                const total = parseFloat(row.querySelector('.total-input').value) || 0;
 
-                let subtotal = 0;
                 if (checkbox.checked) {
-                    let h = parseFloat(harga.value) || 0;
-                    let j = parseFloat(jumlah.value) || 0;
-                    subtotal = h * j;
-
-                    harga.disabled = false;
-                    jumlah.disabled = false;
-
-                    totalBerat += j;
-                    totalHarga += subtotal;
-
-                    totalDisplay.value = 'Rp ' + formatRupiah(subtotal);
-                    totalHidden.value = subtotal;
-                } else {
-                    harga.disabled = true;
-                    jumlah.disabled = true;
-                    jumlah.value = '';
-                    harga.value = '';
-                    totalDisplay.value = '';
-                    totalHidden.value = '';
+                    totalBerat += jumlah;
+                    totalHarga += total;
                 }
             });
 
             document.getElementById('totalBeratFormatted').value = totalBerat.toFixed(2);
             document.getElementById('totalBerat').value = totalBerat.toFixed(2);
             document.getElementById('totalHargaFormatted').value = 'Rp ' + formatRupiah(totalHarga);
-            document.getElementById('totalHarga').value = totalHarga.toFixed(0);
+            document.getElementById('totalHarga').value = Math.round(totalHarga);
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.sampah-checkbox').forEach(cb => {
-                cb.addEventListener('change', updateTotalSemua);
-            });
-
-            document.querySelectorAll('.harga-input, .jumlah-input').forEach(input => {
-                input.addEventListener('input', updateTotalSemua);
-            });
-
-            // Kosongkan input yang tidak dicentang saat form dikirim
-            const form = document.querySelector('form');
-            form.addEventListener('submit', function() {
-                document.querySelectorAll('.detail-row').forEach(row => {
-                    const checkbox = row.querySelector('.sampah-checkbox');
-                    if (!checkbox.checked) {
-                        row.querySelectorAll('input, select').forEach(input => {
-                            input.disabled = true;
-                        });
-                    }
+            // auto isi harga saat pilih jenis
+            document.querySelectorAll('.jenis-select').forEach(select => {
+                select.addEventListener('change', function() {
+                    const hargaInput = this.closest('.detail-row').querySelector('.harga-input');
+                    const selectedOption = this.options[this.selectedIndex];
+                    const harga = selectedOption.getAttribute('data-harga');
+                    hargaInput.value = harga ? harga : 0;
+                    updateTotal(this.closest('.detail-row'));
                 });
             });
 
+            // update saat harga/jumlah berubah
+            document.querySelectorAll('.harga-input, .jumlah-input').forEach(input => {
+                input.addEventListener('input', function() {
+                    updateTotal(this.closest('.detail-row'));
+                });
+            });
+
+            // update saat checkbox berubah
+            document.querySelectorAll('.check-input').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    updateTotal(this.closest('.detail-row'));
+                });
+            });
+
+            // inisialisasi perhitungan awal
             updateTotalSemua();
         });
     </script>
-
-    {{-- STYLE --}}
-    <style>
-        .sampah-checkbox {
-            transform: scale(1.4);
-            margin-top: 5px;
-        }
-
-        .detail-row:hover {
-            background-color: #eef6ff;
-        }
-
-        .total-display:disabled {
-            background-color: #f3f3f3;
-        }
-    </style>
 @endsection
