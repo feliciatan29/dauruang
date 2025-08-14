@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Artikel;
 use App\Models\Informasi;
-
+use App\Models\Riwayat;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class BerandaNasabahController extends Controller
@@ -13,74 +15,51 @@ class BerandaNasabahController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $artikels = Artikel::orderBy('tgl_terbit', 'desc')->take(3)->get();
-        $informasis = Informasi::orderBy('tgl_informasi', 'desc')->take(6)->get(); // ambil informasi terbaru duluan
-        return view('nasabah.beranda', compact('artikels', 'informasis'));
-    }
+       public function index()
+{
+    // Ambil total pesanan dari riwayat dengan status "transaksi berhasil"
+    $totalPesanan = Riwayat::whereRaw("LOWER(TRIM(status)) = 'transaksi berhasil'")
+        ->sum('total_pesanan');
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // Format ke Rupiah
+    $totalRupiah = number_format($totalPesanan, 0, ',', '.');
+
+    // Artikel & Informasi terbaru
+    $artikels = Artikel::orderBy('tgl_terbit', 'desc')->take(3)->get();
+    $informasis = Informasi::orderBy('tgl_informasi', 'desc')->take(6)->get();
+
+    return view('nasabah.beranda', compact('artikels', 'informasis', 'totalRupiah'));
+}
+
+
+
+
+
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //

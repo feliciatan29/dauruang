@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Models\Pesananc;
 use App\Models\Jenis;
+use App\Models\Riwayat; // ✅ Tambahkan Model Riwayat
 use Illuminate\Support\Facades\DB;
 
 class PesananController extends Controller
@@ -25,12 +25,11 @@ class PesananController extends Controller
         return view('admin.pesanan.edit', compact('pesanan', 'jenisSampah', 'allJenis'));
     }
 
- public function update(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $pesanan = Pesananc::findOrFail($id);
 
         $inputSampah = $request->input('jenis_sampah', []);
-
         $newJenisSampah = [];
         $totalBerat = 0;
         $totalHarga = 0;
@@ -55,15 +54,43 @@ class PesananController extends Controller
             }
         }
 
+        // Update nilai di model
         $pesanan->jenis_sampah = json_encode($newJenisSampah);
-        $pesanan->berat = $totalBerat; // sesuai field di tabel
-        $pesanan->total_pesanan = $totalHarga; // sesuai field di tabel
+        $pesanan->berat = $totalBerat;
+        $pesanan->total_pesanan = $totalHarga;
         $pesanan->status = $request->status;
+
+        // ✅ Tambahan: Pindahkan ke tbl_riwayat jika transaksi berhasil
+        if ($request->status === 'transaksi berhasil') {
+            Riwayat::create([
+                'nama'          => $pesanan->nama,
+                'tanggal'       => $pesanan->tanggal,
+                'waktu'         => $pesanan->waktu,
+                'telepon'       => $pesanan->telepon,
+                'alamat'        => $pesanan->alamat,
+                'jenis_sampah'  => $pesanan->jenis_sampah,
+                'berat'         => $pesanan->berat,
+                'total_pesanan' => $pesanan->total_pesanan,
+                'catatan'       => $pesanan->catatan,
+                'status'        => $pesanan->status,
+                'gambar'        => $pesanan->gambar,
+                'created_at'    => $pesanan->created_at,
+                'updated_at'    => now()
+            ]);
+
+            // Hapus dari tabel pesanan
+            $pesanan->delete();
+
+            return redirect()->route('pesanan.index')
+                ->with('success', 'Pesanan berhasil dipindahkan ke Riwayat');
+        }
+
+        // Jika status bukan transaksi berhasil → simpan biasa
         $pesanan->save();
 
-        return redirect()->route('pesanan.index')->with('success', 'Pesanan berhasil diperbarui');
+        return redirect()->route('pesanan.index')
+            ->with('success', 'Pesanan berhasil diperbarui');
     }
-
 
     public function destroy($id)
     {

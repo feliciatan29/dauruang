@@ -26,10 +26,29 @@ use App\Models\Pesananc;
 // Redirect root to login page
 Route::get('/', fn() => redirect('/login'));
 
-// Login & Logout
-Route::get('/login', [UserController::class, 'index'])->name('login')->middleware('guest');
+// Login Admin
+Route::get('/login', [UserController::class, 'index'])
+    ->name('login')
+    ->middleware('guest');
 Route::post('/login', [UserController::class, 'authenticate']);
+
+// Login Nasabah
+Route::get('/login-nasabah', [UserController::class, 'loginNasabah'])
+    ->name('nasabah.login')
+    ->middleware('guest');
+Route::post('/login-nasabah', [UserController::class, 'authenticateNasabah']);
+
+// Register Nasabah
+Route::get('/register-nasabah', [UserController::class, 'registerNasabah'])
+    ->name('nasabah.register') // ← tambahkan name agar Blade bisa pakai route('nasabah.register')
+    ->middleware('guest');
+Route::post('/register-nasabah', [UserController::class, 'storeNasabah'])
+    ->name('nasabah.register.store');
+
+// Logout
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+Route::get('/logout-nasabah', [UserController::class, 'logoutNasabah'])->name('logout.nasabah');
+
 
 // Dashboard (Beranda)
 Route::get('/admin.beranda', [BerandaController::class, 'index'])->name('admin.beranda');

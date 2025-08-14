@@ -73,7 +73,7 @@
         }
     </style>
 
-    
+
 <div class="container py-5">
         <h2 class="text-center mb-5 fw-bold text-primary">Pesanan Telah Diterima</h2>
 
@@ -104,7 +104,7 @@
         </div>
     </div>
 
-    
+
         @if (session('success'))
             <div class="alert alert-success text-center">{{ session('success') }}</div>
         @endif
@@ -133,8 +133,19 @@
                     <!-- Informasi -->
                     <div class="col-12 col-md-9 text-secondary">
                         <p class="sampah-title">
-                            SAMPAH {{ $item->jenis_sampah->jenis_sampah ?? '-' }}
-                        </p>
+                                SAMPAH <br>
+                                @php
+                                    $jenisSampahList = json_decode($item->jenis_sampah, true);
+                                @endphp
+
+                                @if (is_array($jenisSampahList))
+                                    @foreach ($jenisSampahList as $js)
+                                        {{ $js['nama'] ?? '-' }} - {{ $js['jumlah'] ?? 0 }} Kg<br>
+                                    @endforeach
+                                @else
+                                    Tidak ada data jenis sampah
+                                @endif
+                            </p>
                         <p class="mb-2">
                             <i class="bi bi-scale"></i> {{ $item->berat ?? '-' }} kg
                         </p>

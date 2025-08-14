@@ -3,88 +3,96 @@
     <!-- Carousel Start -->
     <div class="container-fluid p-0 wow fadeIn" data-wow-delay="0.1s">
         <div id="header-carousel" class="carousel slide" data-bs-ride="carousel">
+
+            <!-- Carousel Indicators -->
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#header-carousel" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#header-carousel" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#header-carousel" data-bs-slide-to="2"></button>
+            </div>
+
+            <!-- Carousel Items -->
             <div class="carousel-inner">
+                <!-- Slide 1 -->
                 <div class="carousel-item active">
-                    <img class="w-100" src="nasabah/img/home-1.jpeg" alt="Image">
-                    <div class="carousel-caption">
-                        <div class="container">
-                            <div class="row justify-content-center">
-                                <div class="col-lg-8">
-                                    <h1 class="display-1 text-white mb-5 animated slideInDown">Mulai dari Sampah Wujudkan
-                                        Perubahan</h1>
-                                    <a href="" class="btn btn-primary py-sm-3 px-sm-4">Explore More</a>
-                                </div>
-                            </div>
-                        </div>
+                    <img class="w-100" src="nasabah/img/home-1.jpeg" alt="Image 1">
+                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                        <h1 class="display-1 text-white mb-4 animated slideInDown text-center">
+                            Mulai dari Sampah Wujudkan Perubahan
+                        </h1>
+                        <a href="#" class="btn btn-primary px-5 py-3 rounded-pill shadow-lg fw-bold animated fadeInUp"
+                            style="font-size: 1.1rem;">
+                            Explore More
+                        </a>
                     </div>
                 </div>
+
+                <!-- Slide 2 -->
                 <div class="carousel-item">
-                    <img class="w-100" src="nasabah/img/home-1.jpeg" alt="Image">
-                    <div class="carousel-caption">
-                        <div class="container">
-                            <div class="row justify-content-center">
-                                <div class="col-lg-7">
-                                    <h1 class="display-1 text-white mb-5 animated slideInDown">Mulai dari Sampah Wujudkan
-                                        Perubahan</h1>
-                                    <a href="" class="btn btn-primary py-sm-3 px-sm-4">Explore More</a>
-                                </div>
-                            </div>
-                        </div>
+                    <img class="w-100" src="nasabah/img/carousel-1.jpg" alt="Image 2">
+                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                        <h1 class="display-4 text-white mb-4 animated slideInDown">Daur Ulang untuk Masa Depan</h1>
+                        <a href="#" class="btn btn-primary px-5 py-3 rounded-pill shadow-lg fw-bold animated fadeInUp"
+                            style="font-size: 1.1rem; margin-top: 10px;">
+                            Learn More
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Slide 3 -->
+                <div class="carousel-item">
+                    <img class="w-100" src="nasabah/img/carousel-2.jpg" alt="Image 3">
+                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                        <h1 class="display-4 text-white mb-4 animated slideInDown">Bersama Menjaga Lingkungan</h1>
+                        <a href="#" class="btn btn-primary px-5 py-3 rounded-pill shadow-lg fw-bold animated fadeInUp"
+                            style="font-size: 1.1rem; margin-top: 10px;">
+                            Join Us
+                        </a>
                     </div>
                 </div>
             </div>
+
+            <!-- Controls -->
             <button class="carousel-control-prev" type="button" data-bs-target="#header-carousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
+                <span class="carousel-control-prev-icon"></span>
             </button>
             <button class="carousel-control-next" type="button" data-bs-target="#header-carousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
+                <span class="carousel-control-next-icon"></span>
             </button>
         </div>
     </div>
     <!-- Carousel End -->
 
     <!-- Top Feature Start -->
-    <div class="container-fluid top-feature py-5 pt-lg-0">
-        <div class="container py-5 pt-lg-0">
-            <div class="row gx-0 ">
-                <div class="col-lg-4 wow fadeIn" data-wow-delay="0.1s">
-                    <div class="bg-white shadow d-flex align-items-center h-100 px-5" style="min-height: 160px;">
-                        <div class="d-flex">
-                            <div class="flex-shrink-0 btn-lg-square rounded-circle bg-light">
-                                <i class="fa fa-star fa-3x text-success"></i>
-                            </div>
-                            <div class="ps-3">
-                                <h4 class="mb-0">0</h4>
-                                <small>Coin</small>
-                            </div>
+    <div class="container-fluid top-feature py-5">
+        <div class="container py-5">
+            <div class="row justify-content-center gx-4 gy-4">
+                <!-- Poin -->
+                <div class="col-lg-4 col-md-6 d-flex justify-content-center wow fadeIn" data-wow-delay="0.3s">
+                    <div class="bg-white shadow-sm d-flex align-items-center px-4 py-3 rounded"
+                        style="min-height: 160px; width: 100%;">
+                        <div
+                            class="flex-shrink-0 btn-lg-square rounded-circle bg-light d-flex align-items-center justify-content-center me-3">
+                            <i class="fa fa-wallet fa-3x text-primary"></i>
+                        </div>
+                        <div class="flex-grow-1 text-center text-md-start">
+                            <h4 class="mb-1 font-weight-bold">Rp {{ $totalRupiah }}</h4>
+                            <small class="text-muted">Poin (Transaksi Berhasil)</small>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 wow fadeIn" data-wow-delay="0.3s">
-                    <div class="bg-white shadow d-flex align-items-center h-100 px-5" style="min-height: 160px;">
-                        <div class="d-flex">
-                            <div class="flex-shrink-0 btn-lg-square rounded-circle bg-light">
-                                <i class="fa fa-wallet fa-3x text-primary"></i>
-                            </div>
-                            <div class="ps-3">
-                                <h4 class="mb-0">0</h4>
-                                <small>Poin</small>
-                            </div>
+
+                <!-- Riwayat Transaksi -->
+                <div class="col-lg-4 col-md-6 d-flex justify-content-center wow fadeIn" data-wow-delay="0.5s">
+                    <div class="bg-white shadow-sm d-flex align-items-center px-4 py-3 rounded"
+                        style="min-height: 160px; width: 100%;">
+                        <div
+                            class="flex-shrink-0 btn-lg-square rounded-circle bg-light d-flex align-items-center justify-content-center me-3">
+                            <i class="fa fa-history fa-3x text-warning"></i>
                         </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 wow fadeIn" data-wow-delay="0.5s">
-                    <div class="bg-white shadow d-flex align-items-center h-100 px-5" style="min-height: 160px;">
-                        <div class="d-flex">
-                            <div class="flex-shrink-0 btn-lg-square rounded-circle bg-light">
-                                <i class="fa fa-history fa-3x text-warning"></i>
-                            </div>
-                            <div class="ps-3">
-                                <a href="#" class="btn btn-sm btn-outline-warning mt-2">Lihat Riwayat</a>
-                                <p class="text-muted mt-2 mb-0">Riwayat Transaksi</p>
-                            </div>
+                        <div class="flex-grow-1 text-center text-md-start d-flex flex-column justify-content-center">
+                            <a href="{{ route('pesananc.transaksi_berhasil') }}" class="btn btn-sm btn-outline-warning mb-2">Lihat Riwayat</a>
+                            <p class="text-muted mb-0">Riwayat Transaksi</p>
                         </div>
                     </div>
                 </div>
@@ -92,7 +100,6 @@
         </div>
     </div>
     <!-- Top Feature End -->
-
 
     <div class="container-xxl py-5">
         <div class="container">
@@ -279,7 +286,8 @@
                                         {{ \Carbon\Carbon::parse($info->tgl_informasi)->format('d M Y') }} |
                                         {{ $info->kategori }}
                                     </p>
-                                    <p class="mb-3 artikel-content">{{ Str::limit(strip_tags($info->isi_informasi), 100) }}
+                                    <p class="mb-3 artikel-content">
+                                        {{ Str::limit(strip_tags($info->isi_informasi), 100) }}
                                     </p>
                                     <a class="btn btn-sm" href="{{ route('informasi.show', $info->id) }}">
                                         <i class="fa fa-plus text-primary me-2"></i>Read More
