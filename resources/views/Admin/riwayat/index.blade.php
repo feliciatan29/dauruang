@@ -49,7 +49,8 @@
                                         <ul class="list-unstyled mb-0 text-left">
                                             @foreach ($jenisSampah as $sampah)
                                                 <li>{{ $sampah['nama'] ?? '-' }}
-                                                    ({{ number_format($sampah['jumlah'] ?? 0, 2) }} kg)</li>
+                                                    ({{ number_format($sampah['jumlah'] ?? 0, 2) }} kg)
+                                                </li>
                                             @endforeach
                                         </ul>
                                     @else
@@ -61,9 +62,14 @@
                                 <td>Rp {{ number_format($item->total_pesanan ?? 0, 0, ',', '.') }}</td>
                                 <td>{{ $item->catatan ?? '-' }}</td>
 
-                                {{-- Status --}}
                                 <td>
-                                    <span class="badge badge-success">{{ ucfirst($item->status) }}</span>
+                                    @if ($item->status === 'dibatalkan')
+                                        <span class="badge badge-danger">{{ ucfirst($item->status) }}</span>
+                                    @elseif ($item->status === 'transaksi berhasil')
+                                        <span class="badge badge-success">{{ ucfirst($item->status) }}</span>
+                                    @else
+                                        <span class="badge badge-secondary">{{ ucfirst($item->status) }}</span>
+                                    @endif
                                 </td>
 
                                 {{-- Gambar --}}
@@ -74,7 +80,8 @@
 
                                     @if ($gambar && file_exists(public_path($gambar)))
                                         <a href="{{ asset($gambar) }}" target="_blank">
-                                            <img src="{{ asset($gambar) }}" width="60" height="60" style="object-fit: cover;" alt="Bukti">
+                                            <img src="{{ asset($gambar) }}" width="60" height="60"
+                                                style="object-fit: cover;" alt="Bukti">
                                         </a>
                                     @else
                                         <span class="text-muted">-</span>

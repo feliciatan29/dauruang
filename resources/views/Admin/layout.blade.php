@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>Trash2Cash - Website Bank Sampah</title>
+    <title>DaurUang - Website Bank Sampah</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="{{ asset('../assets/vendors/mdi/css/materialdesignicons.min.css')}}">
     <link rel="stylesheet" href="{{ asset('../assets/vendors/flag-icon-css/css/flag-icon.min.css')}}">
@@ -60,7 +60,7 @@
 
 
             <div>
-              <span class="text-muted d-block text-center text-sm-left d-sm-inline-block"> Distributed By: Intan Widara - 2025</span>
+              <span class="text-muted d-block text-center text-sm-left d-sm-inline-block"> DaurUang: Website Bank Sampah</span>
             </div>
           </footer>
           <!-- partial -->

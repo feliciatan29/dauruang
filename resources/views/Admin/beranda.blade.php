@@ -163,8 +163,8 @@
                 </div>
             </div>
 
-            <!-- Rasio Pengembalian -->
-            <div class="col-md-6" data-aos="zoom-in">
+            <!-- Rasio Pengembalian Sampah -->
+            <div class="col-md-6 col-xl-6" data-aos="fade-up" data-aos-delay="400">
                 <div class="card">
                     <div class="card-body d-flex flex-column justify-content-between">
                         <h5 class="card-title d-flex justify-content-between align-items-center">
@@ -174,12 +174,14 @@
                         <div class="d-flex flex-column align-items-start mt-2">
                             <div class="d-flex align-items-baseline">
                                 <h2 class="font-weight-bold text-success mr-2 counter"
-                                    data-target="{{ $rasioPengembalian ?? 33.5 }}">0</h2>
+                                    data-target="{{ $rasioPengembalian ?? 0 }}">0</h2>
                                 <span class="text-muted">%</span>
                             </div>
                             <p class="text-muted mb-2">Dari total volume sampah yang berhasil diolah kembali.</p>
                             <div class="progress progress-md w-100 mt-1">
-                                <div class="progress-bar bg-success" style="width: {{ $rasioPengembalian ?? 33.5 }}%">
+                                <div class="progress-bar bg-success" role="progressbar"
+                                    style="width: {{ $rasioPengembalian ?? 0 }}%"
+                                    aria-valuenow="{{ $rasioPengembalian ?? 0 }}" aria-valuemin="0" aria-valuemax="100">
                                 </div>
                             </div>
                         </div>
@@ -191,38 +193,45 @@
         <!-- Artikel & Informasi -->
         <div class="row">
             <div class="col-md-12" data-aos="fade-up" data-aos-delay="100">
-                <div class="card">
+                <div class="card shadow-sm">
                     <div class="card-body">
-                        <div class="section-header">Artikel & Informasi Terbaru</div>
+                        <div class="section-header mb-3 fw-bold fs-5">Artikel & Informasi Terbaru</div>
                         <div class="table-responsive">
-                            <table class="table table-hover">
-                                <thead>
+                            <table class="table table-hover align-middle">
+                                <thead class="table-light">
                                     <tr>
                                         <th>Judul</th>
                                         <th>Kategori</th>
                                         <th>Tanggal</th>
-                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Cara Mengelola Sampah Rumah Tangga</td>
-                                        <td><span class="badge bg-primary text-white">Artikel</span></td>
-                                        <td>02 Juli 2025</td>
-                                        <td><a href="#" class="btn btn-sm btn-outline-primary">Lihat</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Pemberitahuan Jadwal Baru</td>
-                                        <td><span class="badge bg-success text-white">Informasi</span></td>
-                                        <td>01 Juli 2025</td>
-                                        <td><a href="#" class="btn btn-sm btn-outline-success">Lihat</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Manfaat Bank Sampah Digital</td>
-                                        <td><span class="badge bg-info text-white">Artikel</span></td>
-                                        <td>28 Juni 2025</td>
-                                        <td><a href="#" class="btn btn-sm btn-outline-info">Lihat</a></td>
-                                    </tr>
+                                    @foreach ($artikels as $artikel)
+                                        <tr>
+                                            <td>{{ $artikel->judul_artikel }}</td>
+                                            <td>
+                                                <span
+                                                    class="badge
+                                            {{ strtolower($artikel->kategori) == 'artikel'
+                                                ? 'bg-primary'
+                                                : (strtolower($artikel->kategori) == 'informasi'
+                                                    ? 'bg-success'
+                                                    : 'bg-secondary') }}">
+                                                    {{ $artikel->kategori }}
+                                                </span>
+                                            </td>
+                                            <td>{{ \Carbon\Carbon::parse($artikel->tgl_terbit)->format('d M Y') }}</td>
+                                        </tr>
+                                    @endforeach
+
+                                    @foreach ($informasi as $informasi)
+                                        <tr>
+                                            <td>{{ $informasi->judul_informasi }}</td>
+                                            <td><span class="badge bg-success">Informasi</span></td>
+                                            <td>{{ \Carbon\Carbon::parse($informasi->tgl_informasi)->format('d M Y') }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -243,60 +252,33 @@
         lucide.createIcons();
 
         // Grafik Uang Masuk
-        const ctxUang = document.getElementById('chartUangMasuk').getContext('2d');
-        new Chart(ctxUang, {
-            type: 'bar',
+        const ctx = document.getElementById('chartUangMasuk').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar', // diganti ke grafik batang
             data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'],
+                labels: @json($labels),
                 datasets: [{
-                    label: 'Uang Masuk (Rp)',
-                    data: [120000, 150000, 130000, 180000, 210000, 250000],
-                    backgroundColor: '#66bb6a',
-                    borderColor: '#388e3c',
-                    borderWidth: 1,
-                    borderRadius: 8,
-                    barThickness: 30
+                    label: 'Total Uang Masuk',
+                    data: @json($dataUangMasuk),
+                    backgroundColor: 'rgba(0, 128, 0, 0.6)',
+                    borderColor: 'rgba(0, 128, 0, 1)',
+                    borderWidth: 1
                 }]
             },
             options: {
                 responsive: true,
                 plugins: {
-                    title: {
-                        display: true,
-                        text: 'Rekap Uang Masuk Nasabah per Bulan',
-                        color: '#2e7d32',
-                        font: {
-                            size: 16,
-                            weight: 'bold'
-                        }
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return 'Rp ' + context.parsed.y.toLocaleString();
-                            }
-                        }
+                    legend: {
+                        position: 'top'
                     }
                 },
                 scales: {
-                    x: {
-                        ticks: {
-                            color: '#388e3c'
-                        },
-                        grid: {
-                            display: false
-                        }
-                    },
                     y: {
                         beginAtZero: true,
                         ticks: {
-                            color: '#388e3c',
                             callback: function(value) {
-                                return 'Rp ' + value.toLocaleString();
+                                return 'Rp ' + value.toLocaleString('id-ID');
                             }
-                        },
-                        grid: {
-                            color: '#c8e6c9'
                         }
                     }
                 }

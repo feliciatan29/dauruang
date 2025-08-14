@@ -1,12 +1,10 @@
 @extends('nasabah.layout')
+
 @section('content')
 
-
-    <!-- Pesanan Section Start -->
 <!-- Pesanan Section Start -->
 <div class="container py-5">
     <div class="text-center mx-auto wow fadeInUp mb-4" data-wow-delay="0.1s" style="max-width: 500px;">
-
         <h1 class="display-6 fw-semibold">Pilih Jenis Sampah</h1>
     </div>
 

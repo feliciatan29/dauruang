@@ -144,10 +144,6 @@
     <!-- Nav Tabs -->
     <ul class="nav nav-tabs nav-tabs-profile">
         <li class="nav-item"><a class="nav-link active" href="#">Biodata Diri</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Daftar Alamat</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Panduan</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Syarat dan Ketentuan</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Hubungi Kami</a></li>
     </ul>
 
     <!-- Profile Section -->
@@ -167,7 +163,7 @@
         <!-- Biodata dan Kontak -->
 <div class="col-lg-8 col-md-7 col-12">
     <a href="{{ route('profiles.edit') }}" class="section-title d-inline-block text-decoration-none" style="color: #00b14f;">
-    <i class="bi bi-pencil-square me-2"></i> 
+    <i class="bi bi-pencil-square me-2"></i>
 </a>
 
 
@@ -194,10 +190,6 @@
     <strong>Nomor HP</strong> {{ $profile->nomor_hp ?? 'Tambah Nomor HP' }} <span></span>
 </div>
 
-
-            <div class="button-group">
-                <button class="btn btn-outline-secondary">Buat Kata Sandi</button>
-            </div>
         </div>
     </div>
 </div>

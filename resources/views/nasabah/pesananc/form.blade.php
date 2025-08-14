@@ -110,10 +110,7 @@
                 <span class="fw-semibold">Rp {{ number_format($total, 0, ',', '.') }}</span>
             </div>
 
-            {{-- ✅ TOMBOL PENGALIHAN KE PILIH JENIS --}}
-            <button type="submit" form="form-edit-jenis" class="btn btn-outline-primary mt-3">
-                <i class="bi bi-plus-circle"></i> Tambah / Edit Jenis Sampah
-            </button>
+
         </div>
 
         {{-- Hidden input untuk database --}}
@@ -129,16 +126,11 @@
 
         {{-- Tombol Aksi --}}
         <div class="d-flex gap-3 mt-4">
-            <button type="submit" name="action" value="keranjang" class="btn btn-secondary">Simpan di Keranjang</button>
             <button type="submit" name="action" value="kirim" class="btn btn-success">Kirim Pesanan</button>
         </div>
     </form>
 
-    {{-- ✅ FORM TAMBAH JENIS SAMPAH (DILUAR FORM UTAMA) --}}
-    <form id="form-edit-jenis" action="{{ route('pesananc.pilihjenis') }}" method="POST" style="display: none;">
-        @csrf
-        <input type="hidden" name="form_sementara" value="{{ base64_encode(serialize($form)) }}">
-    </form>
+
 </div>
 
 {{-- Script Validasi Dinamis --}}
@@ -147,21 +139,7 @@
         const form = document.querySelector('#form-pesanan');
         const wajibFields = form.querySelectorAll('.wajib');
 
-        document.querySelector('button[name="action"][value="keranjang"]').addEventListener('click', function (e) {
-            e.preventDefault();
-            wajibFields.forEach(field => field.removeAttribute('required'));
 
-            let input = form.querySelector('input[name="action"]');
-            if (!input) {
-                input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = 'action';
-                form.appendChild(input);
-            }
-            input.value = 'keranjang';
-
-            form.submit();
-        });
 
         document.querySelector('button[name="action"][value="kirim"]').addEventListener('click', function () {
             wajibFields.forEach(field => field.setAttribute('required', 'required'));

@@ -17,11 +17,14 @@ class JenisController extends Controller
 
     public function cari_jenis(Request $request)
     {
-        $kata = $request->input('kata');
-        $jenish = Jenis::where('nm_jenis', 'LIKE', "%$kata%")->paginate(20);
+       $keyword = $request->input('keyword');
+
+        $jenish = Jenis::where('kd_jenis', 'LIKE', "%{$keyword}%")
+        ->orWhere('nm_jenis', 'LIKE', "%{$keyword}%")
+        ->paginate(20);
 
         return view('admin.jenis.index', compact('jenish'))
-            ->with('i', (request()->input('page', 1) - 1) * 20);
+        ->with('i', (request()->input('page', 1) - 1) * 20);
     }
 
     public function create()

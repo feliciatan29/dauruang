@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Pesananc;
 use App\Models\Riwayat;
 use App\Models\Pesanan;
+use Illuminate\Support\Facades\DB;
 
 
 class PesanancController extends Controller
@@ -227,14 +228,38 @@ public function statusPesanan()
 
 public function batalkanTransaksi($id)
 {
-    $pesanan = Pesananc::findOrFail($id);
-    $pesanan->status = 'dibatalkan';
-    $pesanan->save();
+    DB::beginTransaction();
+    try {
+        $pesanan = Pesananc::findOrFail($id);
 
-    return redirect()->route('pesananc.status')
-    ->with('success', 'Transaksi berhasil dibatalkan.');
+        // Insert ke tbl_riwayat
+        Riwayat::create([
+            'nama'           => $pesanan->nama,
+            'tanggal'        => $pesanan->tanggal,
+            'waktu'          => $pesanan->waktu,
+            'telepon'        => $pesanan->telepon,
+            'alamat'         => $pesanan->alamat,
+            'jenis_sampah'   => $pesanan->jenis_sampah,
+            'berat'          => $pesanan->berat,
+            'total_pesanan'  => $pesanan->total_pesanan,
+            'catatan'        => $pesanan->catatan,
+            'status'         => 'dibatalkan', // status khusus dibatalkan
+            'gambar'         => $pesanan->gambar,
+        ]);
 
+        // Hapus dari tabel pesanan yang sedang diproses
+        $pesanan->delete();
+
+        DB::commit();
+
+        return redirect()->route('pesananc.status')
+            ->with('success', 'Transaksi berhasil dibatalkan dan dipindahkan ke riwayat.');
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return redirect()->back()->with('error', 'Gagal membatalkan transaksi: ' . $e->getMessage());
+    }
 }
+
 
 public function editPilihJenis()
 {
