@@ -10,112 +10,97 @@ class ProfilesController extends Controller
 {
     public function __construct()
     {
-        // Pastikan semua method butuh login
         $this->middleware('auth');
     }
 
+    // Menampilkan semua profil (khusus admin)
     public function index()
     {
-        // Jika ingin menampilkan semua profile (opsional)
-        $profiles = Profiles::with('user')->get();
+        $profiles = Profiles::with('user')
+            ->whereHas('user', fn($q) => $q->where('role', 'nasabah'))
+            ->get();
+
         return view('nasabah.pesananc.index_profil', compact('profiles'));
     }
 
+    // Form create profil
     public function create()
     {
+        $this->authorizeNasabah();
         return view('nasabah.pesananc.create_profil');
     }
 
+    // Simpan profil baru
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'nama_lengkap'  => 'nullable|string|max:255',
-            'tanggal_lahir' => 'nullable|date',
-            'jenis_kelamin' => 'nullable|in:Laki-laki,Perempuan',
-            'nomor_hp'      => 'nullable|string|max:20',
-            'foto'          => 'nullable|image|mimes:jpeg,png,jpg|max:10240',
-        ]);
+        $this->authorizeNasabah();
 
-        $user = Auth::user();
+        $data = $this->validateData($request);
 
+        // Upload foto jika ada
         if ($request->hasFile('foto')) {
-            $foto = $request->file('foto');
-            $nama_file = time() . '_' . $foto->getClientOriginalName();
-            $folder = public_path('Foto_Profil');
-
-            if (!file_exists($folder)) {
-                mkdir($folder, 0777, true);
-            }
-
-            $foto->move($folder, $nama_file);
-            $data['foto'] = 'Foto_Profil/' . $nama_file;
+            $data['foto'] = $this->uploadFoto($request->file('foto'));
         }
 
-        $user->profile()->create($data);
+        Auth::user()->profile()->create($data);
 
         return redirect()->route('profiles.show')
             ->with('success', 'Profil berhasil dibuat!');
     }
 
+    // Tampilkan profil nasabah
     public function show()
     {
+        $this->authorizeNasabah();
         $user = Auth::user();
         $profile = $user->profile;
 
         return view('nasabah.pesananc.profil', compact('user', 'profile'));
     }
 
+    // Form edit profil
     public function edit()
     {
+        $this->authorizeNasabah();
         $user = Auth::user();
-        $profile = $user->profile; // Bisa null kalau belum dibuat
+        $profile = $user->profile;
 
         return view('nasabah.pesananc.edit_profil', compact('user', 'profile'));
     }
 
+    // Update profil
     public function update(Request $request)
     {
-        $data = $request->validate([
-            'nama'          => 'nullable|string|max:255', // nama di tabel users
-            'nama_lengkap'  => 'nullable|string|max:255',
-            'tanggal_lahir' => 'nullable|date',
-            'jenis_kelamin' => 'nullable|in:Laki-laki,Perempuan',
-            'nomor_hp'      => 'nullable|string|max:20',
-            'foto'          => 'nullable|image|mimes:jpeg,png,jpg|max:10240',
-        ]);
+        $this->authorizeNasabah();
 
+        $data = $this->validateData($request, true);
         $user = Auth::user();
 
-        // Update nama user jika diubah
-        if ($request->filled('nama')) {
-            $user->name = $request->nama;
+        // Update nama di tabel users
+        if (!empty($data['nama'])) {
+            $user->name = $data['nama'];
             $user->save();
+            unset($data['nama']);
         }
 
-        // Upload foto jika ada
+        // Upload foto jika ada, jika tidak ada tetap pakai yang lama
         if ($request->hasFile('foto')) {
-            $foto = $request->file('foto');
-            $nama_file = time() . '_' . $foto->getClientOriginalName();
-            $folder = public_path('Foto_Profil');
-
-            if (!file_exists($folder)) {
-                mkdir($folder, 0777, true);
-            }
-
-            $foto->move($folder, $nama_file);
-            $data['foto'] = 'Foto_Profil/' . $nama_file;
+            $data['foto'] = $this->uploadFoto($request->file('foto'));
         }
 
-        // Update atau buat profil
-        $user->profile()->updateOrCreate(
-            ['user_id' => $user->id],
-            $data
-        );
+        // Update data lama hanya pada field yang diisi
+        $profile = $user->profile;
+        if ($profile) {
+            $profile->fill(array_filter($data))->save();
+        } else {
+            $user->profile()->create($data);
+        }
 
         return redirect()->route('profiles.show')
             ->with('success', 'Profil berhasil diperbarui!');
     }
 
+    // Hapus profil (khusus admin)
     public function destroy($id)
     {
         $profile = Profiles::findOrFail($id);
@@ -123,5 +108,41 @@ class ProfilesController extends Controller
 
         return redirect()->route('profiles.index')
             ->with('success', 'Profil berhasil dihapus!');
+    }
+
+    // ======================== Helper Methods ========================
+
+    private function authorizeNasabah()
+    {
+        if (Auth::user()->role !== 'nasabah') {
+            abort(403, 'Akses ditolak');
+        }
+    }
+
+    private function validateData(Request $request, $isUpdate = false)
+    {
+        $rules = [
+            'nama'          => 'nullable|string|max:255', // untuk tabel users
+            'nama_lengkap'  => 'nullable|string|max:255',
+            'tanggal_lahir' => 'nullable|date',
+            'jenis_kelamin' => 'nullable|in:Laki-laki,Perempuan',
+            'nomor_hp'      => 'nullable|string|max:20',
+            'foto'          => 'nullable|image|mimes:jpeg,png,jpg|max:10240',
+        ];
+
+        return $request->validate($rules);
+    }
+
+    private function uploadFoto($file)
+    {
+        $nama_file = time() . '_' . $file->getClientOriginalName();
+        $folder = public_path('Foto_Profil');
+
+        if (!file_exists($folder)) {
+            mkdir($folder, 0777, true);
+        }
+
+        $file->move($folder, $nama_file);
+        return 'Foto_Profil/' . $nama_file;
     }
 }

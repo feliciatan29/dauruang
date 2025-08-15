@@ -15,7 +15,7 @@
             <div class="carousel-inner">
                 <!-- Slide 1 -->
                 <div class="carousel-item active">
-                    <img class="w-100" src="nasabah/img/home-1.jpeg" alt="Image 1">
+                    <img class="w-100" src="{{ asset('nasabah/img/home-1.jpeg') }}" alt="Image 1">
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                         <h1 class="display-1 text-white mb-4 animated slideInDown text-center">
                             Mulai dari Sampah Wujudkan Perubahan
@@ -29,7 +29,7 @@
 
                 <!-- Slide 2 -->
                 <div class="carousel-item">
-                    <img class="w-100" src="nasabah/img/carousel-1.jpg" alt="Image 2">
+                    <img class="w-100" src="{{ asset('nasabah/img/carousel-1.jpg') }}" alt="Image 2">
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                         <h1 class="display-4 text-white mb-4 animated slideInDown">Daur Ulang untuk Masa Depan</h1>
                         <a href="#" class="btn btn-primary px-5 py-3 rounded-pill shadow-lg fw-bold animated fadeInUp"
@@ -41,7 +41,7 @@
 
                 <!-- Slide 3 -->
                 <div class="carousel-item">
-                    <img class="w-100" src="nasabah/img/carousel-2.jpg" alt="Image 3">
+                    <img class="w-100" src="{{ asset('nasabah/img/carousel-2.jpg') }}" alt="Image 3">
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                         <h1 class="display-4 text-white mb-4 animated slideInDown">Bersama Menjaga Lingkungan</h1>
                         <a href="#" class="btn btn-primary px-5 py-3 rounded-pill shadow-lg fw-bold animated fadeInUp"
@@ -141,7 +141,7 @@
             <div class="container">
                 <div class="row g-5 align-items-end">
                     <div class="col-lg-3 col-md-5 wow fadeInUp" data-wow-delay="0.1s">
-                        <img class="img-fluid rounded" data-wow-delay="0.1s" src="nasabah/img/about-1.jpg">
+                        <img class="img-fluid rounded" src="{{ asset('nasabah/img/about-1.jpg') }}">
                     </div>
                     <div class="col-lg-6 col-md-7 wow fadeInUp" data-wow-delay="0.3s">
                         <h1 class="display-1 text-primary mb-0">#1</h1>
@@ -176,7 +176,7 @@
 
 
         <!-- Facts Start -->
-        <div class="container-fluid facts my-5 py-5" data-parallax="scroll" data-image-src="nasabah/img/home-1.jpeg">
+        <div class="container-fluid facts my-5 py-5" data-parallax="scroll" data-image-src="{{ asset('nasabah/img/home-1.jpeg') }}">
             <div class="container py-5">
                 <div class="row g-5">
                     <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.1s">

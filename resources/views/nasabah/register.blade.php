@@ -73,7 +73,7 @@
                 </div>
                 <button type="submit" class="btn-register">Daftar</button>
             </form>
-            <a href="{{ url('/login-nasabah') }}" class="link-login">Sudah punya akun? Login di sini</a>
+            <a href="{{ url('/login') }}" class="link-login">Sudah punya akun? Login di sini</a>
         </div>
     </div>
 </div>

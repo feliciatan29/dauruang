@@ -138,11 +138,15 @@
 
         <!-- LOGOUT -->
         <li class="nav-item pt-3">
-            <a class="nav-link" href="{{ route('logout') }}"
-                onclick="return confirm('Apakah kamu yakin ingin keluar?')">
-                <i class="mdi mdi-logout menu-icon"></i>
-                <span class="menu-title">Log out</span>
-            </a>
+            <form action="{{ route('logout') }}" method="POST"
+                onsubmit="return confirm('Apakah kamu yakin ingin keluar?');">
+                @csrf
+                <button type="submit" class="nav-link"
+                    style="background: none; border: none; padding: 0; display: flex; align-items: center; cursor: pointer;">
+                    <i class="mdi mdi-logout menu-icon"></i>
+                    <span class="menu-title">Log out</span>
+                </button>
+            </form>
         </li>
     </ul>
 </nav>
