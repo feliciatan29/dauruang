@@ -57,7 +57,7 @@
                 </div>
             @endif
 
-            <form action="{{ route('nasabah.register.store') }}" method="POST">
+            <form action="{{ route('nasabah.register.post') }}" method="POST">
                 @csrf
                 <div class="form-group">
                     <input type="text" name="name" placeholder="Nama Lengkap" value="{{ old('name') }}" required>
