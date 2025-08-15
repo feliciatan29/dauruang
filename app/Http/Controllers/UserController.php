@@ -10,23 +10,15 @@ use App\Models\User;
 class UserController extends Controller
 {
     /**
-     * Halaman login admin
+     * Halaman login
      */
-    public function index()
+    public function showLoginForm()
     {
-        return view('admin.login', ['title' => 'Login Admin']);
+        return view('auth.login', ['title' => 'Login']);
     }
 
     /**
-     * Halaman login nasabah
-     */
-    public function loginNasabah()
-    {
-        return view('nasabah.login', ['title' => 'Login Nasabah']);
-    }
-
-    /**
-     * Proses login admin
+     * Proses login
      */
     public function authenticate(Request $request)
     {
@@ -35,27 +27,23 @@ class UserController extends Controller
             'password' => ['required'],
         ]);
 
-        if (Auth::attempt($credentials)) {
+        // Coba login
+        if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
-            return redirect('/admin.beranda');
-        }
+            $user = Auth::user();
 
-        return back()->with('loginError', 'Login gagal! Email atau password salah.');
-    }
-
-    /**
-     * Proses login nasabah
-     */
-    public function authenticateNasabah(Request $request)
-    {
-        $credentials = $request->validate([
-            'email'    => ['required', 'email'],
-            'password' => ['required'],
-        ]);
-
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            return redirect('/beranda-nasabah'); // langsung ke beranda nasabah
+            // Arahkan sesuai role
+            if ($user->role === 'admin') {
+                return redirect()->route('admin.beranda');
+            } elseif ($user->role === 'nasabah') {
+                return redirect()->route('nasabah.beranda');
+            } else {
+                // Logout jika role tidak valid
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+                return back()->with('loginError', 'Role tidak dikenali.');
+            }
         }
 
         return back()->with('loginError', 'Login gagal! Email atau password salah.');
@@ -75,49 +63,34 @@ class UserController extends Controller
     public function storeNasabah(Request $request)
     {
         $request->validate([
-            'name'                  => 'required|min:3',
-            'email'                 => 'required|email|unique:users',
-            'password'              => 'required|min:5|confirmed',
+            'name'     => 'required|min:3',
+            'email'    => 'required|email|unique:users',
+            'password' => 'required|min:5|confirmed',
         ]);
 
-        // Buat user baru
-        User::create([
+        $user = User::create([
             'name'     => $request->name,
             'email'    => $request->email,
             'password' => Hash::make($request->password),
+            'role'     => 'nasabah'
         ]);
 
-        // Langsung login setelah register
-        Auth::attempt([
-            'email'    => $request->email,
-            'password' => $request->password
-        ]);
-
+        // Login otomatis setelah registrasi
+        Auth::login($user);
         $request->session()->regenerate();
 
-        // Langsung ke beranda nasabah
-        return redirect('/beranda-nasabah')->with('success', 'Pendaftaran berhasil! Selamat datang.');
+        return redirect()->route('nasabah.beranda')->with('success', 'Pendaftaran berhasil! Selamat datang.');
     }
 
     /**
-     * Logout admin
+     * Logout
      */
     public function logout(Request $request)
     {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/login');
-    }
 
-    /**
-     * Logout nasabah
-     */
-    public function logoutNasabah(Request $request)
-    {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return redirect('/login-nasabah');
+        return redirect()->route('login')->with('success', 'Anda telah keluar.');
     }
 }
