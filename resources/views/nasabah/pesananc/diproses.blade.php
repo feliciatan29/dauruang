@@ -153,10 +153,7 @@
                             <p>
                                 <i class="bi bi-sticky"></i> {{ $item->catatan ?? '-' }}
                             </p>
-                            <p>
-                                <i class="bi bi-cash"></i> Total: Rp
-                                {{ number_format($item->total_pesanan ?? 0, 0, ',', '.') }}
-                            </p>
+
                         </div>
 
                     </div>
