@@ -74,13 +74,14 @@
                         <div class="row mb-2 detail-row align-items-center">
                             <!-- Checkbox -->
                             <div class="col-md-1 text-center">
-                                <input type="checkbox" class="check-input"
-                                    name="jenis_sampah[{{ $index }}][checked]" value="1" {{ $checked }}>
+                                <input type="checkbox" class="check-input" name="jenis_sampah[{{ $index }}][checked]"
+                                    value="1" {{ $checked }}>
                             </div>
 
                             <!-- Jenis Sampah -->
                             <div class="col-md-3">
-                                <select name="jenis_sampah[{{ $index }}][nama]" class="form-control jenis-select" data-index="{{ $index }}">
+                                <select name="jenis_sampah[{{ $index }}][nama]" class="form-control jenis-select"
+                                    data-index="{{ $index }}">
                                     <option value="">-- Pilih Jenis --</option>
                                     @foreach ($allJenis as $jenis)
                                         <option value="{{ $jenis->nm_jenis }}" data-harga="{{ $jenis->harga_perkilo }}"
@@ -131,16 +132,19 @@
                 {{-- CATATAN --}}
                 <div class="form-group">
                     <label>Catatan</label>
-                    <textarea class="form-control" rows="2" readonly>{{ $pesanan->catatan }}</textarea>
+                    <textarea name="catatan" class="form-control" rows="2">{{ old('catatan', $pesanan->catatan) }}</textarea>
                 </div>
 
                 {{-- STATUS --}}
                 <div class="form-group">
                     <label>Status Pesanan</label>
                     <select name="status" class="form-control" required>
-                        <option value="sedang diproses" {{ $pesanan->status == 'sedang diproses' ? 'selected' : '' }}>Diproses</option>
-                        <option value="telah diterima" {{ $pesanan->status == 'telah diterima' ? 'selected' : '' }}>Telah Diterima</option>
-                        <option value="transaksi berhasil" {{ $pesanan->status == 'transaksi berhasil' ? 'selected' : '' }}>Transaksi Berhasil</option>
+                        <option value="sedang diproses" {{ $pesanan->status == 'sedang diproses' ? 'selected' : '' }}>
+                            Diproses</option>
+                        <option value="telah diterima" {{ $pesanan->status == 'telah diterima' ? 'selected' : '' }}>Telah
+                            Diterima</option>
+                        <option value="transaksi berhasil"
+                            {{ $pesanan->status == 'transaksi berhasil' ? 'selected' : '' }}>Transaksi Berhasil</option>
                     </select>
                 </div>
 

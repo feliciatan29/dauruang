@@ -89,7 +89,7 @@
         </div>
     </div>
 
-    
+
         @if (session('success'))
             <div class="alert alert-success text-center">{{ session('success') }}</div>
         @endif
@@ -112,13 +112,17 @@
                 <div class="row g-3">
                     {{-- Gambar --}}
                     <div class="col-12 col-md-3 text-center">
-                       @if (!empty($item['gambar']))
-                            <img src="{{ asset('Foto_Sampah/' . $item['gambar']) }}" alt="Gambar" class="img-fluid rounded border">
-                        @elseif (!empty($item->pesananc->gambar))
-                            <img src="{{ asset($item->pesananc->gambar) }}" alt="Gambar Pesanan" class="img-fluid rounded border">
-                        @else
-                            <div class="bg-light text-center p-4 border rounded">Tidak ada gambar</div>
-                        @endif
+                       @php
+                                        $gambar = $item->gambar ? 'Foto_Sampah/' . basename($item->gambar) : null;
+                                    @endphp
+
+                                    @if ($gambar && file_exists(public_path($gambar)))
+                                            <img src="{{ asset($gambar) }}"
+                                                class="img-fluid rounded border" alt="Bukti">
+
+                                    @else
+                                        <span class="text-muted">-</span>
+                                    @endif
                     </div>
 
                     {{-- Informasi --}}

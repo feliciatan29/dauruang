@@ -59,6 +59,8 @@ class PesananController extends Controller
         $pesanan->berat = $totalBerat;
         $pesanan->total_pesanan = $totalHarga;
         $pesanan->status = $request->status;
+        $pesanan->catatan = $request->catatan; // <-- tambah ini biar catatan ikut terupdate
+
 
         // ✅ Tambahan: Pindahkan ke tbl_riwayat jika transaksi berhasil
         if ($request->status === 'transaksi berhasil') {

@@ -86,8 +86,8 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="{{ route('nasabah.beranda') }}" class="nav-item nav-link active">Beranda</a>
-                <a href="{{ route('pesananc.pilihjenis') }}" class="nav-item nav-link active">Mulai Pesanan</a>
+                <a href="{{ route('nasabah.beranda') }}" class="nav-item nav-link">Beranda</a>
+                <a href="{{ route('pesananc.pilihjenis') }}" class="nav-item nav-link">Mulai Pesanan</a>
                 <a href="{{ route('pesananc.status') }}" class="nav-item nav-link">Pesanan Saya</a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Profil Saya</a>
