@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Nasabah;
 use App\Models\Riwayat;
+use App\Models\Profiles;
 use App\Models\Pesananc;
 use Illuminate\Support\Facades\DB;
 
@@ -12,8 +13,9 @@ class BerandaController extends Controller
 {
     public function index()
     {
-        $totalNasabah = Nasabah::count();
-        $totalPenjemputan = Riwayat::count();
+         // ✅ Total Nasabah langsung dari tabel tbl_nasabah
+        $totalNasabah = Profiles::count();
+        $totalPenjemputan = Riwayat::where('status', 'transaksi berhasil')->count();
         $jadwalSelesai = Riwayat::where('status', 'transaksi berhasil')->count();
 
         // Ambil data jenis sampah terbanyak

@@ -20,34 +20,22 @@
                         <h1 class="display-1 text-white mb-4 animated slideInDown text-center">
                             Mulai dari Sampah Wujudkan Perubahan
                         </h1>
-                        <a href="#" class="btn btn-primary px-5 py-3 rounded-pill shadow-lg fw-bold animated fadeInUp"
-                            style="font-size: 1.1rem;">
-                            Explore More
-                        </a>
                     </div>
                 </div>
 
                 <!-- Slide 2 -->
                 <div class="carousel-item">
-                    <img class="w-100" src="{{ asset('nasabah/img/carousel-1.jpg') }}" alt="Image 2">
+                    <img class="w-100" src="{{ asset('nasabah/img/img1.jpg') }}" alt="Image 2">
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                         <h1 class="display-4 text-white mb-4 animated slideInDown">Daur Ulang untuk Masa Depan</h1>
-                        <a href="#" class="btn btn-primary px-5 py-3 rounded-pill shadow-lg fw-bold animated fadeInUp"
-                            style="font-size: 1.1rem; margin-top: 10px;">
-                            Learn More
-                        </a>
                     </div>
                 </div>
 
                 <!-- Slide 3 -->
                 <div class="carousel-item">
-                    <img class="w-100" src="{{ asset('nasabah/img/carousel-2.jpg') }}" alt="Image 3">
+                    <img class="w-100" src="{{ asset('nasabah/img/img2.jpg') }}" alt="Image 3">
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                         <h1 class="display-4 text-white mb-4 animated slideInDown">Bersama Menjaga Lingkungan</h1>
-                        <a href="#" class="btn btn-primary px-5 py-3 rounded-pill shadow-lg fw-bold animated fadeInUp"
-                            style="font-size: 1.1rem; margin-top: 10px;">
-                            Join Us
-                        </a>
                     </div>
                 </div>
             </div>
@@ -149,7 +137,7 @@
                         <h1 class="display-5 mb-4">Ubah Sampah Jadi Tabungan</h1>
                         <p class="mb-4">Kami membantu Anda menukar sampah menjadi tabungan dan lingkungan yang lebih
                             sehat. Solusi digital pengelolaan sampah yang efisien, praktis, dan ramah lingkungan.</p>
-                        <a class="btn btn-primary py-3 px-4" href="">Explore More</a>
+
                     </div>
                     <div class="col-lg-3 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
                         <div class="row g-5">
@@ -163,8 +151,8 @@
                             <div class="col-12 col-sm-6 col-lg-12">
                                 <div class="border-start ps-4">
                                     <i class="fa fa-users fa-3x text-primary mb-3"></i>
-                                    <h4 class="mb-3">Company</h4>
-                                    <span>Pemesanan penjemputan sampah khusus dari perusahaan atau instansi</span>
+                                    <h4 class="mb-3">Mulai Pesanan</h4>
+                                    <span>Ayo setorkan sampahmu di DaurUang</span>
                                 </div>
                             </div>
                         </div>
@@ -180,20 +168,20 @@
             <div class="container py-5">
                 <div class="row g-5">
                     <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.1s">
-                        <h1 class="display-4 text-white" data-toggle="counter-up">1234</h1>
-                        <span class="fs-5 fw-semi-bold text-light">Happy Clients</span>
+                        <h1 class="display-4 text-white" data-toggle="counter-up">20</h1>
+                        <span class="fs-5 fw-semi-bold text-light">Setoran Terkini</span>
                     </div>
                     <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.3s">
-                        <h1 class="display-4 text-white" data-toggle="counter-up">1234</h1>
-                        <span class="fs-5 fw-semi-bold text-light">Garden Complated</span>
+                        <h1 class="display-4 text-white" data-toggle="counter-up">41.200</h1>
+                        <span class="fs-5 fw-semi-bold text-light">Saldo Terbaru</span>
                     </div>
                     <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.5s">
-                        <h1 class="display-4 text-white" data-toggle="counter-up">1234</h1>
-                        <span class="fs-5 fw-semi-bold text-light">Dedicated Staff</span>
+                        <h1 class="display-4 text-white" data-toggle="counter-up">35</h1>
+                        <span class="fs-5 fw-semi-bold text-light">Sampah Terkumpul</span>
                     </div>
                     <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.7s">
-                        <h1 class="display-4 text-white" data-toggle="counter-up">1234</h1>
-                        <span class="fs-5 fw-semi-bold text-light">Awards Achieved</span>
+                        <h1 class="display-4 text-white" data-toggle="counter-up">24</h1>
+                        <span class="fs-5 fw-semi-bold text-light">Penjemputan Sukses</span>
                     </div>
                 </div>
             </div>
@@ -210,7 +198,7 @@
                         <h1 class="display-5 mb-4">Kami Hadir Untuk Anda, Para Pejuang Linkungan</h1>
                         <p class="mb-4">Bank sampah digital adalah solusi pintar untuk menjadikan sampah bernilai. Dengan
                             sistem ini, Anda tak hanya menabung, tapi juga berkontribusi untuk bumi yang lebih bersih</p>
-                        <a class="btn btn-primary py-3 px-4" href="">Explore More</a>
+
                     </div>
                     <div class="col-lg-6">
                         <div class="row g-4 align-items-center">

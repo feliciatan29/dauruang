@@ -152,18 +152,13 @@
                         <p>
                             <i class="bi bi-sticky"></i> {{ $item->catatan ?? '-' }}
                         </p>
-                        <p>
-                            <i class="bi bi-cash"></i> Total: Rp {{ number_format($item->total_pesanan ?? 0, 0, ',', '.') }}
-                        </p>
                     </div>
                 </div>
 
                 <!-- Total & Tombol -->
                 <div class="action-footer mt-4">
                     <p class="fw-semibold mb-2">Total: Rp {{ number_format($item['total_pesanan'] ?? 0, 0, ',', '.') }}</p>
-                    <a href="tel:{{ $item['telepon'] ?? '' }}" class="btn btn-success btn-action text-white px-4">
-                        Hubungi Penjemput
-                    </a>
+
                 </div>
             </div>
         @empty
